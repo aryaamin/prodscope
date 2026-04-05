@@ -12,7 +12,9 @@ router.get("/api/v1/function-stats", async (req: Request, res: Response) => {
   const ch = getClickHouse();
 
   let query = `
-    SELECT function, file, line, window, call_count, avg_ms, p99_ms, error_count, error_rate
+    SELECT function, file, line, window, call_count, avg_ms, p50_ms, p99_ms,
+           error_count, error_rate, unique_sessions, total_sessions,
+           calls_per_session, session_reach_pct
     FROM function_stats FINAL
     WHERE project_id = {projectId:String}
   `;
@@ -224,7 +226,9 @@ router.get("/api/v1/hot-paths", async (req: Request, res: Response) => {
 
   const result = await ch.query({
     query: `
-      SELECT function, file, line, call_count, avg_ms, p99_ms, error_rate
+      SELECT function, file, line, call_count, avg_ms, p50_ms, p99_ms,
+             error_count, error_rate, unique_sessions, total_sessions,
+             calls_per_session, session_reach_pct
       FROM function_stats FINAL
       WHERE project_id = {projectId:String} AND window = {window:String}
       ORDER BY call_count DESC

@@ -63,7 +63,17 @@
       "Bash(curl -s \"http://localhost:8123/?query=SELECT+file,line,function,message,timestamp+FROM+prodscope.errors+WHERE+project_id='01a67906-dca7-4e83-926e-b382583550fa'+AND+timestamp>'2026-04-05 23:50:00'+ORDER+BY+timestamp+DESC+LIMIT+10\")",
       "Bash(curl -s \"http://localhost:8123/\" --data-binary \"SELECT file,line,function,message,timestamp FROM prodscope.errors WHERE project_id='01a67906-dca7-4e83-926e-b382583550fa' AND file='src/api.ts' ORDER BY timestamp DESC LIMIT 10\")",
       "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.function_stats DELETE WHERE project_id = '01a67906-dca7-4e83-926e-b382583550fa'\")",
-      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.spans DELETE WHERE project_id = '01a67906-dca7-4e83-926e-b382583550fa' AND name = 'http.request' AND function != ''\")"
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.spans DELETE WHERE project_id = '01a67906-dca7-4e83-926e-b382583550fa' AND name = 'http.request' AND function != ''\")",
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"DESCRIBE TABLE prodscope.function_stats\")",
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"SELECT function, file, count\\(\\) as calls, uniqExact\\(session_id\\) as unique_sessions FROM prodscope.spans WHERE project_id='01a67906-dca7-4e83-926e-b382583550fa' AND function != '' GROUP BY function, file\")",
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"SHOW CREATE TABLE prodscope.function_stats\")",
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.function_stats ADD COLUMN IF NOT EXISTS unique_sessions UInt64 DEFAULT 0\")",
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.function_stats ADD COLUMN IF NOT EXISTS total_sessions UInt64 DEFAULT 0\")",
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.function_stats ADD COLUMN IF NOT EXISTS calls_per_session Float64 DEFAULT 0\")",
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.function_stats ADD COLUMN IF NOT EXISTS session_reach_pct Float64 DEFAULT 0\")",
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.function_stats ADD COLUMN IF NOT EXISTS p50_ms Float64 DEFAULT 0\")",
+      "Bash(pnpm --filter @prodscope/collector run build)",
+      "Bash(pnpm --filter @prodscope/mcp-server run build)"
     ],
     "additionalDirectories": [
       "/home/arya/prodscope-demo",

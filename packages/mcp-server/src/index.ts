@@ -17,7 +17,7 @@ const server = new McpServer({
 // Tool 1: get_function_stats
 server.tool(
   "get_function_stats",
-  "Get call count, latency breakdown, and error rate for a function across time windows (1h, 24h, 7d).",
+  "Get detailed production metrics for a function: call count, p50/p99 latency, error count/rate, unique sessions, session reach %, and calls per session. Available across time windows (1h, 24h, 7d).",
   {
     function: z.string().optional().describe("Function name to look up"),
     file: z.string().optional().describe("File path to filter by"),
@@ -32,13 +32,18 @@ server.tool(
       file,
       window,
     });
+    const rows = Array.isArray(data) ? data : [];
+    if (rows.length === 0) {
+      return { content: [{ type: "text" as const, text: "No function stats found for the given filters." }] };
+    }
+    const lines = rows.map((r: any) =>
+      `${r.function} (${r.file}:${r.line}) [${r.window}]\n` +
+      `  Calls: ${r.call_count}  |  p50: ${Number(r.p50_ms).toFixed(0)}ms  |  p99: ${Number(r.p99_ms).toFixed(0)}ms  |  avg: ${Number(r.avg_ms).toFixed(0)}ms\n` +
+      `  Errors: ${r.error_count} (${(Number(r.error_rate) * 100).toFixed(1)}%)\n` +
+      `  Sessions: ${r.unique_sessions}/${r.total_sessions} (${Number(r.session_reach_pct).toFixed(0)}% of users)  |  ${Number(r.calls_per_session).toFixed(1)}x per session`
+    );
     return {
-      content: [
-        {
-          type: "text" as const,
-          text: JSON.stringify(data, null, 2),
-        },
-      ],
+      content: [{ type: "text" as const, text: lines.join("\n\n") }],
     };
   },
 );
@@ -157,7 +162,7 @@ server.tool(
 // Tool 7: get_hot_paths
 server.tool(
   "get_hot_paths",
-  "Get the most-called code paths in the last time window.",
+  "Get the most-called code paths ranked by traffic volume. Includes call count, latency, error rate, session reach, and calls per session.",
   {
     window: z
       .enum(["1h", "24h", "7d"])
@@ -166,13 +171,16 @@ server.tool(
   },
   async ({ window }) => {
     const data = await api.getHotPaths({ window });
+    const rows = Array.isArray(data) ? data : [];
+    if (rows.length === 0) {
+      return { content: [{ type: "text" as const, text: "No hot paths found." }] };
+    }
+    const lines = rows.map((r: any, i: number) =>
+      `#${i + 1} ${r.function} (${r.file}:${r.line})\n` +
+      `   ${r.call_count} calls  |  p50 ${Number(r.p50_ms || r.avg_ms).toFixed(0)}ms  |  ${(Number(r.error_rate) * 100).toFixed(1)}% errors  |  ${Number(r.session_reach_pct || 0).toFixed(0)}% users`
+    );
     return {
-      content: [
-        {
-          type: "text" as const,
-          text: JSON.stringify(data, null, 2),
-        },
-      ],
+      content: [{ type: "text" as const, text: lines.join("\n") }],
     };
   },
 );

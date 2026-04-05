@@ -193,16 +193,22 @@ async function refreshEditor(
       }
     }
 
-    // Add hot path annotations from stats
+    // Add inline annotations from stats — compact summary per function line
     for (const stat of stats) {
-      if (stat.line && stat.avg_ms > 0) {
-        const p99Text = stat.p99_ms ? ` \u00b7 p99 ${stat.p99_ms.toFixed(0)}ms` : "";
-        annotations.push({
-          line: stat.line,
-          type: "hot",
-          text: `avg ${stat.avg_ms.toFixed(0)}ms${p99Text}`,
-        });
+      if (!stat.line || stat.line <= 0) continue;
+      const parts: string[] = [];
+      parts.push(`${stat.p50_ms?.toFixed(0) ?? stat.avg_ms.toFixed(0)}ms`);
+      if (stat.error_count > 0) {
+        parts.push(`${stat.error_count} err`);
       }
+      if (stat.session_reach_pct > 0) {
+        parts.push(`${stat.session_reach_pct.toFixed(0)}% users`);
+      }
+      annotations.push({
+        line: stat.line,
+        type: stat.error_count > 0 ? "error" : "hot",
+        text: parts.join(" \u00b7 "),
+      });
     }
 
     log.info(`Applying ${annotations.length} decorations`);
