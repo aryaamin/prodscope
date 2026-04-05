@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run ProdScope Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "/home/arya/prodscope-demo"
+      ],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "env": {
+        "PRODSCOPE_API_KEY": "ps_ffd5caef-c937-47a0-83d6-748a0e72c6b9"
+      }
+    }
+  ]
+}

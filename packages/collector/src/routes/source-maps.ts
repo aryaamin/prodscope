@@ -1,7 +1,7 @@
 import { Router, type Request, type Response } from "express";
 import { getPostgres } from "../db/postgres.js";
 
-const router = Router();
+const router: ReturnType<typeof Router> = Router();
 
 /** Upload a source map for a project. */
 router.post("/v1/source-maps", async (req: Request, res: Response) => {

@@ -46,31 +46,15 @@ export class Transport {
     try {
       const url = `${this.ingestUrl}/v1/ingest`;
 
-      // Use sendBeacon for page unload, fetch otherwise
-      if (typeof navigator !== "undefined" && navigator.sendBeacon) {
-        const blob = new Blob([JSON.stringify(batch)], {
-          type: "application/json",
-        });
-        // Try fetch first, fall back to sendBeacon
-        await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": this.apiKey,
-          },
-          body: JSON.stringify(batch),
-          keepalive: true,
-        });
-      } else {
-        await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": this.apiKey,
-          },
-          body: JSON.stringify(batch),
-        });
-      }
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": this.apiKey,
+        },
+        body: JSON.stringify(batch),
+        keepalive: true,
+      });
     } catch {
       // Silently drop on failure — SDK should never break the host app
     }

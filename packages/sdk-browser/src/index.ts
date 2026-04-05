@@ -8,6 +8,7 @@ import { generateId, generateSpanId, getSessionId, now } from "./utils.js";
 
 export type { ProdScopeConfig, SpanData, ErrorData, DbQueryData, IngestBatch } from "./types.js";
 export { trackFunction } from "./capture/functions.js";
+export { tracked, traced } from "./decorator.js";
 
 let transport: Transport | null = null;
 const teardowns: Array<() => void> = [];
@@ -53,11 +54,28 @@ export function track<T extends (...args: any[]) => any>(
   file = "",
   line = 0,
 ): T {
-  if (!transport) {
-    console.warn("[ProdScope] SDK not initialized. Call init() first.");
-    return fn;
+  // If transport is ready now, wrap immediately
+  if (transport) {
+    return trackFunction(transport, name, fn, file, line);
   }
-  return trackFunction(transport, name, fn, file, line);
+
+  // Lazy wrapper: defer transport check to call time so that track() can be
+  // called before init() (e.g. at module-load time by the Vite auto-track plugin)
+  let wrapped: T | null = null;
+  const lazy = function (this: any, ...args: any[]) {
+    if (!wrapped) {
+      if (transport) {
+        wrapped = trackFunction(transport, name, fn, file, line);
+      } else {
+        // SDK still not initialized — run the original function untracked
+        return fn.apply(this, args);
+      }
+    }
+    return wrapped.apply(this, args);
+  } as unknown as T;
+
+  Object.defineProperty(lazy, "name", { value: name });
+  return lazy;
 }
 
 /** Send a custom named event with metadata. */

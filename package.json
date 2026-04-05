@@ -10,6 +10,7 @@
     "lint": "pnpm -r lint",
     "clean": "pnpm -r clean"
   },
+  "packageManager": "pnpm@9.15.4",
   "engines": {
     "node": ">=20",
     "pnpm": ">=9"

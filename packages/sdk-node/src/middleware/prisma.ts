@@ -1,8 +1,10 @@
 import { getTransport, getConfig } from "../index.js";
 import { generateId, generateSpanId, now } from "../utils.js";
+import { captureCallSite } from "../callsite.js";
 
 /**
  * Prisma client extension that traces database queries.
+ * Automatically captures the file and line where the query was called.
  *
  * ```ts
  * import { PrismaClient } from "@prisma/client";
@@ -31,6 +33,9 @@ export function prodscopePrisma() {
           const config = getConfig();
           if (!transport) return query(args);
 
+          // Capture WHERE in user code this query was called
+          const site = captureCallSite(1);
+
           const start = process.hrtime.bigint();
           const startTime = now();
           const traceId = generateId();
@@ -56,6 +61,8 @@ export function prodscopePrisma() {
                   operation,
                   durationMs,
                   rowCount,
+                  file: site?.file ?? "",
+                  line: site?.line ?? 0,
                   timestamp: startTime,
                 },
               ],
@@ -75,6 +82,8 @@ export function prodscopePrisma() {
                   operation,
                   durationMs,
                   rowCount: 0,
+                  file: site?.file ?? "",
+                  line: site?.line ?? 0,
                   timestamp: startTime,
                 },
               ],
@@ -87,6 +96,9 @@ export function prodscopePrisma() {
                       : String(err),
                   stack:
                     err instanceof Error ? err.stack ?? "" : "",
+                  file: site?.file ?? "",
+                  line: site?.line ?? 0,
+                  function: site?.function ?? "",
                   type: "PrismaError",
                   timestamp: now(),
                   gitSha: config?.gitSha ?? "",

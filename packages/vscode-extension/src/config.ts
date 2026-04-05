@@ -24,14 +24,18 @@ export function loadConfig(): ExtensionConfig | null {
       extractValue(content, "apiUrl") ?? "https://api.prodscope.dev";
 
     // Derive WebSocket URL from API URL
-    const wsUrl = apiUrl
-      .replace("https://api.", "wss://live.")
-      .replace("http://localhost", "ws://localhost");
+    let wsUrl: string;
+    if (apiUrl.includes("localhost") || apiUrl.includes("127.0.0.1")) {
+      wsUrl = apiUrl.replace("http://", "ws://");
+    } else {
+      wsUrl = apiUrl.replace("https://api.", "wss://live.");
+    }
 
-    // API key from env var or VS Code settings
+    // API key: env var > VS Code settings > config file
     const apiKey =
       process.env.PRODSCOPE_API_KEY ??
       vscode.workspace.getConfiguration("prodscope").get<string>("apiKey") ??
+      extractValue(content, "apiKey") ??
       "";
 
     if (!projectId) return null;

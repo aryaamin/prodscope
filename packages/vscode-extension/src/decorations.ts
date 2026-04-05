@@ -44,7 +44,6 @@ export function applyDecorations(
           contentText: `  \u21b3 ${ann.text}`,
           color: ann.type === "error" ? "#f87171" : "#fbbf24",
           fontStyle: "italic",
-          fontSize: "12px",
         },
       },
     };

@@ -1,8 +1,10 @@
 import type { ProdScopeConfig } from "./types.js";
 import { Transport } from "./transport.js";
 import { generateId, generateSpanId, now } from "./utils.js";
+import { captureCallSite } from "./callsite.js";
 
 export type { ProdScopeConfig, SpanData, ErrorData, DbQueryData, IngestBatch } from "./types.js";
+export { tracked, traced } from "./decorator.js";
 
 let transport: Transport | null = null;
 let config: ProdScopeConfig | null = null;
@@ -80,6 +82,15 @@ export function track<T extends (...args: any[]) => any>(
   line = 0,
 ): T {
   if (!transport) return fn;
+
+  // Runtime fallback if build plugin didn't inject file:line
+  if (!file) {
+    const site = captureCallSite();
+    if (site) {
+      file = site.file;
+      line = site.line;
+    }
+  }
 
   const wrapped = function (this: any, ...args: any[]) {
     const traceId = generateId();

@@ -4,7 +4,7 @@ import { createHash, randomBytes } from "crypto";
 import jwt from "jsonwebtoken";
 import { env } from "../env.js";
 
-const router = Router();
+const router: ReturnType<typeof Router> = Router();
 
 function hashPassword(password: string): string {
   const salt = randomBytes(16).toString("hex");

@@ -1,11 +1,11 @@
 import type { Transport } from "../transport.js";
 import { generateId, generateSpanId, getSessionId, now } from "../utils.js";
+import { captureCallSite } from "../callsite.js";
 
 /**
  * Wraps a function to track call count, duration, and errors.
- *
- * Usage:
- *   const trackedFn = trackFunction(transport, "generateQuestion", myFunction, "quiz.ts", 42);
+ * File and line are auto-injected by the Vite plugin at build time,
+ * or captured at runtime as a fallback.
  */
 export function trackFunction<T extends (...args: any[]) => any>(
   transport: Transport,
@@ -14,6 +14,15 @@ export function trackFunction<T extends (...args: any[]) => any>(
   file = "",
   line = 0,
 ): T {
+  // Runtime fallback if Vite plugin didn't inject file:line
+  if (!file) {
+    const site = captureCallSite();
+    if (site) {
+      file = site.file;
+      line = site.line;
+    }
+  }
+
   const wrapped = function (this: any, ...args: any[]) {
     const traceId = generateId();
     const spanId = generateSpanId();

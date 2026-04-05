@@ -1,6 +1,6 @@
 import WebSocket from "ws";
 import * as vscode from "vscode";
-import type { ExtensionConfig } from "./config.js";
+import type { ExtensionConfig } from "./config";
 
 export type EventHandler = (event: any) => void;
 

@@ -1,5 +1,6 @@
 import type { Transport } from "../transport.js";
 import { generateId, generateSpanId, getSessionId, now } from "../utils.js";
+import { captureCallSite } from "../callsite.js";
 
 export function captureFetches(transport: Transport): () => void {
   const originalFetch = window.fetch;
@@ -8,6 +9,9 @@ export function captureFetches(transport: Transport): () => void {
     input: RequestInfo | URL,
     init?: RequestInit,
   ): Promise<Response> {
+    // Capture WHERE in user code this fetch was called
+    const site = captureCallSite();
+
     const traceId = generateId();
     const spanId = generateSpanId();
     const startTime = now();
@@ -43,6 +47,9 @@ export function captureFetches(transport: Transport): () => void {
               "http.status_code": String(response.status),
               "page.url": location.href,
             },
+            file: site?.file ?? "",
+            line: site?.line ?? 0,
+            function: site?.function ?? "",
             sessionId: getSessionId(),
             userAgent: navigator.userAgent,
           },
@@ -70,6 +77,9 @@ export function captureFetches(transport: Transport): () => void {
               "http.url": url,
               "error.message": err instanceof Error ? err.message : String(err),
             },
+            file: site?.file ?? "",
+            line: site?.line ?? 0,
+            function: site?.function ?? "",
             sessionId: getSessionId(),
             userAgent: navigator.userAgent,
           },
@@ -87,10 +97,17 @@ export function captureFetches(transport: Transport): () => void {
   XMLHttpRequest.prototype.open = function (
     method: string,
     url: string | URL,
-    ...args: any[]
+    async?: boolean,
+    username?: string | null,
+    password?: string | null,
   ) {
-    (this as any).__prodscope = { method, url: String(url) };
-    return originalOpen.call(this, method, url, ...args);
+    // Capture call site at open() time — this is where user code calls xhr.open()
+    (this as any).__prodscope = {
+      method,
+      url: String(url),
+      site: captureCallSite(),
+    };
+    return originalOpen.call(this, method, url, async ?? true, username ?? null, password ?? null);
   };
 
   XMLHttpRequest.prototype.send = function (body?: any) {
@@ -101,6 +118,7 @@ export function captureFetches(transport: Transport): () => void {
     const spanId = generateSpanId();
     const startTime = now();
     const start = performance.now();
+    const site = meta.site;
 
     this.setRequestHeader("x-prodscope-trace-id", traceId);
 
@@ -124,6 +142,9 @@ export function captureFetches(transport: Transport): () => void {
               "http.url": meta.url,
               "http.status_code": String(this.status),
             },
+            file: site?.file ?? "",
+            line: site?.line ?? 0,
+            function: site?.function ?? "",
             sessionId: getSessionId(),
             userAgent: navigator.userAgent,
           },

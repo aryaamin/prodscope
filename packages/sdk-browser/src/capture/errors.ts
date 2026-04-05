@@ -1,6 +1,18 @@
 import type { Transport } from "../transport.js";
 import { getSessionId, now } from "../utils.js";
 
+/** Strip origin from browser URL to get relative path */
+function toRelativePath(url: string): string {
+  if (!url) return "";
+  try {
+    const parsed = new URL(url);
+    // Remove leading slash, strip query params (Vite HMR adds ?t=...)
+    return parsed.pathname.replace(/^\//, "");
+  } catch {
+    return url;
+  }
+}
+
 export function captureErrors(transport: Transport): () => void {
   function onError(event: ErrorEvent) {
     transport.enqueue({
@@ -8,7 +20,7 @@ export function captureErrors(transport: Transport): () => void {
         {
           message: event.message,
           stack: event.error?.stack ?? "",
-          file: event.filename ?? "",
+          file: toRelativePath(event.filename ?? ""),
           line: event.lineno ?? 0,
           column: event.colno ?? 0,
           type: event.error?.name ?? "Error",

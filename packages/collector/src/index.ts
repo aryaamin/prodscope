@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import http from "http";
 import { env } from "./env.js";
 import { initClickHouse } from "./db/clickhouse.js";
@@ -12,8 +13,9 @@ import sourceMapRouter from "./routes/source-maps.js";
 import apiRouter from "./routes/api.js";
 import authRouter from "./routes/auth.js";
 
-const app = express();
+const app: ReturnType<typeof express> = express();
 
+app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
 // Health check

@@ -9,7 +9,7 @@ export const env = {
   clickhouseDb: process.env.CLICKHOUSE_DB ?? "prodscope",
   postgresUrl:
     process.env.POSTGRES_URL ??
-    "postgresql://prodscope:prodscope@localhost:5432/prodscope",
+    "postgresql://prodscope:prodscope@localhost:5450/prodscope",
   anthropicApiKey: process.env.ANTHROPIC_API_KEY ?? "",
   jwtSecret: process.env.JWT_SECRET ?? "change-me-in-production",
 } as const;

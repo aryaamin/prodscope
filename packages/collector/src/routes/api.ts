@@ -3,7 +3,7 @@ import { getClickHouse } from "../db/clickhouse.js";
 import { getPostgres } from "../db/postgres.js";
 import { generateInsight } from "../services/ai-insights.js";
 
-const router = Router();
+const router: ReturnType<typeof Router> = Router();
 
 /** GET /api/v1/function-stats?function=X&file=Y&window=1h|24h|7d */
 router.get("/api/v1/function-stats", async (req: Request, res: Response) => {

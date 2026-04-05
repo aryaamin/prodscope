@@ -4,7 +4,12 @@ import { resolveStack, resolveLocation } from "../services/source-map-resolver.j
 import { broadcast } from "../services/websocket.js";
 import { z } from "zod";
 
-const router = Router();
+const router: ReturnType<typeof Router> = Router();
+
+/** Convert ISO string to ClickHouse DateTime64 format: "YYYY-MM-DD HH:MM:SS.sss" */
+function toCH(iso: string): string {
+  return iso.replace("T", " ").replace("Z", "");
+}
 
 const SpanSchema = z.object({
   traceId: z.string(),
@@ -93,8 +98,8 @@ router.post("/v1/ingest", async (req: Request, res: Response) => {
         name: s.name,
         kind: s.kind,
         status: s.status,
-        start_time: s.startTime,
-        end_time: s.endTime,
+        start_time: toCH(s.startTime),
+        end_time: toCH(s.endTime),
         duration_ms: s.durationMs,
         attributes: s.attributes,
         events: JSON.stringify(s.events),
@@ -149,7 +154,7 @@ router.post("/v1/ingest", async (req: Request, res: Response) => {
           user_agent: e.userAgent,
           session_id: e.sessionId,
           git_sha: e.gitSha,
-          timestamp: e.timestamp,
+          timestamp: toCH(e.timestamp),
           resolved_stack: resolvedStack,
         };
       }),
@@ -180,7 +185,7 @@ router.post("/v1/ingest", async (req: Request, res: Response) => {
         line: q.line,
         statement: q.statement,
         session_id: q.sessionId,
-        timestamp: q.timestamp,
+        timestamp: toCH(q.timestamp),
       })),
       format: "JSONEachRow",
     });
