@@ -9,6 +9,9 @@ let wsClient: WebSocketClient | null = null;
 let workspaceRoot = "";
 const log = vscode.window.createOutputChannel("ProdScope", { log: true });
 
+/** Files we've already fetched stats/errors for — skip re-fetching */
+const fetchedFiles = new Set<string>();
+
 /** Convert absolute file path to workspace-relative path (e.g. "src/quiz.ts") */
 function toRelative(absPath: string): string {
   if (workspaceRoot && absPath.startsWith(workspaceRoot)) {
@@ -21,7 +24,6 @@ function toRelative(absPath: string): string {
 export function activate(context: vscode.ExtensionContext) {
   console.log("[ProdScope] activate() called");
   log.info("ProdScope extension activating...");
-  log.show(); // Force the output channel to be visible
 
   const config = loadConfig();
   console.log("[ProdScope] config:", config);
@@ -34,7 +36,6 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath ?? "";
-  console.log(`[ProdScope] Config loaded: projectId=${config.projectId}, apiUrl=${config.apiUrl}, apiKey=${config.apiKey ? "present" : "MISSING"}`);
   log.info(`Config loaded: projectId=${config.projectId}, apiUrl=${config.apiUrl}, wsUrl=${config.wsUrl}, workspaceRoot=${workspaceRoot}, apiKey=${config.apiKey ? "set (" + config.apiKey.length + " chars)" : "MISSING"}`);
 
   // Status bar
@@ -45,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
   statusBar.text = "$(radio-tower) ProdScope";
   statusBar.color = "#71717a";
   statusBar.tooltip = "ProdScope: Connecting...";
-  statusBar.command = "prodscope.connect";
+  statusBar.command = "prodscope.refreshAll";
   statusBar.show();
   context.subscriptions.push(statusBar);
 
@@ -67,34 +68,28 @@ export function activate(context: vscode.ExtensionContext) {
     ),
   );
 
-  // WebSocket client
+  // WebSocket client — just update status bar, don't refetch
   wsClient = new WebSocketClient(config, statusBar);
-
   wsClient.onEvent((event) => {
     log.info(`WS event: ${event.type}`);
-    if (event.type === "spans" || event.type === "errors") {
-      refreshActiveEditor(config, codeLensProvider);
-    }
+    // No automatic refetch — user can manually refresh
   });
-
-  // Connect
   wsClient.connect();
 
-  // Update decorations and insights when active editor changes
+  // Fetch stats/decorations when a file is opened (first time only)
   context.subscriptions.push(
     vscode.window.onDidChangeActiveTextEditor((editor) => {
       if (editor && editor.document.uri.scheme === "file") {
-        log.info(`Active editor changed: ${editor.document.uri.fsPath}`);
-        refreshEditor(editor, config, codeLensProvider);
-        insightProvider.updateForFile(toRelative(editor.document.uri.fsPath));
-      }
-    }),
-  );
+        const absPath = editor.document.uri.fsPath;
+        const relPath = toRelative(absPath);
 
-  // Refresh on save
-  context.subscriptions.push(
-    vscode.workspace.onDidSaveTextDocument(() => {
-      refreshActiveEditor(config, codeLensProvider);
+        if (!fetchedFiles.has(relPath)) {
+          log.info(`First open: ${relPath}`);
+          refreshEditor(editor, config, codeLensProvider);
+          insightProvider.updateForFile(relPath);
+          fetchedFiles.add(relPath);
+        }
+      }
     }),
   );
 
@@ -109,28 +104,32 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("prodscope.refreshInsight", () => {
       insightProvider.refresh();
     }),
+    // Manual refresh: re-fetch stats/errors/insight for the current file
+    vscode.commands.registerCommand("prodscope.refreshAll", () => {
+      const editor = vscode.window.activeTextEditor;
+      if (editor && editor.document.uri.scheme === "file") {
+        const relPath = toRelative(editor.document.uri.fsPath);
+        log.info(`Manual refresh: ${relPath}`);
+        fetchedFiles.delete(relPath); // allow re-fetch
+        refreshEditor(editor, config, codeLensProvider);
+        insightProvider.updateForFile(relPath);
+        fetchedFiles.add(relPath);
+      }
+    }),
   );
 
-  // Initial refresh
+  // Initial refresh for already-open file
   const activeEditor = vscode.window.activeTextEditor;
   if (activeEditor?.document.uri.scheme === "file") {
     const filePath = activeEditor.document.uri.fsPath;
+    const relPath = toRelative(filePath);
     log.info(`Initial refresh for: ${filePath}`);
     refreshEditor(activeEditor, config, codeLensProvider);
-    insightProvider.updateForFile(toRelative(filePath));
+    insightProvider.updateForFile(relPath);
+    fetchedFiles.add(relPath);
   }
 
   log.info("ProdScope extension activated.");
-}
-
-async function refreshActiveEditor(
-  config: { apiUrl: string; apiKey: string },
-  codeLensProvider: ProdScopeCodeLensProvider,
-): Promise<void> {
-  const editor = vscode.window.activeTextEditor;
-  if (editor && editor.document.uri.scheme === "file") {
-    await refreshEditor(editor, config, codeLensProvider);
-  }
 }
 
 async function refreshEditor(
@@ -140,17 +139,20 @@ async function refreshEditor(
 ): Promise<void> {
   const absPath = editor.document.uri.fsPath;
   const filePath = toRelative(absPath);
-  log.info(`Refreshing editor: ${absPath} -> ${filePath}`);
+  log.info(`Fetching data for: ${filePath}`);
 
   try {
-    // Fetch function stats for this file
-    const statsUrl = `${config.apiUrl}/api/v1/function-stats?file=${encodeURIComponent(filePath)}&window=1h`;
-    log.info(`Fetching stats: ${statsUrl}`);
-
-    const statsRes = await fetch(statsUrl, {
-      headers: { "x-api-key": config.apiKey },
-    });
-    log.info(`Stats response: ${statsRes.status}`);
+    // Fetch function stats and errors in parallel
+    const [statsRes, errorsRes] = await Promise.all([
+      fetch(
+        `${config.apiUrl}/api/v1/function-stats?file=${encodeURIComponent(filePath)}&window=1h`,
+        { headers: { "x-api-key": config.apiKey } },
+      ),
+      fetch(
+        `${config.apiUrl}/api/v1/errors?file=${encodeURIComponent(filePath)}&limit=100`,
+        { headers: { "x-api-key": config.apiKey } },
+      ),
+    ]);
 
     let stats: any[] = [];
     if (statsRes.ok) {
@@ -158,15 +160,6 @@ async function refreshEditor(
       log.info(`Got ${stats.length} function stats`);
       codeLensProvider.updateStats(absPath, stats);
     }
-
-    // Fetch errors for decorations
-    const errorsUrl = `${config.apiUrl}/api/v1/errors?file=${encodeURIComponent(filePath)}&limit=100`;
-    log.info(`Fetching errors: ${errorsUrl}`);
-
-    const errorsRes = await fetch(errorsUrl, {
-      headers: { "x-api-key": config.apiKey },
-    });
-    log.info(`Errors response: ${errorsRes.status}`);
 
     const annotations: LineAnnotation[] = [];
 

@@ -57,7 +57,13 @@
       "Read(//home/arya/.config/Code/User/**)",
       "Bash(curl -s \"http://localhost:8123/?query=SELECT+id,api_key+FROM+prodscope_meta.projects+FORMAT+TabSeparated\")",
       "Bash(PGPASSWORD=prodscope psql -h localhost -p 5450 -U prodscope -d prodscope -t -c \"SELECT id, api_key FROM projects;\")",
-      "Bash(curl -s 'http://localhost:3100/api/v1/function-stats?file=src/api.ts&window=1h' -H 'x-api-key: ps_ffd5caef-c937-47a0-83d6-748a0e72c6b9')"
+      "Bash(curl -s 'http://localhost:3100/api/v1/function-stats?file=src/api.ts&window=1h' -H 'x-api-key: ps_ffd5caef-c937-47a0-83d6-748a0e72c6b9')",
+      "Bash(curl -s 'http://localhost:3100/api/v1/errors?file=src/api.ts&limit=10' -H 'x-api-key: ps_ffd5caef-c937-47a0-83d6-748a0e72c6b9')",
+      "Bash(curl -s \"http://localhost:8123/?query=SELECT+file,line,function,message,timestamp+FROM+prodscope.errors+WHERE+project_id='01a67906-dca7-4e83-926e-b382583550fa'+ORDER+BY+timestamp+DESC+LIMIT+10\")",
+      "Bash(curl -s \"http://localhost:8123/?query=SELECT+file,line,function,message,timestamp+FROM+prodscope.errors+WHERE+project_id='01a67906-dca7-4e83-926e-b382583550fa'+AND+timestamp>'2026-04-05 23:50:00'+ORDER+BY+timestamp+DESC+LIMIT+10\")",
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"SELECT file,line,function,message,timestamp FROM prodscope.errors WHERE project_id='01a67906-dca7-4e83-926e-b382583550fa' AND file='src/api.ts' ORDER BY timestamp DESC LIMIT 10\")",
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.function_stats DELETE WHERE project_id = '01a67906-dca7-4e83-926e-b382583550fa'\")",
+      "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.spans DELETE WHERE project_id = '01a67906-dca7-4e83-926e-b382583550fa' AND name = 'http.request' AND function != ''\")"
     ],
     "additionalDirectories": [
       "/home/arya/prodscope-demo",
