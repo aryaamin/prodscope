@@ -1,0 +1,51 @@
+{
+  "name": "@prodscope/sdk-node",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./express": {
+      "import": "./dist/middleware/express.js",
+      "types": "./dist/middleware/express.d.ts"
+    },
+    "./prisma": {
+      "import": "./dist/middleware/prisma.js",
+      "types": "./dist/middleware/prisma.d.ts"
+    },
+    "./pg": {
+      "import": "./dist/middleware/pg.js",
+      "types": "./dist/middleware/pg.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "crypto": "^1.0.1"
+  },
+  "peerDependencies": {
+    "express": ">=4.0.0",
+    "@prisma/client": ">=5.0.0",
+    "pg": ">=8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "express": { "optional": true },
+    "@prisma/client": { "optional": true },
+    "pg": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.0",
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

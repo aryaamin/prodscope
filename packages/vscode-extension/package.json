@@ -1,0 +1,62 @@
+{
+  "name": "prodscope-vscode",
+  "displayName": "ProdScope",
+  "description": "Live production observability inside VS Code — CodeLens, gutter decorations, and AI insights mapped to your code",
+  "version": "0.1.0",
+  "publisher": "prodscope",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["workspaceContains:prodscope.config.ts"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "prodscope.connect",
+        "title": "ProdScope: Connect"
+      },
+      {
+        "command": "prodscope.disconnect",
+        "title": "ProdScope: Disconnect"
+      },
+      {
+        "command": "prodscope.refreshInsight",
+        "title": "ProdScope: Refresh AI Insight"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "prodscope",
+          "title": "ProdScope",
+          "icon": "$(radio-tower)"
+        }
+      ]
+    },
+    "views": {
+      "prodscope": [
+        {
+          "type": "webview",
+          "id": "prodscope.insight",
+          "name": "AI Insight"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "package": "vsce package",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.90.0",
+    "@types/ws": "^8.5.13",
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
