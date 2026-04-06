@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProdScope — Production insights mapped to your code</title>
+  <meta name="description" content="See live production telemetry — errors, latency, user sessions — directly on the lines of code that cause them. Inside VS Code." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="#3b82f6" stroke-width="2.5"/><circle cx="14" cy="14" r="5" fill="#3b82f6"/><line x1="14" y1="2" x2="14" y2="8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="20" x2="14" y2="26" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="14" x2="8" y2="14" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/><line x1="20" y1="14" x2="26" y2="14" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>ProdScope</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="https://docs.prodscope.dev" target="_blank">Docs</a>
+        <a href="#waitlist" class="btn btn-sm">Get early access</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Now in early access</div>
+    <h1>Production insights,<br/>mapped to your code</h1>
+    <p class="hero-sub">
+      See errors, latency, and user sessions directly on the lines of code that cause them.
+      Inside VS Code. Powered by AI.
+    </p>
+    <div class="hero-cta">
+      <a href="#waitlist" class="btn btn-lg">Get early access</a>
+      <a href="#how" class="btn btn-lg btn-ghost">See how it works</a>
+    </div>
+
+    <!-- CODE MOCKUP -->
+    <div class="editor-window">
+      <div class="editor-toolbar">
+        <div class="editor-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <span class="editor-filename">src/api.ts</span>
+        <span class="editor-badge">ProdScope</span>
+      </div>
+      <div class="editor-body">
+<pre><code><span class="line-num"> 6</span>  <span class="kw">export async function</span> <span class="fn">fetchProducts</span>(<span class="param">category</span>: <span class="type">string</span>) {
+<span class="line-num">  </span>  <span class="codelens">&nearr; fetchProducts  77 calls  |  p50 245ms &middot; p99 1.2s  |  1 error (1.3%)  |  84% of sessions  |  2.3x per session</span>
+<span class="line-num"> 7</span>    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">`/api/products?cat=${category}`</span>);
+<span class="line-num"> 8</span>    <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> <span class="type">Error</span>(<span class="str">`Failed: ${res.status}`</span>);
+<span class="line-num">  </span>  <span class="decoration-err">&#8627; 1 error (Chrome)</span>
+<span class="line-num"> 9</span>    <span class="kw">return</span> res.<span class="fn">json</span>();
+<span class="line-num">10</span>  }
+<span class="line-num">  </span>
+<span class="line-num">27</span>  <span class="kw">export async function</span> <span class="fn">checkout</span>(<span class="param">cartId</span>: <span class="type">string</span>) {
+<span class="line-num">  </span>  <span class="codelens">&nearr; checkout  412 calls  |  p50 389ms &middot; p99 512ms  |  82 errors (19.9%)  |  62% of sessions  |  1.1x per session</span>
+<span class="line-num">28</span>    <span class="kw">await</span> <span class="fn">delay</span>(<span class="num">200</span> + Math.<span class="fn">random</span>() * <span class="num">300</span>);
+<span class="line-num">29</span>    <span class="kw">if</span> (Math.<span class="fn">random</span>() &lt; <span class="num">0.2</span>) {
+<span class="line-num">30</span>      <span class="kw">throw new</span> <span class="type">Error</span>(<span class="str">"Payment failed &mdash; card declined"</span>);
+<span class="line-num">  </span>  <span class="decoration-err">&#8627; 82 errors (Chrome, Safari/iOS)</span>
+<span class="line-num">31</span>    }
+<span class="line-num">32</span>    <span class="kw">return</span> { orderId: <span class="str">`ord-${Date.now()}`</span> };
+<span class="line-num">33</span>  }</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGOS / TRUST -->
+  <section class="trust">
+    <p>Works with</p>
+    <div class="trust-logos">
+      <span>React</span>
+      <span>Next.js</span>
+      <span>Vue</span>
+      <span>Express</span>
+      <span>Node.js</span>
+      <span>Prisma</span>
+      <span>Vite</span>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="features">
+    <h2>Everything you need to understand production</h2>
+    <p class="section-sub">Stop guessing. See exactly what's happening in prod, right where you wrote the code.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">&#127919;</div>
+        <h3>Mapped to your code</h3>
+        <p>Every error, every slow query, every API call is traced back to the exact file and line that caused it. No more log-diving.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#9889;</div>
+        <h3>Live in VS Code</h3>
+        <p>See call counts, p50/p99 latency, error rates, and session reach as inline CodeLens — right above your functions.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#129302;</div>
+        <h3>AI-powered insights</h3>
+        <p>Claude analyzes your telemetry and tells you what's wrong, who's affected, and what to fix — in plain English in your sidebar.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#128101;</div>
+        <h3>Session-level detail</h3>
+        <p>See what % of users hit each function, calls per session, and affected browsers. Know the real user impact.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#128268;</div>
+        <h3>Zero-config SDK</h3>
+        <p>Add the Vite plugin, call init(). That's it. Every exported function is auto-tracked with file:line mapping. No manual wrapping.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#128640;</div>
+        <h3>MCP for Claude Code</h3>
+        <p>Ask Claude "what's failing in checkout?" and it queries your live production data through the MCP server. Debug with AI.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="how-it-works">
+    <h2>Up and running in 2 minutes</h2>
+    <p class="section-sub">Three steps. No agents. No config files. No dashboards to set up.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Install the SDK</h3>
+          <div class="code-block">
+            <code>npm install @prodscope/sdk-browser</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Add to your Vite config</h3>
+          <div class="code-block">
+<pre><code><span class="kw">import</span> { prodscope } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser/vite"</span>;
+
+<span class="kw">export default</span> <span class="fn">defineConfig</span>({
+  plugins: [
+    <span class="fn">prodscope</span>({ apiKey: process.env.<span class="const">PRODSCOPE_API_KEY</span> }),
+  ],
+});</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Init in your app entry</h3>
+          <div class="code-block">
+<pre><code><span class="kw">import</span> { init } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser"</span>;
+
+<span class="fn">init</span>({
+  projectId: <span class="str">"my-app"</span>,
+  apiKey: import.meta.env.<span class="const">VITE_PRODSCOPE_API_KEY</span>,
+});</code></pre>
+          </div>
+          <p class="step-note">That's it. Open VS Code and see your production data appear on every function.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU SEE -->
+  <section class="what-you-see">
+    <h2>What appears in your editor</h2>
+    <p class="section-sub">Real metrics from real users, on every function.</p>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-value">p50 <span>245ms</span></div>
+        <div class="metric-label">Median latency</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">p99 <span>1.2s</span></div>
+        <div class="metric-label">Worst-case latency</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value"><span>84%</span></div>
+        <div class="metric-label">Session reach</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value"><span>2.3x</span></div>
+        <div class="metric-label">Calls per session</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value"><span>1.3%</span></div>
+        <div class="metric-label">Error rate</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value"><span>412</span></div>
+        <div class="metric-label">Total calls (1h)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing">
+    <h2>Simple pricing</h2>
+    <p class="section-sub">Start free. Scale when you're ready.</p>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Free</h3>
+        <div class="price">$0<span>/mo</span></div>
+        <ul>
+          <li>1 project</li>
+          <li>1M spans/month</li>
+          <li>24h data retention</li>
+          <li>VS Code extension</li>
+          <li>MCP server</li>
+          <li>Community support</li>
+        </ul>
+        <a href="#waitlist" class="btn btn-outline">Get started</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Popular</div>
+        <h3>Pro</h3>
+        <div class="price">$29<span>/mo</span></div>
+        <ul>
+          <li>Unlimited projects</li>
+          <li>50M spans/month</li>
+          <li>30-day retention</li>
+          <li>AI insights (Claude)</li>
+          <li>Deploy comparisons</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#waitlist" class="btn">Get early access</a>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Team</h3>
+        <div class="price">$99<span>/mo</span></div>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>500M spans/month</li>
+          <li>90-day retention</li>
+          <li>Team sharing</li>
+          <li>SSO / SAML</li>
+          <li>Dedicated support</li>
+        </ul>
+        <a href="#waitlist" class="btn btn-outline">Contact us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAITLIST / CTA -->
+  <section id="waitlist" class="waitlist">
+    <h2>Get early access</h2>
+    <p>We're onboarding teams one at a time. Drop your email and we'll set you up.</p>
+    <form class="waitlist-form" action="https://api.prodscope.dev/auth/waitlist" method="POST">
+      <input type="email" name="email" placeholder="you@company.com" required />
+      <button type="submit" class="btn btn-lg">Join waitlist</button>
+    </form>
+    <p class="waitlist-note">Free during early access. No credit card required.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo">
+          <svg width="22" height="22" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="#3b82f6" stroke-width="2.5"/><circle cx="14" cy="14" r="5" fill="#3b82f6"/><line x1="14" y1="2" x2="14" y2="8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="20" x2="14" y2="26" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="14" x2="8" y2="14" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/><line x1="20" y1="14" x2="26" y2="14" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/></svg>
+          ProdScope
+        </span>
+        <p>Production insights, mapped to your code.</p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#pricing">Pricing</a>
+          <a href="https://docs.prodscope.dev">Docs</a>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <a href="https://github.com/prodscope">GitHub</a>
+          <a href="https://docs.prodscope.dev/changelog">Changelog</a>
+          <a href="https://marketplace.visualstudio.com/items?itemName=prodscope.prodscope-vscode">VS Code</a>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <a href="mailto:hello@prodscope.dev">Contact</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 ProdScope. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

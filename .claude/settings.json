@@ -73,12 +73,14 @@
       "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.function_stats ADD COLUMN IF NOT EXISTS session_reach_pct Float64 DEFAULT 0\")",
       "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.function_stats ADD COLUMN IF NOT EXISTS p50_ms Float64 DEFAULT 0\")",
       "Bash(pnpm --filter @prodscope/collector run build)",
-      "Bash(pnpm --filter @prodscope/mcp-server run build)"
+      "Bash(pnpm --filter @prodscope/mcp-server run build)",
+      "Bash(pnpm --filter @prodscope/website run build)"
     ],
     "additionalDirectories": [
       "/home/arya/prodscope-demo",
       "/home/arya/prodscope/packages/vscode-extension",
-      "/home/arya/prodscope/packages/sdk-node"
+      "/home/arya/prodscope/packages/sdk-node",
+      "/home/arya/prodscope/packages"
     ]
   }
 }
