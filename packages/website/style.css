@@ -317,6 +317,27 @@ nav {
   line-height: 1.6;
 }
 
+/* ---- ARCHITECTURE DIAGRAM ---- */
+.arch-diagram {
+  border: 1px solid var(--border);
+  background: var(--bg-code);
+  padding: 24px 16px;
+  overflow-x: auto;
+}
+
+.arch-svg {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .arch-diagram { padding: 12px 4px; }
+  .arch-svg { min-width: 600px; }
+}
+
 /* ---- STEPS (how it works) ---- */
 .steps { display: flex; flex-direction: column; gap: 0; }
 

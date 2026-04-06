@@ -85,7 +85,8 @@
       "/home/arya/prodscope-demo",
       "/home/arya/prodscope/packages/vscode-extension",
       "/home/arya/prodscope/packages/sdk-node",
-      "/home/arya/prodscope/packages"
+      "/home/arya/prodscope/packages",
+      "/home/arya/prodscope/packages/website/public"
     ]
   }
 }

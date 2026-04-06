@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
 
@@ -19,6 +19,7 @@
       <a href="/" class="brand"><span class="brand-prefix">&gt;</span> prodscope</a>
       <div class="nav-links">
         <a href="#features">features</a>
+        <a href="#architecture">how it works</a>
         <a href="#how">setup</a>
         <a href="#sdk">sdk</a>
         <a href="#pricing">pricing</a>
@@ -123,6 +124,107 @@
         <h3>MCP for Claude Code</h3>
         <p>Ask Claude "what's failing in checkout?" and it queries your live production data via MCP.</p>
       </div>
+    </div>
+  </section>
+
+  <div class="sep"><hr/></div>
+
+  <!-- ARCHITECTURE DIAGRAM -->
+  <section id="architecture" class="section">
+    <div class="section-header">
+      <p class="section-title">&gt; how it works</p>
+      <h2 class="section-heading">From your code to your editor</h2>
+      <p class="section-desc">SDKs collect telemetry. We process it. You see it where you code.</p>
+    </div>
+
+    <div class="arch-diagram">
+      <svg class="arch-svg" viewBox="0 0 900 520" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <!-- ROW 1: Your Application (3 SDK boxes) -->
+        <rect x="20" y="10" width="860" height="120" rx="0" stroke="#222" stroke-width="1" fill="#0e0e0e"/>
+        <text x="40" y="35" fill="#777" font-family="'JetBrains Mono', monospace" font-size="10" text-transform="uppercase" letter-spacing="2">YOUR APPLICATION</text>
+
+        <rect x="50" y="50" width="230" height="65" rx="0" fill="#111" stroke="#333" stroke-width="1"/>
+        <text x="165" y="74" text-anchor="middle" fill="#5b9af5" font-family="'JetBrains Mono', monospace" font-size="11">sdk-browser</text>
+        <text x="165" y="100" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">React / Vite / Vue</text>
+
+        <rect x="335" y="50" width="230" height="65" rx="0" fill="#111" stroke="#333" stroke-width="1"/>
+        <text x="450" y="74" text-anchor="middle" fill="#5b9af5" font-family="'JetBrains Mono', monospace" font-size="11">sdk-node</text>
+        <text x="450" y="100" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">Express / Middleware</text>
+
+        <rect x="620" y="50" width="230" height="65" rx="0" fill="#111" stroke="#333" stroke-width="1"/>
+        <text x="735" y="74" text-anchor="middle" fill="#5b9af5" font-family="'JetBrains Mono', monospace" font-size="11">sdk-node</text>
+        <text x="735" y="100" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">Prisma / PostgreSQL</text>
+
+        <!-- ANIMATED ARROWS: SDKs → Collector -->
+        <line x1="165" y1="130" x2="165" y2="175" stroke="#333" stroke-width="1"/>
+        <line x1="450" y1="130" x2="450" y2="175" stroke="#333" stroke-width="1"/>
+        <line x1="735" y1="130" x2="735" y2="175" stroke="#333" stroke-width="1"/>
+        <!-- Animated dots on arrows -->
+        <circle r="3" fill="#5b9af5">
+          <animateMotion dur="2s" repeatCount="indefinite" path="M165,130 L165,175" begin="0s"/>
+        </circle>
+        <circle r="3" fill="#5b9af5">
+          <animateMotion dur="2s" repeatCount="indefinite" path="M450,130 L450,175" begin="0.3s"/>
+        </circle>
+        <circle r="3" fill="#5b9af5">
+          <animateMotion dur="2s" repeatCount="indefinite" path="M735,130 L735,175" begin="0.6s"/>
+        </circle>
+
+        <!-- Data labels on arrows -->
+        <text x="450" y="158" text-anchor="middle" fill="#444" font-family="'JetBrains Mono', monospace" font-size="9">functions &middot; errors &middot; queries &middot; sessions</text>
+
+        <!-- ROW 2: Collector -->
+        <rect x="200" y="175" width="500" height="60" rx="0" fill="#0e0e0e" stroke="#333" stroke-width="1"/>
+        <text x="450" y="202" text-anchor="middle" fill="#3ddc84" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">COLLECTOR</text>
+        <text x="450" y="222" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">validate &middot; enrich &middot; batch</text>
+
+        <!-- ANIMATED ARROW: Collector → ClickHouse -->
+        <line x1="450" y1="235" x2="450" y2="280" stroke="#333" stroke-width="1"/>
+        <circle r="3" fill="#3ddc84">
+          <animateMotion dur="1.5s" repeatCount="indefinite" path="M450,235 L450,280"/>
+        </circle>
+
+        <!-- ROW 3: ClickHouse -->
+        <rect x="200" y="280" width="500" height="60" rx="0" fill="#0e0e0e" stroke="#333" stroke-width="1"/>
+        <text x="450" y="307" text-anchor="middle" fill="#e3b341" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">CLICKHOUSE</text>
+        <text x="450" y="327" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">function_stats &middot; errors &middot; traces &middot; sessions</text>
+
+        <!-- ANIMATED ARROWS: ClickHouse → MCP + Extension (split) -->
+        <line x1="320" y1="340" x2="220" y2="395" stroke="#333" stroke-width="1"/>
+        <line x1="580" y1="340" x2="680" y2="395" stroke="#333" stroke-width="1"/>
+        <circle r="3" fill="#e3b341">
+          <animateMotion dur="2s" repeatCount="indefinite" path="M320,340 L220,395" begin="0s"/>
+        </circle>
+        <circle r="3" fill="#e3b341">
+          <animateMotion dur="2s" repeatCount="indefinite" path="M580,340 L680,395" begin="0.4s"/>
+        </circle>
+
+        <!-- ROW 4: MCP Server + VS Code Extension -->
+        <rect x="60" y="395" width="320" height="55" rx="0" fill="#111" stroke="#5b9af5" stroke-width="1"/>
+        <text x="220" y="418" text-anchor="middle" fill="#5b9af5" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold">MCP SERVER</text>
+        <text x="220" y="438" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">7 tools &middot; natural language queries</text>
+
+        <rect x="520" y="395" width="320" height="55" rx="0" fill="#111" stroke="#5b9af5" stroke-width="1"/>
+        <text x="680" y="418" text-anchor="middle" fill="#5b9af5" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold">VS CODE EXTENSION</text>
+        <text x="680" y="438" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">CodeLens &middot; inline diagnostics</text>
+
+        <!-- ANIMATED ARROWS: Row 4 → Row 5 -->
+        <line x1="220" y1="450" x2="220" y2="490" stroke="#333" stroke-width="1"/>
+        <line x1="680" y1="450" x2="680" y2="490" stroke="#333" stroke-width="1"/>
+        <circle r="3" fill="#bc8cff">
+          <animateMotion dur="1.5s" repeatCount="indefinite" path="M220,450 L220,490" begin="0s"/>
+        </circle>
+        <circle r="3" fill="#bc8cff">
+          <animateMotion dur="1.5s" repeatCount="indefinite" path="M680,450 L680,490" begin="0.3s"/>
+        </circle>
+
+        <!-- ROW 5: End consumers -->
+        <rect x="60" y="490" width="320" height="28" rx="0" fill="#0a0a0a" stroke="#222" stroke-width="1"/>
+        <text x="220" y="509" text-anchor="middle" fill="#bc8cff" font-family="'JetBrains Mono', monospace" font-size="10">Claude Code &middot; Cursor &middot; Any MCP client</text>
+
+        <rect x="520" y="490" width="320" height="28" rx="0" fill="#0a0a0a" stroke="#222" stroke-width="1"/>
+        <text x="680" y="509" text-anchor="middle" fill="#bc8cff" font-family="'JetBrains Mono', monospace" font-size="10">VS Code &middot; JetBrains (soon)</text>
+      </svg>
     </div>
   </section>
 
