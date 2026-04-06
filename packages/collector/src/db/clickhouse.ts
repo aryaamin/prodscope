@@ -14,6 +14,13 @@ export function getClickHouse(): ClickHouseClient {
 }
 
 export async function initClickHouse(): Promise<void> {
+  // Create database first (using a client without database set)
+  const initClient = createClient({ url: env.clickhouseUrl });
+  await initClient.command({
+    query: `CREATE DATABASE IF NOT EXISTS ${env.clickhouseDb}`,
+  });
+  await initClient.close();
+
   const ch = getClickHouse();
 
   await ch.command({
@@ -77,18 +84,23 @@ export async function initClickHouse(): Promise<void> {
   await ch.command({
     query: `
       CREATE TABLE IF NOT EXISTS function_stats (
-        project_id   String,
-        function     String,
-        file         String,
-        line         UInt32,
-        window       Enum8('1h'=0, '24h'=1, '7d'=2),
-        call_count   UInt64,
-        total_ms     Float64,
-        avg_ms       Float64,
-        p99_ms       Float64,
-        error_count  UInt64,
-        error_rate   Float64,
-        updated_at   DateTime64(3, 'UTC')
+        project_id       String,
+        function         String,
+        file             String,
+        line             UInt32,
+        window           Enum8('1h'=0, '24h'=1, '7d'=2),
+        call_count       UInt64,
+        total_ms         Float64,
+        avg_ms           Float64,
+        p99_ms           Float64,
+        error_count      UInt64,
+        error_rate       Float64,
+        updated_at       DateTime64(3, 'UTC'),
+        unique_sessions  UInt64 DEFAULT 0,
+        total_sessions   UInt64 DEFAULT 0,
+        calls_per_session Float64 DEFAULT 0,
+        session_reach_pct Float64 DEFAULT 0,
+        p50_ms           Float64 DEFAULT 0
       )
       ENGINE = ReplacingMergeTree(updated_at)
       ORDER BY (project_id, function, file, window)

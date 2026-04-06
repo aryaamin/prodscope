@@ -74,7 +74,8 @@
       "Bash(curl -s \"http://localhost:8123/\" --data-binary \"ALTER TABLE prodscope.function_stats ADD COLUMN IF NOT EXISTS p50_ms Float64 DEFAULT 0\")",
       "Bash(pnpm --filter @prodscope/collector run build)",
       "Bash(pnpm --filter @prodscope/mcp-server run build)",
-      "Bash(pnpm --filter @prodscope/website run build)"
+      "Bash(pnpm --filter @prodscope/website run build)",
+      "Bash(git -c core.pager= diff --stat HEAD)"
     ],
     "additionalDirectories": [
       "/home/arya/prodscope-demo",
