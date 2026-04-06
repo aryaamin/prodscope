@@ -1,54 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ProdScope — Production insights mapped to your code</title>
-  <meta name="description" content="See live production telemetry — errors, latency, user sessions — directly on the lines of code that cause them. Inside VS Code." />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./style.css" />
-</head>
-<body>
-
-  <!-- NAV -->
-  <nav>
-    <div class="nav-inner">
-      <a href="/" class="brand"><span class="brand-prefix">&gt;</span> prodscope</a>
-      <div class="nav-links">
-        <a href="#features">features</a>
-        <a href="#architecture">how it works</a>
-        <a href="#how">setup</a>
-        <a href="#sdk">sdk</a>
-        <a href="#pricing">pricing</a>
-        <a href="#waitlist" class="btn btn-primary">early access</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ProdScope — Production insights mapped to your code</title>
+    <meta
+      name="description"
+      content="See live production telemetry — errors, latency, user sessions — directly on the lines of code that cause them. Inside VS Code."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <div class="nav-inner">
+        <a href="/" class="brand"
+          ><span class="brand-prefix">&gt;</span> prodscope</a
+        >
+        <div class="nav-links">
+          <a href="#features">features</a>
+          <a href="#architecture">how it works</a>
+          <a href="#how">setup</a>
+          <a href="#sdk">sdk</a>
+          <a href="#pricing">pricing</a>
+          <a href="#waitlist" class="btn btn-primary">early access</a>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <p class="hero-tag"><span>&gt;</span> production observability for developers</p>
-    <h1>Production insights,<br/>mapped to your code.</h1>
-    <p class="hero-sub">
-      Errors, latency, and user sessions — directly on the lines of code
-      that cause them. Inside VS Code. Powered by AI.
-    </p>
-    <div class="hero-actions">
-      <a href="#waitlist" class="btn btn-primary">get early access</a>
-      <a href="#how" class="btn">see how it works</a>
-    </div>
-
-    <!-- TERMINAL MOCKUP -->
-    <div class="terminal">
-      <div class="terminal-bar">
-        <div class="terminal-dots"><span></span><span></span><span></span></div>
-        <span class="terminal-title">src/api.ts — prodscope</span>
+    <!-- HERO -->
+    <section class="hero">
+      <p class="hero-tag">
+        <span>&gt;</span> production observability for developers
+      </p>
+      <h1>Production insights,<br />mapped to your code.</h1>
+      <p class="hero-sub">
+        Errors, latency, and user sessions — directly on the lines of code that
+        cause them. Inside VS Code. Powered by AI.
+      </p>
+      <div class="hero-actions">
+        <a href="#waitlist" class="btn btn-primary">get early access</a>
+        <a href="#how" class="btn">see how it works</a>
       </div>
-      <div class="terminal-body">
-<pre><code><span class="line-num"> 6</span>  <span class="kw">export async function</span> <span class="fn">fetchProducts</span>(<span class="param">category</span>: <span class="type">string</span>) {
+
+      <!-- TERMINAL MOCKUP -->
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="terminal-title">src/api.ts — prodscope</span>
+        </div>
+        <div class="terminal-body">
+          <pre><code><span class="line-num"> 6</span>  <span class="kw">export async function</span> <span class="fn">fetchProducts</span>(<span class="param">category</span>: <span class="type">string</span>) {
 <span class="line-num">  </span>  <span class="codelens">&nearr; fetchProducts  77 calls  |  p50 245ms &middot; p99 1.2s  |  1 error (1.3%)  |  84% sessions</span>
 <span class="line-num"> 7</span>    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">`/api/products?cat=${category}`</span>);
 <span class="line-num"> 8</span>    <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> <span class="type">Error</span>(<span class="str">`Failed: ${res.status}`</span>);
@@ -65,253 +76,204 @@
 <span class="line-num">31</span>    }
 <span class="line-num">32</span>    <span class="kw">return</span> { orderId: <span class="str">`ord-${Date.now()}`</span> };
 <span class="line-num">33</span>  }</code></pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- TRUST -->
-  <section class="trust">
-    <p class="trust-label">works with</p>
-    <div class="trust-list">
-      <span>React</span>
-      <span>Next.js</span>
-      <span>Vue</span>
-      <span>Express</span>
-      <span>Node.js</span>
-      <span>Prisma</span>
-      <span>Vite</span>
-    </div>
-  </section>
-
-  <div class="sep"><hr/></div>
-
-  <!-- FEATURES -->
-  <section id="features" class="section">
-    <div class="section-header">
-      <p class="section-title">&gt; features</p>
-      <h2 class="section-heading">Everything you need to understand production</h2>
-      <p class="section-desc">Stop guessing. See exactly what's happening, right where you wrote the code.</p>
-    </div>
-
-    <div class="feature-grid">
-      <div class="feature-card">
-        <p class="feature-num">[01]</p>
-        <h3>Mapped to your code</h3>
-        <p>Every error, slow query, and API call traced back to the exact file and line that caused it.</p>
-      </div>
-      <div class="feature-card">
-        <p class="feature-num">[02]</p>
-        <h3>Live in VS Code</h3>
-        <p>See call counts, p50/p99 latency, error rates, and session reach as inline CodeLens.</p>
-      </div>
-      <div class="feature-card">
-        <p class="feature-num">[03]</p>
-        <h3>AI-powered insights</h3>
-        <p>Claude analyzes your telemetry and tells you what's wrong, who's affected, and what to fix.</p>
-      </div>
-      <div class="feature-card">
-        <p class="feature-num">[04]</p>
-        <h3>Session-level detail</h3>
-        <p>See what % of users hit each function, calls per session, and affected browsers.</p>
-      </div>
-      <div class="feature-card">
-        <p class="feature-num">[05]</p>
-        <h3>Zero-config SDK</h3>
-        <p>Add the Vite plugin, call init(). Every exported function auto-tracked with file:line mapping.</p>
-      </div>
-      <div class="feature-card">
-        <p class="feature-num">[06]</p>
-        <h3>MCP for Claude Code</h3>
-        <p>Ask Claude "what's failing in checkout?" and it queries your live production data via MCP.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="sep"><hr/></div>
-
-  <!-- ARCHITECTURE DIAGRAM -->
-  <section id="architecture" class="section">
-    <div class="section-header">
-      <p class="section-title">&gt; how it works</p>
-      <h2 class="section-heading">From your code to your editor</h2>
-      <p class="section-desc">SDKs collect telemetry. We process it. You see it where you code.</p>
-    </div>
-
-    <div class="arch-diagram">
-      <svg class="arch-svg" viewBox="0 0 900 520" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-        <!-- ROW 1: Your Application (3 SDK boxes) -->
-        <rect x="20" y="10" width="860" height="120" rx="0" stroke="#222" stroke-width="1" fill="#0e0e0e"/>
-        <text x="40" y="35" fill="#777" font-family="'JetBrains Mono', monospace" font-size="10" text-transform="uppercase" letter-spacing="2">YOUR APPLICATION</text>
-
-        <rect x="50" y="50" width="230" height="65" rx="0" fill="#111" stroke="#333" stroke-width="1"/>
-        <text x="165" y="74" text-anchor="middle" fill="#5b9af5" font-family="'JetBrains Mono', monospace" font-size="11">sdk-browser</text>
-        <text x="165" y="100" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">React / Vite / Vue</text>
-
-        <rect x="335" y="50" width="230" height="65" rx="0" fill="#111" stroke="#333" stroke-width="1"/>
-        <text x="450" y="74" text-anchor="middle" fill="#5b9af5" font-family="'JetBrains Mono', monospace" font-size="11">sdk-node</text>
-        <text x="450" y="100" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">Express / Middleware</text>
-
-        <rect x="620" y="50" width="230" height="65" rx="0" fill="#111" stroke="#333" stroke-width="1"/>
-        <text x="735" y="74" text-anchor="middle" fill="#5b9af5" font-family="'JetBrains Mono', monospace" font-size="11">sdk-node</text>
-        <text x="735" y="100" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">Prisma / PostgreSQL</text>
-
-        <!-- ANIMATED ARROWS: SDKs → Collector -->
-        <line x1="165" y1="130" x2="165" y2="175" stroke="#333" stroke-width="1"/>
-        <line x1="450" y1="130" x2="450" y2="175" stroke="#333" stroke-width="1"/>
-        <line x1="735" y1="130" x2="735" y2="175" stroke="#333" stroke-width="1"/>
-        <!-- Animated dots on arrows -->
-        <circle r="3" fill="#5b9af5">
-          <animateMotion dur="2s" repeatCount="indefinite" path="M165,130 L165,175" begin="0s"/>
-        </circle>
-        <circle r="3" fill="#5b9af5">
-          <animateMotion dur="2s" repeatCount="indefinite" path="M450,130 L450,175" begin="0.3s"/>
-        </circle>
-        <circle r="3" fill="#5b9af5">
-          <animateMotion dur="2s" repeatCount="indefinite" path="M735,130 L735,175" begin="0.6s"/>
-        </circle>
-
-        <!-- Data labels on arrows -->
-        <text x="450" y="158" text-anchor="middle" fill="#444" font-family="'JetBrains Mono', monospace" font-size="9">functions &middot; errors &middot; queries &middot; sessions</text>
-
-        <!-- ROW 2: Collector -->
-        <rect x="200" y="175" width="500" height="60" rx="0" fill="#0e0e0e" stroke="#333" stroke-width="1"/>
-        <text x="450" y="202" text-anchor="middle" fill="#3ddc84" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">COLLECTOR</text>
-        <text x="450" y="222" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">validate &middot; enrich &middot; batch</text>
-
-        <!-- ANIMATED ARROW: Collector → ClickHouse -->
-        <line x1="450" y1="235" x2="450" y2="280" stroke="#333" stroke-width="1"/>
-        <circle r="3" fill="#3ddc84">
-          <animateMotion dur="1.5s" repeatCount="indefinite" path="M450,235 L450,280"/>
-        </circle>
-
-        <!-- ROW 3: ClickHouse -->
-        <rect x="200" y="280" width="500" height="60" rx="0" fill="#0e0e0e" stroke="#333" stroke-width="1"/>
-        <text x="450" y="307" text-anchor="middle" fill="#e3b341" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold">CLICKHOUSE</text>
-        <text x="450" y="327" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">function_stats &middot; errors &middot; traces &middot; sessions</text>
-
-        <!-- ANIMATED ARROWS: ClickHouse → MCP + Extension (split) -->
-        <line x1="320" y1="340" x2="220" y2="395" stroke="#333" stroke-width="1"/>
-        <line x1="580" y1="340" x2="680" y2="395" stroke="#333" stroke-width="1"/>
-        <circle r="3" fill="#e3b341">
-          <animateMotion dur="2s" repeatCount="indefinite" path="M320,340 L220,395" begin="0s"/>
-        </circle>
-        <circle r="3" fill="#e3b341">
-          <animateMotion dur="2s" repeatCount="indefinite" path="M580,340 L680,395" begin="0.4s"/>
-        </circle>
-
-        <!-- ROW 4: MCP Server + VS Code Extension -->
-        <rect x="60" y="395" width="320" height="55" rx="0" fill="#111" stroke="#5b9af5" stroke-width="1"/>
-        <text x="220" y="418" text-anchor="middle" fill="#5b9af5" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold">MCP SERVER</text>
-        <text x="220" y="438" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">7 tools &middot; natural language queries</text>
-
-        <rect x="520" y="395" width="320" height="55" rx="0" fill="#111" stroke="#5b9af5" stroke-width="1"/>
-        <text x="680" y="418" text-anchor="middle" fill="#5b9af5" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold">VS CODE EXTENSION</text>
-        <text x="680" y="438" text-anchor="middle" fill="#555" font-family="'JetBrains Mono', monospace" font-size="10">CodeLens &middot; inline diagnostics</text>
-
-        <!-- ANIMATED ARROWS: Row 4 → Row 5 -->
-        <line x1="220" y1="450" x2="220" y2="490" stroke="#333" stroke-width="1"/>
-        <line x1="680" y1="450" x2="680" y2="490" stroke="#333" stroke-width="1"/>
-        <circle r="3" fill="#bc8cff">
-          <animateMotion dur="1.5s" repeatCount="indefinite" path="M220,450 L220,490" begin="0s"/>
-        </circle>
-        <circle r="3" fill="#bc8cff">
-          <animateMotion dur="1.5s" repeatCount="indefinite" path="M680,450 L680,490" begin="0.3s"/>
-        </circle>
-
-        <!-- ROW 5: End consumers -->
-        <rect x="60" y="490" width="320" height="28" rx="0" fill="#0a0a0a" stroke="#222" stroke-width="1"/>
-        <text x="220" y="509" text-anchor="middle" fill="#bc8cff" font-family="'JetBrains Mono', monospace" font-size="10">Claude Code &middot; Cursor &middot; Any MCP client</text>
-
-        <rect x="520" y="490" width="320" height="28" rx="0" fill="#0a0a0a" stroke="#222" stroke-width="1"/>
-        <text x="680" y="509" text-anchor="middle" fill="#bc8cff" font-family="'JetBrains Mono', monospace" font-size="10">VS Code &middot; JetBrains (soon)</text>
-      </svg>
-    </div>
-  </section>
-
-  <div class="sep"><hr/></div>
-
-  <!-- HOW IT WORKS -->
-  <section id="how" class="section">
-    <div class="section-header">
-      <p class="section-title">&gt; quick start</p>
-      <h2 class="section-heading">Up and running in 2 minutes</h2>
-      <p class="section-desc">No agents. No config files. No dashboards.</p>
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <span class="step-n">01</span>
-        <div class="step-content">
-          <h3>Install the SDK</h3>
-          <div class="cmd"><span class="cmd-prefix">$ </span>npm install @prodscope/sdk-browser</div>
         </div>
       </div>
-      <div class="step">
-        <span class="step-n">02</span>
-        <div class="step-content">
-          <h3>Add the Vite plugin</h3>
-          <div class="code-block">
-            <div class="code-label">vite.config.ts</div>
-<pre><code><span class="kw">import</span> { prodscope } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser/vite"</span>
+    </section>
+
+    <!-- TRUST -->
+    <section class="trust">
+      <p class="trust-label">works with</p>
+      <div class="trust-list">
+        <span>React</span>
+        <span>Next.js</span>
+        <span>Vue</span>
+        <span>Express</span>
+        <span>Node.js</span>
+        <span>Prisma</span>
+        <span>Vite</span>
+      </div>
+    </section>
+
+    <div class="sep"><hr /></div>
+
+    <!-- FEATURES -->
+    <section id="features" class="section">
+      <div class="section-header">
+        <p class="section-title">&gt; features</p>
+        <h2 class="section-heading">
+          Everything you need to understand production
+        </h2>
+        <p class="section-desc">
+          Stop guessing. See exactly what's happening, right where you wrote the
+          code.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <p class="feature-num">[01]</p>
+          <h3>Mapped to your code</h3>
+          <p>
+            Every error, slow query, and API call traced back to the exact file
+            and line that caused it.
+          </p>
+        </div>
+        <div class="feature-card">
+          <p class="feature-num">[02]</p>
+          <h3>Live in VS Code</h3>
+          <p>
+            See call counts, p50/p99 latency, error rates, and session reach as
+            inline CodeLens.
+          </p>
+        </div>
+        <div class="feature-card">
+          <p class="feature-num">[03]</p>
+          <h3>AI-powered insights</h3>
+          <p>
+            Claude analyzes your telemetry and tells you what's wrong, who's
+            affected, and what to fix.
+          </p>
+        </div>
+        <div class="feature-card">
+          <p class="feature-num">[04]</p>
+          <h3>Session-level detail</h3>
+          <p>
+            See what % of users hit each function, calls per session, and
+            affected browsers.
+          </p>
+        </div>
+        <div class="feature-card">
+          <p class="feature-num">[05]</p>
+          <h3>Zero-config SDK</h3>
+          <p>
+            Add the Vite plugin, call init(). Every exported function
+            auto-tracked with file:line mapping.
+          </p>
+        </div>
+        <div class="feature-card">
+          <p class="feature-num">[06]</p>
+          <h3>MCP for Claude Code</h3>
+          <p>
+            Ask Claude "what's failing in checkout?" and it queries your live
+            production data via MCP.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="sep"><hr /></div>
+
+    <!-- ARCHITECTURE DIAGRAM -->
+    <section id="architecture" class="section">
+      <div class="section-header">
+        <p class="section-title">&gt; how it works</p>
+        <h2 class="section-heading">From your code to your editor</h2>
+        <p class="section-desc">
+          Your app sends raw data. You get clean insights where you code.
+        </p>
+      </div>
+
+      <div class="arch-canvas-wrap">
+        <canvas id="arch-canvas"></canvas>
+      </div>
+    </section>
+
+    <div class="sep"><hr /></div>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="section">
+      <div class="section-header">
+        <p class="section-title">&gt; quick start</p>
+        <h2 class="section-heading">Up and running in 2 minutes</h2>
+        <p class="section-desc">No agents. No config files. No dashboards.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <span class="step-n">01</span>
+          <div class="step-content">
+            <h3>Install the SDK</h3>
+            <div class="cmd">
+              <span class="cmd-prefix">$ </span>npm install
+              @prodscope/sdk-browser
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-n">02</span>
+          <div class="step-content">
+            <h3>Add the Vite plugin</h3>
+            <div class="code-block">
+              <div class="code-label">vite.config.ts</div>
+              <pre><code><span class="kw">import</span> { prodscope } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser/vite"</span>
 
 <span class="kw">export default</span> <span class="fn">defineConfig</span>({
   plugins: [<span class="fn">prodscope</span>({ apiKey: process.env.<span class="const">PRODSCOPE_API_KEY</span> })],
 })</code></pre>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="step">
-        <span class="step-n">03</span>
-        <div class="step-content">
-          <h3>Init in your app entry</h3>
-          <div class="code-block">
-            <div class="code-label">main.tsx</div>
-<pre><code><span class="kw">import</span> { init } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser"</span>
+        <div class="step">
+          <span class="step-n">03</span>
+          <div class="step-content">
+            <h3>Init in your app entry</h3>
+            <div class="code-block">
+              <div class="code-label">main.tsx</div>
+              <pre><code><span class="kw">import</span> { init } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser"</span>
 
 <span class="fn">init</span>({
   projectId: <span class="str">"my-app"</span>,
   apiKey: import.meta.env.<span class="const">VITE_PRODSCOPE_API_KEY</span>,
 })</code></pre>
+            </div>
+            <p class="step-note">
+              Done. Open VS Code and see production data on every function.
+            </p>
           </div>
-          <p class="step-note">Done. Open VS Code and see production data on every function.</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div class="sep"><hr/></div>
+    <div class="sep"><hr /></div>
 
-  <!-- SDK REFERENCE -->
-  <section id="sdk" class="sdk-section">
-    <div class="section-header">
-      <p class="section-title">&gt; sdk reference</p>
-      <h2 class="section-heading">Full setup</h2>
-      <p class="section-desc">Browser apps, Node.js backends, and Claude Code integration.</p>
-    </div>
-
-    <div class="sdk-tabs">
-      <button class="sdk-tab active" data-tab="browser">browser</button>
-      <button class="sdk-tab" data-tab="node">node.js</button>
-      <button class="sdk-tab" data-tab="mcp">mcp server</button>
-    </div>
-
-    <!-- BROWSER -->
-    <div class="sdk-panel" id="tab-browser">
-      <div class="sdk-install-row">
-        <span class="sdk-pkg">@prodscope/sdk-browser</span>
-        <span class="sdk-cmd"><span class="p">$ </span>npm install @prodscope/sdk-browser</span>
+    <!-- SDK REFERENCE -->
+    <section id="sdk" class="sdk-section">
+      <div class="section-header">
+        <p class="section-title">&gt; sdk reference</p>
+        <h2 class="section-heading">Full setup</h2>
+        <p class="section-desc">
+          Browser apps, Node.js backends, and Claude Code integration.
+        </p>
       </div>
 
-      <div class="sdk-steps">
-        <div class="sdk-step">
-          <div class="sdk-step-head">
-            <span class="sdk-step-n">1</span>
-            <span class="sdk-step-title">Add the Vite plugin</span>
-          </div>
-          <p class="sdk-step-desc">Instruments every exported function at build time with file:line metadata.</p>
-          <div class="code-block">
-            <div class="code-label">vite.config.ts</div>
-<pre><code><span class="kw">import</span> { defineConfig } <span class="kw">from</span> <span class="str">"vite"</span>
+      <div class="sdk-tabs">
+        <button class="sdk-tab active" data-tab="browser">browser</button>
+        <button class="sdk-tab" data-tab="node">node.js</button>
+        <button class="sdk-tab" data-tab="mcp">mcp server</button>
+      </div>
+
+      <!-- BROWSER -->
+      <div class="sdk-panel" id="tab-browser">
+        <div class="sdk-install-row">
+          <span class="sdk-pkg">@prodscope/sdk-browser</span>
+          <span class="sdk-cmd"
+            ><span class="p">$ </span>npm install @prodscope/sdk-browser</span
+          >
+        </div>
+
+        <div class="sdk-steps">
+          <div class="sdk-step">
+            <div class="sdk-step-head">
+              <span class="sdk-step-n">1</span>
+              <span class="sdk-step-title">Add the Vite plugin</span>
+            </div>
+            <p class="sdk-step-desc">
+              Instruments every exported function at build time with file:line
+              metadata.
+            </p>
+            <div class="code-block">
+              <div class="code-label">vite.config.ts</div>
+              <pre><code><span class="kw">import</span> { defineConfig } <span class="kw">from</span> <span class="str">"vite"</span>
 <span class="kw">import</span> { prodscope } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser/vite"</span>
 
 <span class="kw">export default</span> <span class="fn">defineConfig</span>({
@@ -321,18 +283,20 @@
     }),
   ],
 })</code></pre>
+            </div>
           </div>
-        </div>
 
-        <div class="sdk-step">
-          <div class="sdk-step-head">
-            <span class="sdk-step-n">2</span>
-            <span class="sdk-step-title">Initialize in your entry point</span>
-          </div>
-          <p class="sdk-step-desc">Call init() once — before anything else renders.</p>
-          <div class="code-block">
-            <div class="code-label">main.tsx</div>
-<pre><code><span class="kw">import</span> { init } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser"</span>
+          <div class="sdk-step">
+            <div class="sdk-step-head">
+              <span class="sdk-step-n">2</span>
+              <span class="sdk-step-title">Initialize in your entry point</span>
+            </div>
+            <p class="sdk-step-desc">
+              Call init() once — before anything else renders.
+            </p>
+            <div class="code-block">
+              <div class="code-label">main.tsx</div>
+              <pre><code><span class="kw">import</span> { init } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser"</span>
 
 <span class="fn">init</span>({
   projectId: <span class="str">"my-app"</span>,
@@ -340,51 +304,68 @@
   environment: import.meta.env.<span class="const">MODE</span>,    <span class="comment">// "production" | "staging"</span>
   release: import.meta.env.<span class="const">VITE_GIT_SHA</span>, <span class="comment">// optional</span>
 })</code></pre>
+            </div>
+          </div>
+
+          <div class="sdk-step">
+            <div class="sdk-step-head">
+              <span class="sdk-step-n">3</span>
+              <span class="sdk-step-title">Set your API key</span>
+            </div>
+            <div class="code-block">
+              <div class="code-label">.env.production</div>
+              <pre><code><span class="const">VITE_PRODSCOPE_API_KEY</span>=<span class="str">ps_live_xxxxxxxxxxxx</span></code></pre>
+            </div>
           </div>
         </div>
 
-        <div class="sdk-step">
-          <div class="sdk-step-head">
-            <span class="sdk-step-n">3</span>
-            <span class="sdk-step-title">Set your API key</span>
-          </div>
-          <div class="code-block">
-            <div class="code-label">.env.production</div>
-<pre><code><span class="const">VITE_PRODSCOPE_API_KEY</span>=<span class="str">ps_live_xxxxxxxxxxxx</span></code></pre>
+        <div class="tracked">
+          <p class="tracked-title">tracked automatically</p>
+          <div class="tracked-grid">
+            <span class="tracked-item"
+              ><span class="td td-blue"></span>function calls &amp;
+              latency</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-blue"></span>fetch / xhr requests</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-red"></span>unhandled errors</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-green"></span>session reach per fn</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-purple"></span>click interactions</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-amber"></span>p50 / p99 latency</span
+            >
           </div>
         </div>
       </div>
 
-      <div class="tracked">
-        <p class="tracked-title">tracked automatically</p>
-        <div class="tracked-grid">
-          <span class="tracked-item"><span class="td td-blue"></span>function calls &amp; latency</span>
-          <span class="tracked-item"><span class="td td-blue"></span>fetch / xhr requests</span>
-          <span class="tracked-item"><span class="td td-red"></span>unhandled errors</span>
-          <span class="tracked-item"><span class="td td-green"></span>session reach per fn</span>
-          <span class="tracked-item"><span class="td td-purple"></span>click interactions</span>
-          <span class="tracked-item"><span class="td td-amber"></span>p50 / p99 latency</span>
+      <!-- NODE -->
+      <div class="sdk-panel" id="tab-node" style="display: none">
+        <div class="sdk-install-row">
+          <span class="sdk-pkg">@prodscope/sdk-node</span>
+          <span class="sdk-cmd"
+            ><span class="p">$ </span>npm install @prodscope/sdk-node</span
+          >
         </div>
-      </div>
-    </div>
 
-    <!-- NODE -->
-    <div class="sdk-panel" id="tab-node" style="display:none">
-      <div class="sdk-install-row">
-        <span class="sdk-pkg">@prodscope/sdk-node</span>
-        <span class="sdk-cmd"><span class="p">$ </span>npm install @prodscope/sdk-node</span>
-      </div>
-
-      <div class="sdk-steps">
-        <div class="sdk-step">
-          <div class="sdk-step-head">
-            <span class="sdk-step-n">1</span>
-            <span class="sdk-step-title">Initialize at startup</span>
-          </div>
-          <p class="sdk-step-desc">Must be the first import in your entry file.</p>
-          <div class="code-block">
-            <div class="code-label">index.ts</div>
-<pre><code><span class="kw">import</span> { init } <span class="kw">from</span> <span class="str">"@prodscope/sdk-node"</span>
+        <div class="sdk-steps">
+          <div class="sdk-step">
+            <div class="sdk-step-head">
+              <span class="sdk-step-n">1</span>
+              <span class="sdk-step-title">Initialize at startup</span>
+            </div>
+            <p class="sdk-step-desc">
+              Must be the first import in your entry file.
+            </p>
+            <div class="code-block">
+              <div class="code-label">index.ts</div>
+              <pre><code><span class="kw">import</span> { init } <span class="kw">from</span> <span class="str">"@prodscope/sdk-node"</span>
 
 <span class="fn">init</span>({
   projectId: <span class="str">"my-api"</span>,
@@ -392,91 +373,110 @@
   environment: process.env.<span class="const">NODE_ENV</span>,
   release: process.env.<span class="const">GIT_SHA</span>, <span class="comment">// optional</span>
 })</code></pre>
+            </div>
           </div>
-        </div>
 
-        <div class="sdk-step">
-          <div class="sdk-step-head">
-            <span class="sdk-step-n">2</span>
-            <span class="sdk-step-title">Express middleware</span>
-          </div>
-          <p class="sdk-step-desc">Tracks every route — method, path, status code, latency.</p>
-          <div class="code-block">
-            <div class="code-label">app.ts</div>
-<pre><code><span class="kw">import</span> express <span class="kw">from</span> <span class="str">"express"</span>
+          <div class="sdk-step">
+            <div class="sdk-step-head">
+              <span class="sdk-step-n">2</span>
+              <span class="sdk-step-title">Express middleware</span>
+            </div>
+            <p class="sdk-step-desc">
+              Tracks every route — method, path, status code, latency.
+            </p>
+            <div class="code-block">
+              <div class="code-label">app.ts</div>
+              <pre><code><span class="kw">import</span> express <span class="kw">from</span> <span class="str">"express"</span>
 <span class="kw">import</span> { expressMiddleware } <span class="kw">from</span> <span class="str">"@prodscope/sdk-node/express"</span>
 
 <span class="kw">const</span> app = <span class="fn">express</span>()
 app.<span class="fn">use</span>(<span class="fn">expressMiddleware</span>()) <span class="comment">// before routes</span></code></pre>
+            </div>
           </div>
-        </div>
 
-        <div class="sdk-step">
-          <div class="sdk-step-head">
-            <span class="sdk-step-n">3</span>
-            <span class="sdk-step-title">Database middleware</span>
-          </div>
-          <p class="sdk-step-desc">Pick your adapter — or use both.</p>
-          <div class="sub-tabs">
-            <button class="sub-tab active" data-db="prisma">prisma</button>
-            <button class="sub-tab" data-db="pg">pg</button>
-          </div>
-          <div class="db-panel" id="db-prisma">
-            <div class="code-block">
-<pre><code><span class="kw">import</span> { PrismaClient } <span class="kw">from</span> <span class="str">"@prisma/client"</span>
+          <div class="sdk-step">
+            <div class="sdk-step-head">
+              <span class="sdk-step-n">3</span>
+              <span class="sdk-step-title">Database middleware</span>
+            </div>
+            <p class="sdk-step-desc">Pick your adapter — or use both.</p>
+            <div class="sub-tabs">
+              <button class="sub-tab active" data-db="prisma">prisma</button>
+              <button class="sub-tab" data-db="pg">pg</button>
+            </div>
+            <div class="db-panel" id="db-prisma">
+              <div class="code-block">
+                <pre><code><span class="kw">import</span> { PrismaClient } <span class="kw">from</span> <span class="str">"@prisma/client"</span>
 <span class="kw">import</span> { prismaMiddleware } <span class="kw">from</span> <span class="str">"@prodscope/sdk-node/prisma"</span>
 
 <span class="kw">const</span> prisma = <span class="kw">new</span> <span class="type">PrismaClient</span>()
 prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())</code></pre>
+              </div>
             </div>
-          </div>
-          <div class="db-panel" id="db-pg" style="display:none">
-            <div class="code-block">
-<pre><code><span class="kw">import</span> { Pool } <span class="kw">from</span> <span class="str">"pg"</span>
+            <div class="db-panel" id="db-pg" style="display: none">
+              <div class="code-block">
+                <pre><code><span class="kw">import</span> { Pool } <span class="kw">from</span> <span class="str">"pg"</span>
 <span class="kw">import</span> { pgMiddleware } <span class="kw">from</span> <span class="str">"@prodscope/sdk-node/pg"</span>
 
 <span class="kw">const</span> pool = <span class="kw">new</span> <span class="type">Pool</span>({ connectionString: process.env.<span class="const">DATABASE_URL</span> })
 <span class="fn">pgMiddleware</span>(pool) <span class="comment">// wraps in-place</span></code></pre>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="tracked">
-        <p class="tracked-title">tracked automatically</p>
-        <div class="tracked-grid">
-          <span class="tracked-item"><span class="td td-blue"></span>express routes &amp; status</span>
-          <span class="tracked-item"><span class="td td-amber"></span>prisma queries &amp; duration</span>
-          <span class="tracked-item"><span class="td td-amber"></span>raw sql (sanitized)</span>
-          <span class="tracked-item"><span class="td td-red"></span>unhandled exceptions</span>
-          <span class="tracked-item"><span class="td td-red"></span>rejected promises</span>
-          <span class="tracked-item"><span class="td td-green"></span>slow query detection</span>
+        <div class="tracked">
+          <p class="tracked-title">tracked automatically</p>
+          <div class="tracked-grid">
+            <span class="tracked-item"
+              ><span class="td td-blue"></span>express routes &amp; status</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-amber"></span>prisma queries &amp;
+              duration</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-amber"></span>raw sql (sanitized)</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-red"></span>unhandled exceptions</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-red"></span>rejected promises</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-green"></span>slow query detection</span
+            >
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- MCP -->
-    <div class="sdk-panel" id="tab-mcp" style="display:none">
-      <div class="sdk-install-row">
-        <span class="sdk-pkg">@prodscope/mcp-server</span>
-        <span class="sdk-cmd"><span class="p">$ </span>npm install -g @prodscope/mcp-server</span>
-      </div>
+      <!-- MCP -->
+      <div class="sdk-panel" id="tab-mcp" style="display: none">
+        <div class="sdk-install-row">
+          <span class="sdk-pkg">@prodscope/mcp-server</span>
+          <span class="sdk-cmd"
+            ><span class="p">$ </span>npm install -g @prodscope/mcp-server</span
+          >
+        </div>
 
-      <div class="sdk-steps">
-        <div class="sdk-step">
-          <div class="sdk-step-head">
-            <span class="sdk-step-n">1</span>
-            <span class="sdk-step-title">Add to Claude Code</span>
-          </div>
-          <p class="sdk-step-desc">Add to ~/.claude/settings.json</p>
-          <div class="sub-tabs">
-            <button class="sub-tab active" data-mcp="global">global install</button>
-            <button class="sub-tab" data-mcp="npx">npx</button>
-          </div>
-          <div class="mcp-panel" id="mcp-global">
-            <div class="code-block">
-              <div class="code-label">~/.claude/settings.json</div>
-<pre><code>{
+        <div class="sdk-steps">
+          <div class="sdk-step">
+            <div class="sdk-step-head">
+              <span class="sdk-step-n">1</span>
+              <span class="sdk-step-title">Add to Claude Code</span>
+            </div>
+            <p class="sdk-step-desc">Add to ~/.claude/settings.json</p>
+            <div class="sub-tabs">
+              <button class="sub-tab active" data-mcp="global">
+                global install
+              </button>
+              <button class="sub-tab" data-mcp="npx">npx</button>
+            </div>
+            <div class="mcp-panel" id="mcp-global">
+              <div class="code-block">
+                <div class="code-label">~/.claude/settings.json</div>
+                <pre><code>{
   <span class="str">"mcpServers"</span>: {
     <span class="str">"prodscope"</span>: {
       <span class="str">"command"</span>: <span class="str">"prodscope-mcp"</span>,
@@ -487,12 +487,12 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
     }
   }
 }</code></pre>
+              </div>
             </div>
-          </div>
-          <div class="mcp-panel" id="mcp-npx" style="display:none">
-            <div class="code-block">
-              <div class="code-label">~/.claude/settings.json</div>
-<pre><code>{
+            <div class="mcp-panel" id="mcp-npx" style="display: none">
+              <div class="code-block">
+                <div class="code-label">~/.claude/settings.json</div>
+                <pre><code>{
   <span class="str">"mcpServers"</span>: {
     <span class="str">"prodscope"</span>: {
       <span class="str">"command"</span>: <span class="str">"npx"</span>,
@@ -504,218 +504,890 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
     }
   }
 }</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="sdk-step">
+            <div class="sdk-step-head">
+              <span class="sdk-step-n">2</span>
+              <span class="sdk-step-title">Ask Claude about production</span>
+            </div>
+            <p class="sdk-step-desc">
+              Claude queries your live telemetry — no log diving.
+            </p>
+            <div class="mcp-prompts">
+              <div class="mcp-prompt">
+                What functions are erroring the most right now?
+              </div>
+              <div class="mcp-prompt">
+                Show me the slowest queries in the last hour
+              </div>
+              <div class="mcp-prompt">
+                How did today's deploy affect checkout latency?
+              </div>
+              <div class="mcp-prompt">
+                What's causing the error on line 42 of checkout.ts?
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="sdk-step">
-          <div class="sdk-step-head">
-            <span class="sdk-step-n">2</span>
-            <span class="sdk-step-title">Ask Claude about production</span>
+        <div class="tracked">
+          <p class="tracked-title">available tools</p>
+          <div class="mcp-tools">
+            <div class="mcp-tool">
+              <code>get_function_stats</code
+              ><span>call count, latency, error rate</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_errors_at_line</code
+              ><span>errors at file:line with stacks</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_slow_queries</code><span>slowest db queries</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_hot_paths</code
+              ><span>most-called function journeys</span>
+            </div>
+            <div class="mcp-tool">
+              <code>compare_deploys</code
+              ><span>diff deploys by latency &amp; errors</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_live_sessions</code
+              ><span>active sessions in real-time</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_ai_insight</code
+              ><span>ai analysis of what's wrong</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_trace</code><span>full request trace with spans</span>
+            </div>
           </div>
-          <p class="sdk-step-desc">Claude queries your live telemetry — no log diving.</p>
-          <div class="mcp-prompts">
-            <div class="mcp-prompt">What functions are erroring the most right now?</div>
-            <div class="mcp-prompt">Show me the slowest queries in the last hour</div>
-            <div class="mcp-prompt">How did today's deploy affect checkout latency?</div>
-            <div class="mcp-prompt">What's causing the error on line 42 of checkout.ts?</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sep"><hr /></div>
+
+    <!-- WHAT YOU SEE -->
+    <section class="metrics-section">
+      <div class="section-header">
+        <p class="section-title">&gt; metrics</p>
+        <h2 class="section-heading">What appears in your editor</h2>
+        <p class="section-desc">
+          Real metrics from real users, on every function.
+        </p>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-val">245ms</div>
+          <div class="metric-sub">p50</div>
+          <div class="metric-label">median latency</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">1.2s</div>
+          <div class="metric-sub">p99</div>
+          <div class="metric-label">worst-case</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">84%</div>
+          <div class="metric-label">session reach</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">2.3x</div>
+          <div class="metric-label">calls/session</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">1.3%</div>
+          <div class="metric-label">error rate</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">412</div>
+          <div class="metric-label">total calls (1h)</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sep"><hr /></div>
+
+    <!-- PRICING -->
+    <section id="pricing" class="pricing-section">
+      <div class="section-header">
+        <p class="section-title">&gt; pricing</p>
+        <h2 class="section-heading">Simple pricing</h2>
+        <p class="section-desc">Start free. Scale when you're ready.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3>free</h3>
+          <div class="pricing-price">$0<span>/mo</span></div>
+          <ul>
+            <li>1 project</li>
+            <li>1M spans/month</li>
+            <li>24h retention</li>
+            <li>VS Code extension</li>
+            <li>MCP server</li>
+            <li>Community support</li>
+          </ul>
+          <a href="#waitlist" class="btn">get started</a>
+        </div>
+
+        <div class="pricing-card featured">
+          <div class="pricing-label"></div>
+          <h3>pro</h3>
+          <div class="pricing-price">$29<span>/mo</span></div>
+          <ul>
+            <li>Unlimited projects</li>
+            <li>50M spans/month</li>
+            <li>30-day retention</li>
+            <li>AI insights (Claude)</li>
+            <li>Deploy comparisons</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#waitlist" class="btn btn-primary">get early access</a>
+        </div>
+
+        <div class="pricing-card">
+          <h3>team</h3>
+          <div class="pricing-price">$99<span>/mo</span></div>
+          <ul>
+            <li>Everything in Pro</li>
+            <li>500M spans/month</li>
+            <li>90-day retention</li>
+            <li>Team sharing</li>
+            <li>SSO / SAML</li>
+            <li>Dedicated support</li>
+          </ul>
+          <a href="#waitlist" class="btn">contact us</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="sep"><hr /></div>
+
+    <!-- WAITLIST -->
+    <section id="waitlist" class="waitlist-section">
+      <div class="section-header">
+        <p class="section-title">&gt; early access</p>
+        <h2 class="section-heading">Get early access</h2>
+        <p class="section-desc">We're onboarding teams one at a time.</p>
+      </div>
+      <form
+        class="waitlist-form"
+        action="https://api.prodscope.dev/auth/waitlist"
+        method="POST"
+      >
+        <input
+          type="email"
+          name="email"
+          placeholder="you@company.com"
+          required
+        />
+        <button type="submit" class="btn btn-primary">join waitlist</button>
+      </form>
+      <p class="waitlist-note">free during early access. no credit card.</p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="brand"
+            ><span class="brand-prefix">&gt;</span> prodscope</a
+          >
+          <p>production insights, mapped to your code.</p>
+        </div>
+        <div class="footer-links">
+          <div>
+            <h4>product</h4>
+            <a href="#features">features</a>
+            <a href="#pricing">pricing</a>
+            <a href="https://docs.prodscope.dev">docs</a>
+          </div>
+          <div>
+            <h4>resources</h4>
+            <a href="https://docs.prodscope.dev/changelog">changelog</a>
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=prodscope.prodscope-vscode"
+              >vs code</a
+            >
+            <a href="https://www.npmjs.com/package/@prodscope/sdk-browser"
+              >npm</a
+            >
+          </div>
+          <div>
+            <h4>company</h4>
+            <a href="mailto:hello@prodscope.dev">contact</a>
+            <a href="/privacy">privacy</a>
+            <a href="/terms">terms</a>
           </div>
         </div>
       </div>
-
-      <div class="tracked">
-        <p class="tracked-title">available tools</p>
-        <div class="mcp-tools">
-          <div class="mcp-tool"><code>get_function_stats</code><span>call count, latency, error rate</span></div>
-          <div class="mcp-tool"><code>get_errors_at_line</code><span>errors at file:line with stacks</span></div>
-          <div class="mcp-tool"><code>get_slow_queries</code><span>slowest db queries</span></div>
-          <div class="mcp-tool"><code>get_hot_paths</code><span>most-called function journeys</span></div>
-          <div class="mcp-tool"><code>compare_deploys</code><span>diff deploys by latency &amp; errors</span></div>
-          <div class="mcp-tool"><code>get_live_sessions</code><span>active sessions in real-time</span></div>
-          <div class="mcp-tool"><code>get_ai_insight</code><span>ai analysis of what's wrong</span></div>
-          <div class="mcp-tool"><code>get_trace</code><span>full request trace with spans</span></div>
-        </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 ProdScope</p>
       </div>
-    </div>
-  </section>
+    </footer>
 
-  <div class="sep"><hr/></div>
+    <script>
+      const logos = {
+        vscode: new Image(),
+        claude: new Image(),
+        chatgpt: new Image(),
+        gemini: new Image(),
+        prodscope: new Image(),
+      };
 
-  <!-- WHAT YOU SEE -->
-  <section class="metrics-section">
-    <div class="section-header">
-      <p class="section-title">&gt; metrics</p>
-      <h2 class="section-heading">What appears in your editor</h2>
-      <p class="section-desc">Real metrics from real users, on every function.</p>
-    </div>
+      logos.vscode.src =
+        "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/visualstudiocode.svg";
+      logos.claude.src = "public/claude-color.svg";
+      logos.chatgpt.src =
+        "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/openai.svg";
+      logos.gemini.src =
+        "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googlegemini.svg";
+      logos.prodscope.src =
+        "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/databricks.svg";
 
-    <div class="metrics-grid">
-      <div class="metric-card">
-        <div class="metric-val">245ms</div>
-        <div class="metric-sub">p50</div>
-        <div class="metric-label">median latency</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-val">1.2s</div>
-        <div class="metric-sub">p99</div>
-        <div class="metric-label">worst-case</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-val">84%</div>
-        <div class="metric-label">session reach</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-val">2.3x</div>
-        <div class="metric-label">calls/session</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-val">1.3%</div>
-        <div class="metric-label">error rate</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-val">412</div>
-        <div class="metric-label">total calls (1h)</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="sep"><hr/></div>
-
-  <!-- PRICING -->
-  <section id="pricing" class="pricing-section">
-    <div class="section-header">
-      <p class="section-title">&gt; pricing</p>
-      <h2 class="section-heading">Simple pricing</h2>
-      <p class="section-desc">Start free. Scale when you're ready.</p>
-    </div>
-
-    <div class="pricing-grid">
-      <div class="pricing-card">
-        <h3>free</h3>
-        <div class="pricing-price">$0<span>/mo</span></div>
-        <ul>
-          <li>1 project</li>
-          <li>1M spans/month</li>
-          <li>24h retention</li>
-          <li>VS Code extension</li>
-          <li>MCP server</li>
-          <li>Community support</li>
-        </ul>
-        <a href="#waitlist" class="btn">get started</a>
-      </div>
-
-      <div class="pricing-card featured">
-        <div class="pricing-label"></div>
-        <h3>pro</h3>
-        <div class="pricing-price">$29<span>/mo</span></div>
-        <ul>
-          <li>Unlimited projects</li>
-          <li>50M spans/month</li>
-          <li>30-day retention</li>
-          <li>AI insights (Claude)</li>
-          <li>Deploy comparisons</li>
-          <li>Priority support</li>
-        </ul>
-        <a href="#waitlist" class="btn btn-primary">get early access</a>
-      </div>
-
-      <div class="pricing-card">
-        <h3>team</h3>
-        <div class="pricing-price">$99<span>/mo</span></div>
-        <ul>
-          <li>Everything in Pro</li>
-          <li>500M spans/month</li>
-          <li>90-day retention</li>
-          <li>Team sharing</li>
-          <li>SSO / SAML</li>
-          <li>Dedicated support</li>
-        </ul>
-        <a href="#waitlist" class="btn">contact us</a>
-      </div>
-    </div>
-  </section>
-
-  <div class="sep"><hr/></div>
-
-  <!-- WAITLIST -->
-  <section id="waitlist" class="waitlist-section">
-    <div class="section-header">
-      <p class="section-title">&gt; early access</p>
-      <h2 class="section-heading">Get early access</h2>
-      <p class="section-desc">We're onboarding teams one at a time.</p>
-    </div>
-    <form class="waitlist-form" action="https://api.prodscope.dev/auth/waitlist" method="POST">
-      <input type="email" name="email" placeholder="you@company.com" required />
-      <button type="submit" class="btn btn-primary">join waitlist</button>
-    </form>
-    <p class="waitlist-note">free during early access. no credit card.</p>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="/" class="brand"><span class="brand-prefix">&gt;</span> prodscope</a>
-        <p>production insights, mapped to your code.</p>
-      </div>
-      <div class="footer-links">
-        <div>
-          <h4>product</h4>
-          <a href="#features">features</a>
-          <a href="#pricing">pricing</a>
-          <a href="https://docs.prodscope.dev">docs</a>
-        </div>
-        <div>
-          <h4>resources</h4>
-          <a href="https://docs.prodscope.dev/changelog">changelog</a>
-          <a href="https://marketplace.visualstudio.com/items?itemName=prodscope.prodscope-vscode">vs code</a>
-          <a href="https://www.npmjs.com/package/@prodscope/sdk-browser">npm</a>
-        </div>
-        <div>
-          <h4>company</h4>
-          <a href="mailto:hello@prodscope.dev">contact</a>
-          <a href="/privacy">privacy</a>
-          <a href="/terms">terms</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 ProdScope</p>
-    </div>
-  </footer>
-
-  <script>
-    // SDK main tabs
-    document.querySelectorAll('.sdk-tab').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        document.querySelectorAll('.sdk-tab').forEach(function(t) { t.classList.remove('active'); });
-        document.querySelectorAll('.sdk-panel').forEach(function(p) { p.style.display = 'none'; });
-        tab.classList.add('active');
-        document.getElementById('tab-' + tab.dataset.tab).style.display = 'block';
+      // Helper to check if image is ready
+      const isLoaded = (img) => img.complete && img.naturalWidth !== 0;
+      // SDK main tabs
+      document.querySelectorAll(".sdk-tab").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          document.querySelectorAll(".sdk-tab").forEach(function (t) {
+            t.classList.remove("active");
+          });
+          document.querySelectorAll(".sdk-panel").forEach(function (p) {
+            p.style.display = "none";
+          });
+          tab.classList.add("active");
+          document.getElementById("tab-" + tab.dataset.tab).style.display =
+            "block";
+        });
       });
-    });
 
-    // DB sub-tabs (prisma / pg)
-    document.querySelectorAll('.sub-tab[data-db]').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        var parent = tab.closest('.sdk-step');
-        parent.querySelectorAll('.sub-tab[data-db]').forEach(function(t) { t.classList.remove('active'); });
-        parent.querySelectorAll('.db-panel').forEach(function(p) { p.style.display = 'none'; });
-        tab.classList.add('active');
-        parent.querySelector('#db-' + tab.dataset.db).style.display = 'block';
+      // DB sub-tabs (prisma / pg)
+      document.querySelectorAll(".sub-tab[data-db]").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          var parent = tab.closest(".sdk-step");
+          parent.querySelectorAll(".sub-tab[data-db]").forEach(function (t) {
+            t.classList.remove("active");
+          });
+          parent.querySelectorAll(".db-panel").forEach(function (p) {
+            p.style.display = "none";
+          });
+          tab.classList.add("active");
+          parent.querySelector("#db-" + tab.dataset.db).style.display = "block";
+        });
       });
-    });
 
-    // MCP sub-tabs (global / npx)
-    document.querySelectorAll('.sub-tab[data-mcp]').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        var parent = tab.closest('.sdk-step');
-        parent.querySelectorAll('.sub-tab[data-mcp]').forEach(function(t) { t.classList.remove('active'); });
-        parent.querySelectorAll('.mcp-panel').forEach(function(p) { p.style.display = 'none'; });
-        tab.classList.add('active');
-        parent.querySelector('#mcp-' + tab.dataset.mcp).style.display = 'block';
+      // MCP sub-tabs (global / npx)
+      document.querySelectorAll(".sub-tab[data-mcp]").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          var parent = tab.closest(".sdk-step");
+          parent.querySelectorAll(".sub-tab[data-mcp]").forEach(function (t) {
+            t.classList.remove("active");
+          });
+          parent.querySelectorAll(".mcp-panel").forEach(function (p) {
+            p.style.display = "none";
+          });
+          tab.classList.add("active");
+          parent.querySelector("#mcp-" + tab.dataset.mcp).style.display =
+            "block";
+        });
       });
-    });
-  </script>
-</body>
+
+      /* --- Architecture Pipeline Canvas (Customer-Facing) --- */
+      (function () {
+        var canvas = document.getElementById("arch-canvas");
+        if (!canvas) return;
+        var ctx = canvas.getContext("2d");
+        var wrap = canvas.parentElement;
+        var W,
+          H,
+          time = 0,
+          packets = [],
+          running = false;
+
+        /* ---- Node positions (percentages) ---- */
+        // "YOUR PRODUCTION APP" box is drawn separately; these are the SDK dots inside it
+        var sdkNodes = [
+          {
+            label: "Frontend",
+            sub: "React \u00b7 Vue \u00b7 Vite",
+            xP: 0.2,
+            yP: 0.18,
+            color: "rgba(97, 218, 251, 1)",
+          },
+          {
+            label: "Backend",
+            sub: "Express \u00b7 Fastify",
+            xP: 0.5,
+            yP: 0.18,
+            color: "rgba(104, 159, 56, 1)",
+          },
+          {
+            label: "Database",
+            sub: "Prisma \u00b7 PostgreSQL",
+            xP: 0.8,
+            yP: 0.18,
+            color: "rgba(51, 103, 145, 1)",
+          },
+        ];
+
+        var prodscope = {
+          label: "PRODSCOPE",
+          xP: 0.5,
+          yP: 0.52,
+          color: "rgba(61, 220, 132, 1)",
+        };
+
+        var outputs = [
+          {
+            id: "vscode",
+            label: "VS CODE",
+            sub: "Extension",
+            xP: 0.34,
+            yP: 0.85,
+            color: "rgba(91, 154, 245, 1)",
+          },
+          {
+            id: "claude",
+            label: "",
+            sub: "",
+            xP: 0.62,
+            yP: 0.85,
+            color: "rgba(227, 179, 65, 1)",
+          },
+          {
+            id: "chatgpt",
+            label: "LLMs MCP",
+            sub: "",
+            xP: 0.65,
+            yP: 0.85,
+            color: "rgba(116, 195, 104, 1)",
+          },
+          {
+            id: "gemini",
+            label: "",
+            sub: "",
+            xP: 0.68,
+            yP: 0.85,
+            color: "rgba(136, 132, 216, 1)",
+          },
+        ];
+
+        /* ---- Links ---- */
+        var inboundLinks = [
+          {
+            fromXP: 0.2,
+            fromYP: 0.28,
+            toXP: prodscope.xP,
+            toYP: prodscope.yP - 0.06,
+            speed: 0.004,
+          },
+          {
+            fromXP: 0.5,
+            fromYP: 0.28,
+            toXP: prodscope.xP,
+            toYP: prodscope.yP - 0.06,
+            speed: 0.005,
+          },
+          {
+            fromXP: 0.8,
+            fromYP: 0.28,
+            toXP: prodscope.xP,
+            toYP: prodscope.yP - 0.06,
+            speed: 0.004,
+          },
+        ];
+
+        // ProdScope → VS Code (extension)
+        var outboundLinks = [
+          {
+            fromXP: prodscope.xP,
+            fromYP: prodscope.yP + 0.06,
+            toXP: 0.34,
+            toYP: 0.85,
+            speed: 0.003,
+            color: "rgba(91, 154, 245, 0.9)",
+          },
+        ];
+
+        // ProdScope → AI tools (MCP protocol)
+        var mcpLinks = [
+          {
+            fromXP: prodscope.xP,
+            fromYP: prodscope.yP + 0.06,
+            toXP: 0.62,
+            toYP: 0.78,
+            speed: 0.003,
+            color: "rgba(227, 179, 65, 0.9)",
+          },
+        ];
+
+        function resize() {
+          W = wrap.clientWidth;
+          H = wrap.clientHeight;
+          var dpr = window.devicePixelRatio || 1;
+          canvas.width = W * dpr;
+          canvas.height = H * dpr;
+          canvas.style.width = W + "px";
+          canvas.style.height = H + "px";
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        /* ---- Packet classes ---- */
+        function TextPacket(link, content, color) {
+          this.link = link;
+          this.content = content;
+          this.color = color || "rgba(61, 220, 132, 1)";
+          this.progress = 0;
+          this.speed = link.speed * (0.8 + Math.random() * 0.6);
+          this.opacity = 0;
+        }
+
+        TextPacket.prototype.update = function () {
+          this.progress += this.speed;
+          if (this.progress < 0.15) this.opacity = this.progress / 0.15;
+          else if (this.progress > 0.75)
+            this.opacity = Math.max(0, (1 - this.progress) / 0.25);
+          else this.opacity = 1;
+          return this.progress > 1;
+        };
+
+        TextPacket.prototype.draw = function () {
+          var l = this.link;
+          var x = l.fromXP * W + (l.toXP * W - l.fromXP * W) * this.progress;
+          var y = l.fromYP * H + (l.toYP * H - l.fromYP * H) * this.progress;
+          var alpha = this.opacity * 0.95;
+          var c = this.color.replace(/[\d.]+\)$/, alpha + ")");
+
+          ctx.save();
+          ctx.font = "600 9px 'JetBrains Mono', monospace";
+          ctx.textAlign = "center";
+          var tw = ctx.measureText(this.content).width + 8;
+          ctx.fillStyle = "rgba(0,0,0," + this.opacity * 0.55 + ")";
+          ctx.fillRect(x - tw / 2, y - 22, tw, 14);
+          ctx.fillStyle = c;
+          ctx.fillText(this.content, x, y - 11);
+          ctx.restore();
+        };
+
+        // Outbound: clean single refined particle with gradient trail + bright dot
+        /* ---- Drawing helpers ---- */
+        function drawGrid() {
+          var s = 50,
+            off = (time * 8) % s;
+          ctx.strokeStyle = "rgba(255,255,255,0.025)";
+          ctx.lineWidth = 1;
+          for (var x = -off; x < W; x += s) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, H);
+            ctx.stroke();
+          }
+          for (var y = -off; y < H; y += s) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(W, y);
+            ctx.stroke();
+          }
+        }
+
+        /* ---- SDK logos for production box ---- */
+        function drawReactLogo(cx, cy, sz) {
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.strokeStyle = "rgba(97, 218, 251, 0.7)";
+          ctx.lineWidth = 0.8;
+          for (var i = 0; i < 3; i++) {
+            ctx.save();
+            ctx.rotate((Math.PI / 3) * i);
+            ctx.beginPath();
+            ctx.ellipse(0, 0, sz, sz * 0.35, 0, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+          }
+          ctx.beginPath();
+          ctx.arc(0, 0, 1.8, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(97, 218, 251, 1)";
+          ctx.fill();
+          ctx.restore();
+        }
+
+        function drawNodeLogo(cx, cy, sz) {
+          ctx.save();
+          ctx.translate(cx, cy);
+          var r = sz * 0.5;
+          ctx.beginPath();
+          for (var i = 0; i < 6; i++) {
+            var a = (Math.PI / 3) * i - Math.PI / 6;
+            if (i === 0) ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r);
+            else ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+          }
+          ctx.closePath();
+          ctx.fillStyle = "rgba(104, 159, 56, 0.2)";
+          ctx.fill();
+          ctx.strokeStyle = "rgba(104, 159, 56, 0.8)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.font = "700 6px 'JetBrains Mono', monospace";
+          ctx.fillStyle = "rgba(104, 159, 56, 1)";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText("JS", 0, 0);
+          ctx.textBaseline = "alphabetic";
+          ctx.restore();
+        }
+
+        function drawDBLogo(cx, cy, sz) {
+          ctx.save();
+          ctx.translate(cx, cy);
+          var w = sz * 0.4,
+            h = sz * 0.48,
+            ey = sz * 0.15;
+          ctx.strokeStyle = "rgba(51, 103, 145, 0.8)";
+          ctx.lineWidth = 0.9;
+          ctx.beginPath();
+          ctx.moveTo(-w, -h + ey);
+          ctx.lineTo(-w, h - ey);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(w, -h + ey);
+          ctx.lineTo(w, h - ey);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.ellipse(0, h - ey, w, ey, 0, 0, Math.PI, false);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.ellipse(0, -h + ey, w, ey, 0, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(51, 103, 145, 0.2)";
+          ctx.fill();
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        function drawProductionBox() {
+          var bx = sdkNodes[0].xP * W - 65;
+          var by = sdkNodes[0].yP * H - 48;
+          var bw = (sdkNodes[2].xP - sdkNodes[0].xP) * W + 130;
+          var bh = 95;
+
+          // Gradient fill
+          var gf = ctx.createLinearGradient(bx, by, bx, by + bh);
+          gf.addColorStop(0, "rgba(255,255,255,0.035)");
+          gf.addColorStop(1, "rgba(255,255,255,0.008)");
+          ctx.fillStyle = gf;
+          ctx.fillRect(bx, by, bw, bh);
+
+          // Outer border
+          ctx.strokeStyle = "rgba(255,255,255,0.12)";
+          ctx.lineWidth = 1;
+          ctx.strokeRect(bx, by, bw, bh);
+
+          // Inner border (double-line effect)
+          ctx.strokeStyle = "rgba(255,255,255,0.04)";
+          ctx.strokeRect(bx + 3, by + 3, bw - 6, bh - 6);
+
+          // Label
+          ctx.font = "700 9px 'JetBrains Mono', monospace";
+          ctx.fillStyle = "rgba(255,255,255,0.4)";
+          ctx.textAlign = "left";
+          ctx.fillText("YOUR PRODUCTION APP", bx + 10, by + 15);
+
+          // SDK nodes with logos
+          sdkNodes.forEach(function (n, i) {
+            var nx = n.xP * W,
+              ny = n.yP * H;
+
+            // Logo above
+            if (i === 0) drawReactLogo(nx, ny - 12, 15);
+            else if (i === 1) drawNodeLogo(nx, ny - 12, 30);
+            else drawDBLogo(nx, ny - 12, 25);
+
+            // Glow in node's color
+            // ctx.beginPath();
+            // ctx.arc(nx, ny + 5, 22, 0, Math.PI * 2);
+            // var g = ctx.createRadialGradient(nx, ny + 5, 0, nx, ny + 5, 22);
+            // g.addColorStop(0, n.color.replace("1)", "0.12)"));
+            // g.addColorStop(1, "rgba(0,0,0,0)");
+            // ctx.fillStyle = g;
+            // ctx.fill();
+
+            // Labels
+            ctx.font = "600 10px 'JetBrains Mono', monospace";
+            ctx.fillStyle = "rgba(255,255,255,0.65)";
+            ctx.textAlign = "center";
+            ctx.fillText(n.label, nx, ny + 22);
+
+            ctx.font = "400 8px 'JetBrains Mono', monospace";
+            ctx.fillStyle = "rgba(255,255,255,0.25)";
+            ctx.fillText(n.sub, nx, ny + 34);
+          });
+        }
+
+        function drawProdScope() {
+          var nx = prodscope.xP * W,
+            ny = prodscope.yP * H;
+
+          // Large glow
+          ctx.beginPath();
+          ctx.arc(nx, ny, 50, 0, Math.PI * 2);
+          var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 50);
+          g.addColorStop(0, "rgba(61, 220, 132, 0.18)");
+          g.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.fillStyle = g;
+          ctx.fill();
+
+          // Pulsing ring
+          var pulse = Math.sin(time * 2) * 0.3 + 0.7;
+          ctx.beginPath();
+          ctx.arc(nx, ny, 22, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(61, 220, 132, " + pulse * 0.4 + ")";
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          // Inner dot
+          ctx.beginPath();
+          ctx.arc(nx, ny, 5, 0, Math.PI * 2);
+          ctx.fillStyle = prodscope.color;
+          ctx.shadowBlur = 16;
+          ctx.shadowColor = prodscope.color;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
+          // Label
+          ctx.font = "700 13px 'JetBrains Mono', monospace";
+          ctx.fillStyle = "rgba(61, 220, 132, 1)";
+          ctx.textAlign = "center";
+          ctx.fillText("PRODSCOPE", nx, ny + 40);
+
+          ctx.font = "400 9px 'JetBrains Mono', monospace";
+          ctx.fillStyle = "rgba(255,255,255,0.3)";
+          ctx.fillText(
+            "errors \u00b7 latency \u00b7 sessions \u00b7 traces",
+            nx,
+            ny + 54,
+          );
+        }
+
+        function drawLogoImage(img, cx, cy, size, filter) {
+          if (isLoaded(img)) {
+            ctx.save();
+            ctx.filter = filter;
+            ctx.drawImage(img, cx - size / 2, cy - size / 2, size, size);
+            ctx.restore();
+          }
+        }
+
+        var logoFilters = {
+          vscode:
+            "brightness(0) invert(1) opacity(0.85)",
+          claude:
+            "invert(25%) sepia(40%) saturate(600%) hue-rotate(3deg) brightness(95%) contrast(90%)",
+          chatgpt:
+            "invert(100%) sepia(70%) saturate(400%) hue-rotate(85deg) brightness(95%) contrast(95%)",
+          gemini:
+            "invert(55%) sepia(60%) saturate(500%) hue-rotate(210deg) brightness(100%) contrast(90%)",
+        };
+
+        function drawOutputNodes() {
+          outputs.forEach(function (node) {
+            var nx = node.xP * W,
+              ny = node.yP * H;
+
+            // Glow
+            ctx.beginPath();
+            ctx.arc(nx, ny, 32, 0, Math.PI * 2);
+            var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 32);
+            g.addColorStop(0, node.color.replace("1)", "0.14)"));
+            g.addColorStop(1, "rgba(0,0,0,0)");
+            ctx.fillStyle = g;
+            ctx.fill();
+
+            // Logo image
+            var img = logos[node.id];
+            var flt = logoFilters[node.id];
+            if (img && flt) drawLogoImage(img, nx, ny - 4, 22, flt);
+
+            // Label
+            ctx.font = "700 10px 'JetBrains Mono', monospace";
+            ctx.fillStyle = "rgba(255,255,255,0.75)";
+            ctx.textAlign = "center";
+            ctx.fillText(node.label, nx, ny + 26);
+
+            ctx.font = "400 8px 'JetBrains Mono', monospace";
+            ctx.fillStyle = node.color.replace("1)", "0.55)");
+            ctx.fillText(node.sub, nx, ny + 38);
+          });
+        }
+
+        function drawArrowTip(x1, y1, x2, y2, color) {
+          var angle = Math.atan2(y2 - y1, x2 - x1);
+          var len = 7;
+          ctx.setLineDash([]);
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.moveTo(
+            x2 - Math.cos(angle - 0.42) * len,
+            y2 - Math.sin(angle - 0.42) * len,
+          );
+          ctx.lineTo(x2, y2);
+          ctx.lineTo(
+            x2 - Math.cos(angle + 0.42) * len,
+            y2 - Math.sin(angle + 0.42) * len,
+          );
+          ctx.stroke();
+        }
+
+        function drawLinkGroup(links, dash, defaultStroke) {
+          ctx.setLineDash(dash);
+          ctx.lineWidth = 1;
+          links.forEach(function (l) {
+            var sc = l.color
+              ? l.color.replace(/[\d.]+\)$/, "0.1)")
+              : defaultStroke;
+            ctx.strokeStyle = sc;
+            ctx.beginPath();
+            ctx.moveTo(l.fromXP * W, l.fromYP * H);
+            ctx.lineTo(l.toXP * W, l.toYP * H);
+            ctx.stroke();
+            drawArrowTip(
+              l.fromXP * W,
+              l.fromYP * H,
+              l.toXP * W,
+              l.toYP * H,
+              l.color
+                ? l.color.replace(/[\d.]+\)$/, "0.25)")
+                : "rgba(255,255,255,0.08)",
+            );
+          });
+        }
+
+        function drawStaticPaths() {
+          drawLinkGroup(inboundLinks, [4, 8], "rgba(255,255,255,0.04)");
+          drawLinkGroup(outboundLinks, [4, 8]);
+          drawLinkGroup(mcpLinks, [3, 7]);
+          ctx.setLineDash([]);
+        }
+
+        /* ---- Arrow labels ---- */
+        function drawLabels() {
+          ctx.font = "italic 9px 'JetBrains Mono', monospace";
+          ctx.textAlign = "center";
+
+          // "raw telemetry" on inbound
+          ctx.fillStyle = "rgba(255,255,255,0.2)";
+          ctx.fillText("raw telemetry", 0.5 * W, 0.38 * H);
+        }
+
+        /* ---- Packet text pools ---- */
+        var inboundTexts = [
+          { text: "ERR 500", color: "rgba(255,75,75,1)" },
+          { text: "TypeError", color: "rgba(255,75,75,1)" },
+          { text: "null ref", color: "rgba(255,75,75,1)" },
+          { text: "CRASH", color: "rgba(255,75,75,1)" },
+          { text: "slow:420ms", color: "rgba(255,165,55,1)" },
+          { text: "mem:94%", color: "rgba(255,165,55,1)" },
+          { text: "DB timeout", color: "rgba(255,165,55,1)" },
+          { text: "GET /api", color: "rgba(170,170,170,0.85)" },
+          { text: "POST /auth", color: "rgba(170,170,170,0.85)" },
+          { text: "SQL query", color: "rgba(170,170,170,0.85)" },
+          { text: "trace_id", color: "rgba(170,170,170,0.85)" },
+        ];
+        var extensionTexts = [
+          { text: "\u2713 line 42", color: "rgba(91,154,245,1)" },
+          { text: "3 errors", color: "rgba(255,75,75,1)" },
+          { text: "\u2191 latency", color: "rgba(91,154,245,1)" },
+          { text: "inline hint", color: "rgba(91,154,245,1)" },
+        ];
+        var mcpTexts = [
+          { text: "get_function_stats", color: "rgba(61,220,132,1)" },
+          { text: "get_errors_at_line", color: "rgba(61,220,132,1)" },
+          { text: "get_slow_queries", color: "rgba(61,220,132,1)" },
+          { text: "get_ai_insight", color: "rgba(61,220,132,1)" },
+          { text: "get_live_sessions", color: "rgba(61,220,132,1)" },
+          { text: "get_trace", color: "rgba(61,220,132,1)" },
+          { text: "get_hot_paths", color: "rgba(61,220,132,1)" },
+          { text: "compare_deploys", color: "rgba(61,220,132,1)" },
+        ];
+
+        /* ---- Main loop ---- */
+        function animate() {
+          if (!running) return;
+          ctx.fillStyle = "rgba(3, 4, 8, 1)";
+          ctx.fillRect(0, 0, W, H);
+          time += 0.05;
+
+          drawGrid();
+          drawStaticPaths();
+
+          // Spawn inbound (raw telemetry — noisy mix)
+          inboundLinks.forEach(function (l) {
+            if (Math.random() < 0.007) {
+              var t =
+                inboundTexts[Math.floor(Math.random() * inboundTexts.length)];
+              packets.push(new TextPacket(l, t.text, t.color));
+            }
+          });
+
+          // Spawn outbound to VS Code (extension insights)
+          outboundLinks.forEach(function (l) {
+            if (Math.random() < 0.005) {
+              var t =
+                extensionTexts[
+                  Math.floor(Math.random() * extensionTexts.length)
+                ];
+              packets.push(new TextPacket(l, t.text, t.color));
+            }
+          });
+
+          // Spawn MCP packets (ProdScope → AI tools)
+          mcpLinks.forEach(function (l) {
+            if (Math.random() < 0.005) {
+              var t = mcpTexts[Math.floor(Math.random() * mcpTexts.length)];
+              packets.push(new TextPacket(l, t.text, t.color));
+            }
+          });
+
+          packets = packets.filter(function (p) {
+            var done = p.update();
+            if (!done) p.draw();
+            return !done;
+          });
+
+          drawProductionBox();
+          drawProdScope();
+          drawOutputNodes();
+          drawLabels();
+
+          requestAnimationFrame(animate);
+        }
+
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting && !running) {
+                running = true;
+                animate();
+              } else if (!entry.isIntersecting) {
+                running = false;
+              }
+            });
+          },
+          { threshold: 0.05 },
+        );
+
+        resize();
+        observer.observe(canvas);
+        window.addEventListener("resize", resize);
+      })();
+    </script>
+  </body>
 </html>
