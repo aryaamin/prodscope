@@ -75,7 +75,11 @@
       "Bash(pnpm --filter @prodscope/collector run build)",
       "Bash(pnpm --filter @prodscope/mcp-server run build)",
       "Bash(pnpm --filter @prodscope/website run build)",
-      "Bash(git -c core.pager= diff --stat HEAD)"
+      "Bash(git -c core.pager= diff --stat HEAD)",
+      "Bash(npm whoami:*)",
+      "Bash(git -C /home/arya/prodscope remote -v)",
+      "Bash(npm access:*)",
+      "Bash(npm run:*)"
     ],
     "additionalDirectories": [
       "/home/arya/prodscope-demo",

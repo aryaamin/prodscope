@@ -142,4 +142,31 @@ router.get("/auth/projects", async (req: Request, res: Response) => {
   res.json(result.rows);
 });
 
+/** POST /auth/waitlist — collect early access emails */
+router.post("/auth/waitlist", async (req: Request, res: Response) => {
+  const { email } = req.body;
+  if (!email || !email.includes("@")) {
+    res.status(400).json({ error: "Valid email is required" });
+    return;
+  }
+
+  const db = getPostgres();
+
+  // Create table if not exists
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS waitlist (
+      id SERIAL PRIMARY KEY,
+      email TEXT UNIQUE NOT NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+
+  try {
+    await db.query("INSERT INTO waitlist (email) VALUES ($1) ON CONFLICT (email) DO NOTHING", [email]);
+    res.json({ ok: true, message: "You're on the list!" });
+  } catch (err: any) {
+    res.status(500).json({ error: "Failed to join waitlist" });
+  }
+});
+
 export default router;

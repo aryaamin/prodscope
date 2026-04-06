@@ -1,7 +1,13 @@
 {
   "name": "@prodscope/mcp-server",
   "version": "0.1.0",
+  "description": "ProdScope MCP server — query live production telemetry from Claude Code",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "homepage": "https://prodscope.dev",
+  "keywords": ["mcp", "claude", "observability", "telemetry", "ai"],
   "type": "module",
+  "files": ["dist"],
   "bin": {
     "prodscope-mcp": "dist/index.js"
   },

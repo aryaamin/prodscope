@@ -22,6 +22,7 @@
       <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#how">How it works</a>
+        <a href="#sdk">SDK Setup</a>
         <a href="#pricing">Pricing</a>
         <a href="https://docs.prodscope.dev" target="_blank">Docs</a>
         <a href="#waitlist" class="btn btn-sm">Get early access</a>
@@ -136,7 +137,7 @@
   <!-- HOW IT WORKS -->
   <section id="how" class="how-it-works">
     <h2>Up and running in 2 minutes</h2>
-    <p class="section-sub">Three steps. No agents. No config files. No dashboards to set up.</p>
+    <p class="section-sub">Install the SDK, add one config line, and every function in your app is tracked — no manual wrapping.</p>
 
     <div class="steps">
       <div class="step">
@@ -146,13 +147,14 @@
           <div class="code-block">
             <code>npm install @prodscope/sdk-browser</code>
           </div>
+          <p class="step-note-dim">For Node/Express apps: npm install @prodscope/sdk-node</p>
         </div>
       </div>
 
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>Add to your Vite config</h3>
+          <h3>Add the Vite plugin</h3>
           <div class="code-block">
 <pre><code><span class="kw">import</span> { prodscope } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser/vite"</span>;
 
@@ -162,6 +164,7 @@
   ],
 });</code></pre>
           </div>
+          <p class="step-note-dim">The Vite plugin instruments every exported function at build time with file:line metadata.</p>
         </div>
       </div>
 
@@ -177,7 +180,220 @@
   apiKey: import.meta.env.<span class="const">VITE_PRODSCOPE_API_KEY</span>,
 });</code></pre>
           </div>
-          <p class="step-note">That's it. Open VS Code and see your production data appear on every function.</p>
+          <p class="step-note">Install the VS Code extension and see live production data on every function.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SDK SETUP -->
+  <section id="sdk" class="sdk-setup">
+    <h2>SDK Reference</h2>
+    <p class="section-sub">Full setup for browser apps, Node.js backends, and Claude Code integration.</p>
+
+    <div class="sdk-tabs">
+      <button class="sdk-tab active" data-tab="browser">Browser (Vite/React)</button>
+      <button class="sdk-tab" data-tab="node">Node.js (Express)</button>
+      <button class="sdk-tab" data-tab="mcp">MCP for Claude Code</button>
+    </div>
+
+    <!-- BROWSER TAB -->
+    <div class="sdk-panel active" id="tab-browser">
+      <div class="sdk-install">
+        <span class="sdk-pkg-badge">@prodscope/sdk-browser</span>
+        <div class="code-block"><code>npm install @prodscope/sdk-browser</code></div>
+      </div>
+
+      <div class="sdk-steps">
+        <div class="sdk-step">
+          <div class="sdk-step-label">1. Add the Vite plugin — instruments every exported function automatically</div>
+          <div class="code-block">
+<pre><code><span class="comment">// vite.config.ts</span>
+<span class="kw">import</span> { defineConfig } <span class="kw">from</span> <span class="str">"vite"</span>;
+<span class="kw">import</span> { prodscope } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser/vite"</span>;
+
+<span class="kw">export default</span> <span class="fn">defineConfig</span>({
+  plugins: [
+    <span class="fn">prodscope</span>({
+      apiKey: process.env.<span class="const">PRODSCOPE_API_KEY</span>,
+    }),
+  ],
+});</code></pre>
+          </div>
+        </div>
+
+        <div class="sdk-step">
+          <div class="sdk-step-label">2. Initialize in your app entry point</div>
+          <div class="code-block">
+<pre><code><span class="comment">// main.tsx / index.tsx</span>
+<span class="kw">import</span> { init } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser"</span>;
+
+<span class="fn">init</span>({
+  projectId: <span class="str">"my-app"</span>,
+  apiKey: import.meta.env.<span class="const">VITE_PRODSCOPE_API_KEY</span>,
+  <span class="comment">// Optional:</span>
+  environment: import.meta.env.<span class="const">MODE</span>,   <span class="comment">// "production" | "staging"</span>
+  release: import.meta.env.<span class="const">VITE_GIT_SHA</span>,
+});</code></pre>
+          </div>
+        </div>
+
+        <div class="sdk-step">
+          <div class="sdk-step-label">3. Set your env variable</div>
+          <div class="code-block">
+<pre><code><span class="comment"># .env.production</span>
+<span class="const">VITE_PRODSCOPE_API_KEY</span>=<span class="str">ps_live_xxxxxxxxxxxx</span></code></pre>
+          </div>
+        </div>
+
+        <div class="sdk-step">
+          <div class="sdk-step-label">What gets tracked automatically</div>
+          <div class="sdk-auto-list">
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> Every exported function — call count, p50/p99 latency, error rate</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> Fetch / XHR requests — URL, status, duration</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> Unhandled errors — stack trace mapped to file:line</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> Session data — which users hit which functions and how often</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> Click interactions — linked to the function that handled them</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NODE TAB -->
+    <div class="sdk-panel" id="tab-node">
+      <div class="sdk-install">
+        <span class="sdk-pkg-badge">@prodscope/sdk-node</span>
+        <div class="code-block"><code>npm install @prodscope/sdk-node</code></div>
+      </div>
+
+      <div class="sdk-steps">
+        <div class="sdk-step">
+          <div class="sdk-step-label">1. Initialize at app startup</div>
+          <div class="code-block">
+<pre><code><span class="comment">// index.ts — must be the very first import</span>
+<span class="kw">import</span> { init } <span class="kw">from</span> <span class="str">"@prodscope/sdk-node"</span>;
+
+<span class="fn">init</span>({
+  projectId: <span class="str">"my-api"</span>,
+  apiKey: process.env.<span class="const">PRODSCOPE_API_KEY</span>,
+  environment: process.env.<span class="const">NODE_ENV</span>,
+  release: process.env.<span class="const">GIT_SHA</span>,        <span class="comment">// optional, for deploy comparison</span>
+});</code></pre>
+          </div>
+        </div>
+
+        <div class="sdk-step">
+          <div class="sdk-step-label">2. Add Express middleware — tracks every route with latency and errors</div>
+          <div class="code-block">
+<pre><code><span class="kw">import</span> express <span class="kw">from</span> <span class="str">"express"</span>;
+<span class="kw">import</span> { expressMiddleware } <span class="kw">from</span> <span class="str">"@prodscope/sdk-node/express"</span>;
+
+<span class="kw">const</span> app = <span class="fn">express</span>();
+app.<span class="fn">use</span>(<span class="fn">expressMiddleware</span>());   <span class="comment">// add before your routes</span></code></pre>
+          </div>
+        </div>
+
+        <div class="sdk-step">
+          <div class="sdk-step-label">3. Prisma middleware — tracks every query with duration and model</div>
+          <div class="code-block">
+<pre><code><span class="kw">import</span> { PrismaClient } <span class="kw">from</span> <span class="str">"@prisma/client"</span>;
+<span class="kw">import</span> { prismaMiddleware } <span class="kw">from</span> <span class="str">"@prodscope/sdk-node/prisma"</span>;
+
+<span class="kw">const</span> prisma = <span class="kw">new</span> <span class="type">PrismaClient</span>();
+prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>());</code></pre>
+          </div>
+        </div>
+
+        <div class="sdk-step">
+          <div class="sdk-step-label">4. pg middleware — tracks raw SQL queries</div>
+          <div class="code-block">
+<pre><code><span class="kw">import</span> { Pool } <span class="kw">from</span> <span class="str">"pg"</span>;
+<span class="kw">import</span> { pgMiddleware } <span class="kw">from</span> <span class="str">"@prodscope/sdk-node/pg"</span>;
+
+<span class="kw">const</span> pool = <span class="kw">new</span> <span class="type">Pool</span>({ connectionString: process.env.<span class="const">DATABASE_URL</span> });
+<span class="fn">pgMiddleware</span>(pool);              <span class="comment">// wraps the pool in-place</span></code></pre>
+          </div>
+        </div>
+
+        <div class="sdk-step">
+          <div class="sdk-step-label">What gets tracked automatically</div>
+          <div class="sdk-auto-list">
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> Every Express route — method, path, status code, latency</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> Prisma queries — model, action, duration, slow query detection</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> pg queries — SQL text (sanitized), duration, error stack</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> Unhandled exceptions and rejected promises</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> All mapped to file:line so VS Code shows them inline</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MCP TAB -->
+    <div class="sdk-panel" id="tab-mcp">
+      <div class="sdk-install">
+        <span class="sdk-pkg-badge">@prodscope/mcp-server</span>
+        <div class="code-block"><code>npm install -g @prodscope/mcp-server</code></div>
+      </div>
+
+      <div class="sdk-steps">
+        <div class="sdk-step">
+          <div class="sdk-step-label">1. Add to Claude Code's MCP config</div>
+          <div class="code-block">
+<pre><code><span class="comment">// ~/.claude/settings.json</span>
+{
+  <span class="str">"mcpServers"</span>: {
+    <span class="str">"prodscope"</span>: {
+      <span class="str">"command"</span>: <span class="str">"prodscope-mcp"</span>,
+      <span class="str">"env"</span>: {
+        <span class="str">"PRODSCOPE_API_KEY"</span>: <span class="str">"ps_live_xxxxxxxxxxxx"</span>,
+        <span class="str">"PRODSCOPE_PROJECT_ID"</span>: <span class="str">"my-app"</span>
+      }
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="sdk-step">
+          <div class="sdk-step-label">2. Or use npx — no global install needed</div>
+          <div class="code-block">
+<pre><code>{
+  <span class="str">"mcpServers"</span>: {
+    <span class="str">"prodscope"</span>: {
+      <span class="str">"command"</span>: <span class="str">"npx"</span>,
+      <span class="str">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@prodscope/mcp-server"</span>],
+      <span class="str">"env"</span>: {
+        <span class="str">"PRODSCOPE_API_KEY"</span>: <span class="str">"ps_live_xxxxxxxxxxxx"</span>,
+        <span class="str">"PRODSCOPE_PROJECT_ID"</span>: <span class="str">"my-app"</span>
+      }
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="sdk-step">
+          <div class="sdk-step-label">3. Ask Claude about your production data</div>
+          <div class="sdk-mcp-examples">
+            <div class="mcp-example">"What functions are erroring the most right now?"</div>
+            <div class="mcp-example">"Show me the slowest database queries in the last hour"</div>
+            <div class="mcp-example">"How did deploy abc123 affect checkout latency vs the previous deploy?"</div>
+            <div class="mcp-example">"Which users are hitting the payment error on line 42?"</div>
+            <div class="mcp-example">"What's the p99 latency for fetchProducts and what's causing it?"</div>
+          </div>
+        </div>
+
+        <div class="sdk-step">
+          <div class="sdk-step-label">Available MCP tools</div>
+          <div class="sdk-auto-list">
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> <code class="inline-code">get_function_stats</code> — call count, latency percentiles, error rate per function</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> <code class="inline-code">get_errors_at_line</code> — errors at a specific file:line with stack traces</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> <code class="inline-code">get_slow_queries</code> — slowest DB queries with duration and frequency</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> <code class="inline-code">get_hot_paths</code> — most-called user journeys through your functions</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> <code class="inline-code">compare_deploys</code> — diff two deploys by latency, errors, and call patterns</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> <code class="inline-code">get_live_sessions</code> — active sessions and what functions they're hitting</div>
+            <div class="sdk-auto-item"><span class="check">&#10003;</span> <code class="inline-code">get_ai_insight</code> — Claude-generated analysis of what's wrong and why</div>
+          </div>
         </div>
       </div>
     </div>
@@ -313,5 +529,15 @@
       <p>&copy; 2026 ProdScope. All rights reserved.</p>
     </div>
   </footer>
+  <script>
+    document.querySelectorAll('.sdk-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.sdk-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.sdk-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
