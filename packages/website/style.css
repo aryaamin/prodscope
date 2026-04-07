@@ -69,11 +69,18 @@ nav {
   font-weight: 700;
   color: var(--text);
   letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .brand:hover { text-decoration: none; color: var(--blue); }
 
-.brand-prefix { color: var(--green); }
+.brand-logo {
+  height: 150px;
+  width: auto;
+  vertical-align: middle;
+}
 
 .nav-links {
   display: flex;
@@ -262,6 +269,12 @@ nav {
 
 .section-header {
   margin-bottom: 36px;
+}
+
+.section-logo {
+  height: 36px;
+  width: auto;
+  margin-bottom: 12px;
 }
 
 .section-title {
@@ -730,6 +743,12 @@ nav {
   margin: 0 auto;
   padding: 64px 24px;
   text-align: center;
+}
+
+.waitlist-logo {
+  height: 64px;
+  width: auto;
+  margin-bottom: 16px;
 }
 
 .waitlist-form {

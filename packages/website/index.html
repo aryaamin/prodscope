@@ -23,7 +23,7 @@
     <nav>
       <div class="nav-inner">
         <a href="/" class="brand"
-          ><span class="brand-prefix">&gt;</span> prodscope</a
+          ><img src="/logo-outline-white.svg" alt="ProdScope" class="brand-logo" />prodscope</a
         >
         <div class="nav-links">
           <a href="#features">features</a>
@@ -240,6 +240,7 @@
     <!-- SDK REFERENCE -->
     <section id="sdk" class="sdk-section">
       <div class="section-header">
+        <img src="/logo-outline.svg" alt="ProdScope" class="section-logo" />
         <p class="section-title">&gt; sdk reference</p>
         <h2 class="section-heading">Full setup</h2>
         <p class="section-desc">
@@ -675,6 +676,7 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
     <!-- WAITLIST -->
     <section id="waitlist" class="waitlist-section">
       <div class="section-header">
+        <img src="/logo-outline-white.svg" alt="ProdScope" class="waitlist-logo" />
         <p class="section-title">&gt; early access</p>
         <h2 class="section-heading">Get early access</h2>
         <p class="section-desc">We're onboarding teams one at a time.</p>
@@ -700,7 +702,7 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="/" class="brand"
-            ><span class="brand-prefix">&gt;</span> prodscope</a
+            ><img src="/logo-outline.svg" alt="ProdScope" class="brand-logo" /> prodscope</a
           >
           <p>production insights, mapped to your code.</p>
         </div>
@@ -746,13 +748,12 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
       logos.vscode.src =
         "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/visualstudiocode.svg";
-      logos.claude.src = "public/claude-color.svg";
+      logos.claude.src = "claude-color.svg";
       logos.chatgpt.src =
         "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/openai.svg";
       logos.gemini.src =
         "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googlegemini.svg";
-      logos.prodscope.src =
-        "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/databricks.svg";
+      logos.prodscope.src = "/logo-outline-white.svg";
 
       // Helper to check if image is ready
       const isLoaded = (img) => img.complete && img.naturalWidth !== 0;
@@ -1148,19 +1149,27 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
           // Pulsing ring
           var pulse = Math.sin(time * 2) * 0.3 + 0.7;
           ctx.beginPath();
-          ctx.arc(nx, ny, 22, 0, Math.PI * 2);
+          ctx.arc(nx, ny, 20, 0, Math.PI * 2);
           ctx.strokeStyle = "rgba(61, 220, 132, " + pulse * 0.4 + ")";
           ctx.lineWidth = 1.5;
           ctx.stroke();
 
-          // Inner dot
-          ctx.beginPath();
-          ctx.arc(nx, ny, 5, 0, Math.PI * 2);
-          ctx.fillStyle = prodscope.color;
-          ctx.shadowBlur = 16;
-          ctx.shadowColor = prodscope.color;
-          ctx.fill();
-          ctx.shadowBlur = 0;
+          // Logo image or fallback dot
+          if (isLoaded(logos.prodscope)) {
+            ctx.save();
+            var logoSizeX = 120;
+            var logoSizeY = 150;
+            ctx.drawImage(logos.prodscope, nx - (logoSizeX-5) / 2, ny - (logoSizeY-5) / 2, logoSizeX, logoSizeY);
+            ctx.restore();
+          } else {
+            ctx.beginPath();
+            ctx.arc(nx, ny, 5, 0, Math.PI * 2);
+            ctx.fillStyle = prodscope.color;
+            ctx.shadowBlur = 16;
+            ctx.shadowColor = prodscope.color;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+          }
 
           // Label
           ctx.font = "700 13px 'JetBrains Mono', monospace";
