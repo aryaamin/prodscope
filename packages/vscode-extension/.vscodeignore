@@ -1,0 +1,13 @@
+src/
+node_modules/
+tsconfig.json
+icon.svg
+.vscodeignore
+dist/**/*.d.ts
+dist/**/*.d.ts.map
+dist/**/*.js.map
+dist/codelens-provider.js
+dist/config.js
+dist/decorations.js
+dist/insight-panel.js
+dist/websocket-client.js

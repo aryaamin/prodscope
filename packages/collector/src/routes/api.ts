@@ -108,17 +108,6 @@ router.get("/api/v1/ai-insight", async (req: Request, res: Response) => {
     return;
   }
 
-  // If refresh=true or no cached insight, generate a new one
-  if (refresh === "true") {
-    const insight = await generateInsight({
-      projectId,
-      file: file as string,
-      functionName: fn as string | undefined,
-    });
-    res.json({ file, function: fn ?? "", insight, fresh: true });
-    return;
-  }
-
   // Try cached first
   const db = getPostgres();
   const cached = await db.query(
@@ -127,7 +116,7 @@ router.get("/api/v1/ai-insight", async (req: Request, res: Response) => {
     [projectId, file, fn ?? ""],
   );
 
-  if (cached.rows.length > 0) {
+  if (cached.rows.length > 0 && refresh !== "true") {
     res.json({
       file,
       function: fn ?? "",
@@ -138,13 +127,21 @@ router.get("/api/v1/ai-insight", async (req: Request, res: Response) => {
     return;
   }
 
-  // Generate fresh
-  const insight = await generateInsight({
-    projectId,
-    file: file as string,
-    functionName: fn as string | undefined,
-  });
-  res.json({ file, function: fn ?? "", insight, fresh: true });
+  // Generate fresh — requires Anthropic API key
+  try {
+    const insight = await generateInsight({
+      projectId,
+      file: file as string,
+      functionName: fn as string | undefined,
+    });
+    res.json({ file, function: fn ?? "", insight, fresh: true });
+  } catch (err: any) {
+    if (err.message?.includes("ANTHROPIC_API_KEY")) {
+      res.json({ file, function: fn ?? "", insight: "AI insights are not configured on this server.", fresh: false });
+    } else {
+      throw err;
+    }
+  }
 });
 
 /** GET /api/v1/live-sessions?route=X */

@@ -79,7 +79,17 @@
       "Bash(npm whoami:*)",
       "Bash(git -C /home/arya/prodscope remote -v)",
       "Bash(npm access:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker-compose ps:*)",
+      "Bash(docker --version)",
+      "Bash(node dist/index.js)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5175/)",
+      "Bash(curl -s -X POST https://api.prodscope.dev/auth/signup -H 'Content-Type: application/json' -d '{\"email\": \"demo@prodscope.dev\", \"password\": \"demo1234\", \"name\": \"Demo User\"}')",
+      "Bash(curl -s -X POST https://api.prodscope.dev/auth/projects -H 'Content-Type: application/json' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQ0MTg2Ni0wNjRkLTRiODEtODdjYy0wMDY4MDBkMjY2NDUiLCJlbWFpbCI6ImRlbW9AcHJvZHNjb3BlLmRldiIsImlhdCI6MTc3NTU1OTk0OCwiZXhwIjoxNzc4MTUxOTQ4fQ.pI16myv5VaRRDWDwuDR5zHaoRRNSfP05S-Zp70PB3HM' -d '{\"name\": \"demo-app\"}')",
+      "Bash(npm install:*)",
+      "Bash(convert /home/arya/prodscope/packages/vscode-extension/icon.svg -resize 128x128 /home/arya/prodscope/packages/vscode-extension/icon.png)",
+      "Bash(convert -background none /home/arya/prodscope/packages/website/public/favicon.svg -resize 128x128 /home/arya/prodscope/packages/vscode-extension/icon.png)"
     ],
     "additionalDirectories": [
       "/home/arya/prodscope-demo",

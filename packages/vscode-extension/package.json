@@ -8,11 +8,27 @@
     "vscode": "^1.90.0"
   },
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/prodscope/prodscope", "directory": "packages/vscode-extension" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prodscope/prodscope",
+    "directory": "packages/vscode-extension"
+  },
   "homepage": "https://prodscope.dev",
-  "categories": ["Other", "Debuggers", "Testing"],
-  "keywords": ["observability", "telemetry", "production", "monitoring", "errors"],
-  "activationEvents": ["onStartupFinished"],
+  "categories": [
+    "Other",
+    "Debuggers",
+    "Testing"
+  ],
+  "keywords": [
+    "observability",
+    "telemetry",
+    "production",
+    "monitoring",
+    "errors"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -48,19 +64,19 @@
       ]
     }
   },
+  "icon": "icon.png",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "package": "vsce package",
+    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --platform=node --format=cjs --minify",
+    "dev": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --platform=node --format=cjs --watch",
+    "package": "npm run build && vsce package",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
     "@types/vscode": "^1.90.0",
     "@types/ws": "^8.5.13",
-    "typescript": "^5.7.0"
-  },
-  "dependencies": {
+    "esbuild": "^0.28.0",
+    "typescript": "^5.7.0",
     "ws": "^8.18.0"
   }
 }

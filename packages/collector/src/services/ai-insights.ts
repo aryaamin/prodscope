@@ -6,6 +6,9 @@ import { getPostgres } from "../db/postgres.js";
 let anthropic: Anthropic | null = null;
 
 function getAnthropic(): Anthropic {
+  if (!env.anthropicApiKey) {
+    throw new Error("ANTHROPIC_API_KEY is not configured");
+  }
   if (!anthropic) {
     anthropic = new Anthropic({ apiKey: env.anthropicApiKey });
   }
