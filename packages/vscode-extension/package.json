@@ -50,7 +50,7 @@
         {
           "id": "prodscope",
           "title": "ProdScope",
-          "icon": "$(radio-tower)"
+          "icon": "resources/activity-icon.svg"
         }
       ]
     },

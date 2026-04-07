@@ -137,7 +137,7 @@ router.get("/api/v1/ai-insight", async (req: Request, res: Response) => {
     res.json({ file, function: fn ?? "", insight, fresh: true });
   } catch (err: any) {
     if (err.message?.includes("ANTHROPIC_API_KEY")) {
-      res.json({ file, function: fn ?? "", insight: "AI insights are not configured on this server.", fresh: false });
+      res.json({ file, function: fn ?? "", insight: "no_api_key", fresh: false });
     } else {
       throw err;
     }

@@ -27,15 +27,23 @@ export function activate(context: vscode.ExtensionContext) {
 
   const config = loadConfig();
   console.log("[ProdScope] config:", config);
+
+  workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath ?? "";
+
+  // Always register the insight panel — it shows setup instructions when config is missing
+  const insightProvider = new InsightPanelProvider(config, log);
+  context.subscriptions.push(
+    vscode.window.registerWebviewViewProvider(
+      "prodscope.insight",
+      insightProvider,
+    ),
+  );
+
   if (!config) {
-    const msg = "ProdScope: No prodscope.config.ts found in workspace.";
-    console.error("[ProdScope]", msg);
-    log.error(msg);
-    vscode.window.showWarningMessage(msg);
+    log.warn("No prodscope.config.ts found — insight panel will show setup instructions.");
     return;
   }
 
-  workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath ?? "";
   log.info(`Config loaded: projectId=${config.projectId}, apiUrl=${config.apiUrl}, wsUrl=${config.wsUrl}, workspaceRoot=${workspaceRoot}, apiKey=${config.apiKey ? "set (" + config.apiKey.length + " chars)" : "MISSING"}`);
 
   // Status bar
@@ -56,15 +64,6 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerCodeLensProvider(
       { scheme: "file", language: "*" },
       codeLensProvider,
-    ),
-  );
-
-  // AI Insight sidebar
-  const insightProvider = new InsightPanelProvider(config, log);
-  context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider(
-      "prodscope.insight",
-      insightProvider,
     ),
   );
 

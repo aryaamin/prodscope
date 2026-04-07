@@ -6,10 +6,10 @@ export class InsightPanelProvider implements vscode.WebviewViewProvider {
   private currentInsight = "";
   private currentFile = "";
   private loading = false;
-  private config: ExtensionConfig;
+  private config: ExtensionConfig | null;
   private log: vscode.LogOutputChannel;
 
-  constructor(config: ExtensionConfig, log: vscode.LogOutputChannel) {
+  constructor(config: ExtensionConfig | null, log: vscode.LogOutputChannel) {
     this.config = config;
     this.log = log;
   }
@@ -22,6 +22,8 @@ export class InsightPanelProvider implements vscode.WebviewViewProvider {
   }
 
   async updateForFile(filePath: string): Promise<void> {
+    if (!this.config) return;
+
     this.currentFile = filePath;
     this.currentInsight = "";
     this.loading = true;
@@ -61,7 +63,7 @@ export class InsightPanelProvider implements vscode.WebviewViewProvider {
   }
 
   async refresh(): Promise<void> {
-    if (!this.currentFile) return;
+    if (!this.config || !this.currentFile) return;
 
     this.loading = true;
     this.render();
@@ -102,8 +104,22 @@ export class InsightPanelProvider implements vscode.WebviewViewProvider {
       : "";
 
     let body: string;
-    if (this.loading) {
+    if (!this.config) {
+      body = `<div class="setup">
+        <div class="setup-icon">⚠️</div>
+        <div class="setup-title">ProdScope not configured</div>
+        <div class="setup-desc">This project doesn't have a <code>prodscope.config.ts</code> file. Add ProdScope to your app to see live production insights here.</div>
+        <a class="setup-link" href="https://prodscope.dev/docs/quickstart">Get started at prodscope.dev →</a>
+      </div>`;
+    } else if (this.loading) {
       body = '<div class="empty">Loading insight...</div>';
+    } else if (this.currentInsight === "no_api_key") {
+      body = `<div class="setup">
+        <div class="setup-icon">🔑</div>
+        <div class="setup-title">AI insights not enabled</div>
+        <div class="setup-desc">Add your Anthropic API key in the ProdScope dashboard to enable AI-generated insights for your production code.</div>
+        <a class="setup-link" href="https://prodscope.dev/settings">Configure at prodscope.dev →</a>
+      </div>`;
     } else if (this.currentInsight) {
       body = `<div class="insight">${renderMarkdown(this.currentInsight)}</div>`;
     } else if (fileName) {
@@ -178,6 +194,35 @@ export class InsightPanelProvider implements vscode.WebviewViewProvider {
       color: var(--vscode-descriptionForeground);
       font-style: italic;
     }
+    .setup {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .setup-icon { font-size: 20px; }
+    .setup-title {
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--vscode-foreground);
+    }
+    .setup-desc {
+      font-size: 11px;
+      color: var(--vscode-descriptionForeground);
+      line-height: 1.5;
+    }
+    .setup-desc code {
+      background: var(--vscode-textCodeBlock-background, rgba(255,255,255,0.06));
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-family: var(--vscode-editor-font-family);
+    }
+    .setup-link {
+      font-size: 11px;
+      color: var(--vscode-textLink-foreground);
+      text-decoration: none;
+      margin-top: 4px;
+    }
+    .setup-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
