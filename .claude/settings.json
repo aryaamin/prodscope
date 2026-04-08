@@ -90,7 +90,8 @@
       "Bash(npm install:*)",
       "Bash(convert /home/arya/prodscope/packages/vscode-extension/icon.svg -resize 128x128 /home/arya/prodscope/packages/vscode-extension/icon.png)",
       "Bash(convert -background none /home/arya/prodscope/packages/website/public/favicon.svg -resize 128x128 /home/arya/prodscope/packages/vscode-extension/icon.png)",
-      "Read(//home/arya/.claude/**)"
+      "Read(//home/arya/.claude/**)",
+      "Bash(git commit -m ':*)"
     ],
     "additionalDirectories": [
       "/home/arya/prodscope-demo",
