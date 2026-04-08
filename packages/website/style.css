@@ -77,9 +77,16 @@ nav {
 .brand:hover { text-decoration: none; color: var(--blue); }
 
 .brand-logo {
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   vertical-align: middle;
+}
+
+.brand-text {
+  font-size: 20px; /* bigger "ProdScope" */
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
 }
 
 .nav-links {
@@ -238,6 +245,117 @@ nav {
   font-size: 11px;
 }
 
+/* ---- TERMINAL ANNOTATIONS ---- */
+.terminal-annotated {
+  position: relative;
+  max-width: 780px;
+}
+
+.annotation {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0;
+  opacity: 0;
+  z-index: 10;
+  animation: annotationFadeIn 0.6s ease forwards;
+}
+
+.annotation-latency {
+  top: 55px;
+  right: -220px;
+  animation-delay: 0.8s;
+}
+
+.annotation-sessions {
+  top: 210px;
+  right: -220px;
+  animation-delay: 1.4s;
+}
+
+.annotation-errors {
+  top: 320px;
+  right: -220px;
+  animation-delay: 2.0s;
+}
+
+@keyframes annotationFadeIn {
+  0% { opacity: 0; transform: translateX(-8px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.arrows-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1100px;
+  height: 460px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.arrow-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawArrow 1s ease forwards;
+}
+
+.arrow-path-1 { animation-delay: 0.8s; }
+.arrow-path-2 { animation-delay: 1.4s; }
+.arrow-path-3 { animation-delay: 2.0s; }
+
+.arrow-head {
+  opacity: 0;
+  animation: showHead 0.2s ease forwards;
+}
+
+.arrow-head-1 { animation-delay: 1.5s; }
+.arrow-head-2 { animation-delay: 2.1s; }
+.arrow-head-3 { animation-delay: 2.7s; }
+
+@keyframes drawArrow {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes showHead {
+  to { opacity: 1; }
+}
+
+.annotation-label {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  background: rgba(8, 8, 8, 0.9);
+  max-width: 200px;
+}
+
+.annotation-tag {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  margin-bottom: 4px;
+  width: fit-content;
+}
+
+.annotation-label--amber { border-color: rgba(227, 179, 65, 0.3); }
+.annotation-label--amber .annotation-tag { background: rgba(227, 179, 65, 0.15); color: var(--amber); }
+
+.annotation-label--red { border-color: rgba(244, 112, 103, 0.3); }
+.annotation-label--red .annotation-tag { background: rgba(244, 112, 103, 0.15); color: var(--red); }
+
+.annotation-label--blue { border-color: rgba(91, 154, 245, 0.3); }
+.annotation-label--blue .annotation-tag { background: rgba(91, 154, 245, 0.15); color: var(--blue); }
+
+@media (max-width: 1100px) {
+  .annotation { display: none; }
+}
+
 /* ---- TRUST ---- */
 .trust {
   max-width: 960px;
@@ -334,7 +452,7 @@ nav {
 .arch-canvas-wrap {
   border: 1px solid var(--border);
   background: #080808;
-  height: 540px;
+  height: 720px;
   position: relative;
   overflow: hidden;
 }
@@ -346,7 +464,7 @@ nav {
 }
 
 @media (max-width: 768px) {
-  .arch-canvas-wrap { height: 440px; }
+  .arch-canvas-wrap { height: 560px; }
 }
 
 /* ---- STEPS (how it works) ---- */
@@ -668,81 +786,17 @@ nav {
   color: var(--text-dim);
 }
 
-/* ---- PRICING ---- */
-.pricing-section { max-width: 960px; margin: 0 auto; padding: 64px 24px; }
-
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border: 1px solid var(--border);
-}
-
-.pricing-card {
-  padding: 28px;
-  border-right: 1px solid var(--border);
-  position: relative;
-}
-
-.pricing-card:last-child { border-right: none; }
-
-.pricing-card.featured {
-  background: var(--bg-card);
-}
-
-.pricing-label {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--blue);
-}
-
-.pricing-card h3 {
-  font-size: 14px;
-  font-weight: 700;
-  color: #eee;
-  margin-bottom: 4px;
-}
-
-.pricing-price {
-  font-size: 32px;
-  font-weight: 700;
-  color: #eee;
-  margin-bottom: 16px;
-}
-
-.pricing-price span {
-  font-size: 13px;
-  color: var(--text-muted);
-  font-weight: 400;
-}
-
-.pricing-card ul {
-  list-style: none;
-  margin-bottom: 20px;
-}
-
-.pricing-card li {
-  font-size: 13px;
-  color: var(--text-dim);
-  padding: 4px 0;
-}
-
-.pricing-card li::before {
-  content: '+ ';
-  color: var(--green);
-}
-
-.pricing-card .btn { width: 100%; }
-
-/* ---- WAITLIST ---- */
-.waitlist-section {
+/* ---- CTA ---- */
+.cta-section {
   max-width: 960px;
   margin: 0 auto;
-  padding: 64px 24px;
+  padding: 80px 24px;
   text-align: center;
+}
+
+.cta-section .section-heading {
+  max-width: 600px;
+  margin: 0 auto 8px;
 }
 
 .waitlist-logo {
@@ -751,35 +805,41 @@ nav {
   margin-bottom: 16px;
 }
 
-.waitlist-form {
+.cta-actions {
   display: flex;
-  gap: 0;
-  max-width: 480px;
-  margin: 24px auto 0;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 32px;
 }
 
-.waitlist-form input {
-  flex: 1;
-  padding: 10px 14px;
-  border: 1px solid var(--border);
-  border-right: none;
-  background: var(--bg-code);
-  color: var(--text);
-  font-family: var(--font);
-  font-size: 13px;
-  outline: none;
+.btn-lg {
+  padding: 14px 32px;
+  font-size: 15px;
 }
 
-.waitlist-form input:focus { border-color: var(--blue); }
-.waitlist-form input::placeholder { color: var(--text-muted); }
+.cta-includes {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
 
-.waitlist-form .btn { border-left: none; }
-
-.waitlist-note {
+.cta-includes span {
   font-size: 12px;
   color: var(--text-muted);
-  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
+
+.cta-includes span::before {
+  content: '+';
+  color: var(--green);
+  font-weight: 700;
+}
+
+/* (waitlist removed — now using CTA section) */
 
 /* ---- FOOTER ---- */
 footer {
@@ -837,6 +897,63 @@ footer {
   color: var(--text-muted);
 }
 
+/* ---- COMPARISON ---- */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.compare-card {
+  background: var(--bg);
+  padding: 28px;
+}
+
+.compare-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #eee;
+  margin-bottom: 16px;
+}
+
+.compare-card ul {
+  list-style: none;
+}
+
+.compare-card li {
+  font-size: 13px;
+  padding: 6px 0;
+  line-height: 1.5;
+}
+
+.compare-old li {
+  color: var(--text-muted);
+}
+
+.compare-old li::before {
+  content: '- ';
+  color: var(--red);
+}
+
+.compare-new li {
+  color: var(--text-dim);
+}
+
+.compare-new li::before {
+  content: '+ ';
+  color: var(--green);
+}
+
+.compare-new {
+  background: var(--bg-card);
+}
+
+@media (max-width: 768px) {
+  .compare-grid { grid-template-columns: 1fr; }
+}
+
 /* ---- SEPARATOR ---- */
 .sep {
   max-width: 960px;
@@ -855,16 +972,12 @@ footer {
   .hero { padding: 100px 20px 32px; }
   .hero-actions { flex-direction: column; align-items: flex-start; }
   .feature-grid { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr; }
-  .pricing-card { border-right: none; border-bottom: 1px solid var(--border); }
-  .pricing-card:last-child { border-bottom: none; }
   .metrics-grid { grid-template-columns: repeat(2, 1fr); }
   .mcp-tools { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; }
   .footer-links { gap: 28px; }
-  .waitlist-form { flex-direction: column; }
-  .waitlist-form input { border-right: 1px solid var(--border); }
-  .waitlist-form .btn { border-left: 1px solid var(--border); }
+  .cta-actions { flex-direction: column; align-items: center; }
+  .cta-includes { flex-direction: column; align-items: center; }
   .sdk-tabs { overflow-x: auto; }
   .step { flex-direction: column; }
   .sdk-install-row { flex-direction: column; align-items: flex-start; }
@@ -911,25 +1024,16 @@ body::before {
 }
 
 /* Card Hover Enhancements */
-.feature-card, .metric-card, .pricing-card {
+.feature-card, .metric-card {
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-  position: relative; /* Needed for z-index on hover */
+  position: relative;
 }
 
 .feature-card:hover, .metric-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(91, 154, 245, 0.4); /* Blue glow border */
+  border-color: rgba(91, 154, 245, 0.4);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(91, 154, 245, 0.05);
   z-index: 2;
-}
-
-.pricing-card:hover {
-  border-color: var(--blue);
-  z-index: 2;
-}
-
-.pricing-card.featured:hover {
-  box-shadow: 0 0 30px rgba(91, 154, 245, 0.1);
 }
 
 /* Blinking Cursor on Brand */

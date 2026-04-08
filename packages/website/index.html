@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ProdScope — Production insights mapped to your code</title>
+    <title>ProdScope — See what your code does in production</title>
     <meta
       name="description"
-      content="See live production telemetry — errors, latency, user sessions — directly on the lines of code that cause them. Inside VS Code."
+      content="Errors, latency, and user sessions — mapped to the exact line of code that caused them. Inside VS Code. Free and live."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,16 +22,23 @@
     <!-- NAV -->
     <nav>
       <div class="nav-inner">
-        <a href="/" class="brand"
-          ><img src="/logo-outline-white.svg?v=2" alt="ProdScope" class="brand-logo" />prodscope</a
-        >
+        <a href="/" class="brand">
+          <img
+            src="/logo-outline-white.svg?v=2"
+            alt="ProdScope"
+            class="brand-logo"
+          />
+          <span class="brand-text">ProdScope</span>
+        </a>
+
         <div class="nav-links">
-          <a href="#features">features</a>
-          <a href="#architecture">how it works</a>
-          <a href="#how">setup</a>
-          <a href="#sdk">sdk</a>
-          <a href="#pricing">pricing</a>
-          <a href="#waitlist" class="btn btn-primary">early access</a>
+          <a href="#features">Features</a>
+          <a href="#architecture">How it works</a>
+          <a href="#how">Setup</a>
+          <a href="#sdk">SDK</a>
+          <a href="https://app.prodscope.dev" class="btn btn-primary">
+            Get started — free
+          </a>
         </div>
       </div>
     </nav>
@@ -39,28 +46,53 @@
     <!-- HERO -->
     <section class="hero">
       <p class="hero-tag">
-        <span>&gt;</span> production observability for developers
+        <span>&gt;</span> live now — free for all developers
       </p>
-      <h1>Production insights,<br />mapped to your code.</h1>
+      <h1>See what your code does<br />in production.</h1>
       <p class="hero-sub">
-        Errors, latency, and user sessions — directly on the lines of code that
-        cause them. Inside VS Code. Powered by AI.
+        Errors, latency, and user sessions — mapped to the exact line of code
+        that caused them. Inside VS Code. No dashboard, no context switching.
       </p>
       <div class="hero-actions">
-        <a href="#waitlist" class="btn btn-primary">get early access</a>
+        <a href="https://app.prodscope.dev" class="btn btn-primary"
+          >start for free</a
+        >
         <a href="#how" class="btn">see how it works</a>
       </div>
 
-      <!-- TERMINAL MOCKUP -->
-      <div class="terminal">
-        <div class="terminal-bar">
-          <div class="terminal-dots">
-            <span></span><span></span><span></span>
+      <!-- SVG filter for hand-drawn look -->
+      <svg style="position: absolute; width: 0; height: 0">
+        <defs>
+          <filter id="sketchy">
+            <feTurbulence
+              type="turbulence"
+              baseFrequency="0.03"
+              numOctaves="3"
+              result="noise"
+              seed="2"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="1.5"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+      </svg>
+
+      <!-- TERMINAL MOCKUP WITH ANNOTATIONS -->
+      <div class="terminal-annotated">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="terminal-title">src/api.ts — prodscope</span>
           </div>
-          <span class="terminal-title">src/api.ts — prodscope</span>
-        </div>
-        <div class="terminal-body">
-          <pre><code><span class="line-num"> 6</span>  <span class="kw">export async function</span> <span class="fn">fetchProducts</span>(<span class="param">category</span>: <span class="type">string</span>) {
+          <div class="terminal-body">
+            <pre><code><span class="line-num"> 6</span>  <span class="kw">export async function</span> <span class="fn">fetchProducts</span>(<span class="param">category</span>: <span class="type">string</span>) {
 <span class="line-num">  </span>  <span class="codelens">&nearr; fetchProducts  77 calls  |  p50 245ms &middot; p99 1.2s  |  1 error (1.3%)  |  84% sessions</span>
 <span class="line-num"> 7</span>    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">`/api/products?cat=${category}`</span>);
 <span class="line-num"> 8</span>    <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> <span class="type">Error</span>(<span class="str">`Failed: ${res.status}`</span>);
@@ -77,6 +109,44 @@
 <span class="line-num">31</span>    }
 <span class="line-num">32</span>    <span class="kw">return</span> { orderId: <span class="str">`ord-${Date.now()}`</span> };
 <span class="line-num">33</span>  }</code></pre>
+          </div>
+        </div>
+
+        <!-- Overlay SVG for all arrows -->
+        <svg class="arrows-overlay" viewBox="0 0 1100 460" fill="none">
+          <!-- Arrow 1: "p99 1.2s" → latency label
+               tip: (400, 90) = on "p99 1.2s" text
+               tail: (830, 75) = near latency label -->
+          <path class="arrow-path arrow-path-1" d="M800 70 C 700 100, 380 60, 380 100" stroke="#e3b341" stroke-width="1.8" fill="none"/>
+          <path class="arrow-head arrow-head-1" d="M378 98 L380 100 L382 98" stroke="#e3b341" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+          <path class="arrow-path arrow-path-2" d="M800 230 C 760 240, 550 260, 570 360" stroke="#5b9af5" stroke-width="1.8" fill="none"/>
+          <path class="arrow-head arrow-head-2" d="M568 358 L570 360 L572 358" stroke="#5b9af5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+          <path class="arrow-path arrow-path-3" d="M800 340 C 720 350, 500 490, 475 390" stroke="#f47067" stroke-width="1.8" fill="none"/>
+          <path class="arrow-head arrow-head-3" d="M473 392 L475 390 L477 392" stroke="#f47067" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+
+        <!-- Annotation labels (no arrows inside, positioned independently) -->
+        <div class="annotation annotation-latency">
+          <div class="annotation-label annotation-label--amber">
+            <span class="annotation-tag">latency</span>
+            p99 at 1.2s — this endpoint<br />needs caching or pagination
+          </div>
+        </div>
+
+        <div class="annotation annotation-sessions">
+          <div class="annotation-label annotation-label--blue">
+            <span class="annotation-tag">sessions</span>
+            62% of users hit this path<br />— high-impact code
+          </div>
+        </div>
+
+        <div class="annotation annotation-errors">
+          <div class="annotation-label annotation-label--red">
+            <span class="annotation-tag">errors</span>
+            19.9% failure rate on checkout<br />— payment provider issue?
+          </div>
         </div>
       </div>
     </section>
@@ -92,6 +162,8 @@
         <span>Node.js</span>
         <span>Prisma</span>
         <span>Vite</span>
+        <span>Supabase Edge</span>
+        <span>Cloudflare Workers</span>
       </div>
     </section>
 
@@ -105,8 +177,8 @@
           Everything you need to understand production
         </h2>
         <p class="section-desc">
-          Stop guessing. See exactly what's happening, right where you wrote the
-          code.
+          No more switching between Sentry, Datadog, and log files. Every
+          signal, on the line that caused it.
         </p>
       </div>
 
@@ -115,32 +187,33 @@
           <p class="feature-num">[01]</p>
           <h3>Mapped to your code</h3>
           <p>
-            Every error, slow query, and API call traced back to the exact file
-            and line that caused it.
+            Every error, slow query, and API call traced back to the exact
+            file:line — not just a service name. Source maps resolved
+            automatically.
           </p>
         </div>
         <div class="feature-card">
           <p class="feature-num">[02]</p>
           <h3>Live in VS Code</h3>
           <p>
-            See call counts, p50/p99 latency, error rates, and session reach as
-            inline CodeLens.
+            Call counts, p50/p99 latency, error rates, and session reach appear
+            as inline CodeLens. Real-time updates via WebSocket.
           </p>
         </div>
         <div class="feature-card">
           <p class="feature-num">[03]</p>
           <h3>AI-powered insights</h3>
           <p>
-            Claude analyzes your telemetry and tells you what's wrong, who's
-            affected, and what to fix.
+            AI analyzes your telemetry and tells you what's broken, who's
+            affected, and what to fix — in plain English.
           </p>
         </div>
         <div class="feature-card">
           <p class="feature-num">[04]</p>
           <h3>Session-level detail</h3>
           <p>
-            See what % of users hit each function, calls per session, and
-            affected browsers.
+            Know what % of your users hit each code path, how many calls per
+            session, and which browsers are affected.
           </p>
         </div>
         <div class="feature-card">
@@ -148,15 +221,32 @@
           <h3>Zero-config SDK</h3>
           <p>
             Add the Vite plugin, call init(). Every exported function
-            auto-tracked with file:line mapping.
+            auto-tracked with file:line mapping. Up and running in 2 minutes.
           </p>
         </div>
         <div class="feature-card">
           <p class="feature-num">[06]</p>
-          <h3>MCP for Claude Code</h3>
+          <h3>MCP for AI coding assistants</h3>
           <p>
-            Ask Claude "what's failing in checkout?" and it queries your live
-            production data via MCP.
+            Ask Claude Code "what's failing in checkout?" and it queries your
+            live production data via MCP — debug with real telemetry, not
+            guesses.
+          </p>
+        </div>
+        <div class="feature-card">
+          <p class="feature-num">[07]</p>
+          <h3>Deploy comparisons</h3>
+          <p>
+            Compare any two deploys by error rate, latency, and session impact.
+            Know instantly if your last push broke something.
+          </p>
+        </div>
+        <div class="feature-card">
+          <p class="feature-num">[08]</p>
+          <h3>Full distributed traces</h3>
+          <p>
+            Follow a request from browser click to API call to database query.
+            See exactly where time is spent, across every layer.
           </p>
         </div>
       </div>
@@ -579,9 +669,10 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
     <section class="metrics-section">
       <div class="section-header">
         <p class="section-title">&gt; metrics</p>
-        <h2 class="section-heading">What appears in your editor</h2>
+        <h2 class="section-heading">What appears on every function</h2>
         <p class="section-desc">
-          Real metrics from real users, on every function.
+          Real metrics from real users. Updated in real-time. No dashboard
+          needed.
         </p>
       </div>
 
@@ -617,84 +708,75 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
     <div class="sep"><hr /></div>
 
-    <!-- PRICING -->
-    <section id="pricing" class="pricing-section">
+    <!-- WHY PRODSCOPE -->
+    <section class="section">
       <div class="section-header">
-        <p class="section-title">&gt; pricing</p>
-        <h2 class="section-heading">Simple pricing</h2>
-        <p class="section-desc">Start free. Scale when you're ready.</p>
+        <p class="section-title">&gt; why prodscope</p>
+        <h2 class="section-heading">Built for developers, not ops teams</h2>
+        <p class="section-desc">
+          Traditional observability tools were built for SRE teams staring at
+          dashboards. ProdScope is built for developers staring at code.
+        </p>
       </div>
 
-      <div class="pricing-grid">
-        <div class="pricing-card">
-          <h3>free</h3>
-          <div class="pricing-price">$0<span>/mo</span></div>
+      <div class="compare-grid">
+        <div class="compare-card compare-old">
+          <h3>Without ProdScope</h3>
           <ul>
-            <li>1 project</li>
-            <li>1M spans/month</li>
-            <li>24h retention</li>
-            <li>VS Code extension</li>
-            <li>MCP server</li>
-            <li>Community support</li>
+            <li>Switch to Sentry for errors</li>
+            <li>Switch to Datadog for latency</li>
+            <li>Check cloud console for costs</li>
+            <li>Grep through logs for context</li>
+            <li>Ask teammates "does this affect users?"</li>
+            <li>$500+/mo for basic APM tooling</li>
           </ul>
-          <a href="#waitlist" class="btn">get started</a>
         </div>
-
-        <div class="pricing-card featured">
-          <div class="pricing-label"></div>
-          <h3>pro</h3>
-          <div class="pricing-price">$29<span>/mo</span></div>
+        <div class="compare-card compare-new">
+          <h3>With ProdScope</h3>
           <ul>
-            <li>Unlimited projects</li>
-            <li>50M spans/month</li>
-            <li>30-day retention</li>
-            <li>AI insights (Claude)</li>
-            <li>Deploy comparisons</li>
-            <li>Priority support</li>
+            <li>Errors on the line that caused them</li>
+            <li>Latency on every function, inline</li>
+            <li>Session reach shows user impact</li>
+            <li>AI tells you what's wrong and why</li>
+            <li>Ask Claude Code with real production data</li>
+            <li>Free for all developers</li>
           </ul>
-          <a href="#waitlist" class="btn btn-primary">get early access</a>
-        </div>
-
-        <div class="pricing-card">
-          <h3>team</h3>
-          <div class="pricing-price">$99<span>/mo</span></div>
-          <ul>
-            <li>Everything in Pro</li>
-            <li>500M spans/month</li>
-            <li>90-day retention</li>
-            <li>Team sharing</li>
-            <li>SSO / SAML</li>
-            <li>Dedicated support</li>
-          </ul>
-          <a href="#waitlist" class="btn">contact us</a>
         </div>
       </div>
     </section>
 
     <div class="sep"><hr /></div>
 
-    <!-- WAITLIST -->
-    <section id="waitlist" class="waitlist-section">
+    <!-- CTA -->
+    <section id="cta" class="cta-section">
       <div class="section-header">
-        <img src="/logo-outline-white.svg?v=2" alt="ProdScope" class="waitlist-logo" />
-        <p class="section-title">&gt; early access</p>
-        <h2 class="section-heading">Get early access</h2>
-        <p class="section-desc">We're onboarding teams one at a time.</p>
-      </div>
-      <form
-        class="waitlist-form"
-        action="https://api.prodscope.dev/auth/waitlist"
-        method="POST"
-      >
-        <input
-          type="email"
-          name="email"
-          placeholder="you@company.com"
-          required
+        <img
+          src="/logo-outline-white.svg?v=2"
+          alt="ProdScope"
+          class="waitlist-logo"
         />
-        <button type="submit" class="btn btn-primary">join waitlist</button>
-      </form>
-      <p class="waitlist-note">free during early access. no credit card.</p>
+        <h2 class="section-heading">
+          Start seeing what your code does in production.
+        </h2>
+        <p class="section-desc">
+          Free for all developers. No credit card. Set up in 2 minutes.
+        </p>
+      </div>
+      <div class="cta-actions">
+        <a href="https://app.prodscope.dev" class="btn btn-primary btn-lg"
+          >get started — free</a
+        >
+        <a href="https://docs.prodscope.dev" class="btn btn-lg"
+          >read the docs</a
+        >
+      </div>
+      <div class="cta-includes">
+        <span>Unlimited projects</span>
+        <span>VS Code extension</span>
+        <span>MCP server</span>
+        <span>AI insights</span>
+        <span>Deploy comparisons</span>
+      </div>
     </section>
 
     <!-- FOOTER -->
@@ -702,15 +784,16 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="/" class="brand"
-            ><img src="/logo-outline.svg" alt="ProdScope" class="brand-logo" /> prodscope</a
+            ><img src="/logo-outline.svg" alt="ProdScope" class="brand-logo" />
+            prodscope</a
           >
-          <p>production insights, mapped to your code.</p>
+          <p>see what your code does in production.</p>
         </div>
         <div class="footer-links">
           <div>
             <h4>product</h4>
             <a href="#features">features</a>
-            <a href="#pricing">pricing</a>
+            <a href="https://app.prodscope.dev">get started</a>
             <a href="https://docs.prodscope.dev">docs</a>
           </div>
           <div>
@@ -822,21 +905,21 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
             label: "Frontend",
             sub: "React \u00b7 Vue \u00b7 Vite",
             xP: 0.2,
-            yP: 0.18,
+            yP: 0.15,
             color: "rgba(97, 218, 251, 1)",
           },
           {
             label: "Backend",
             sub: "Express \u00b7 Fastify",
             xP: 0.5,
-            yP: 0.18,
+            yP: 0.15,
             color: "rgba(104, 159, 56, 1)",
           },
           {
             label: "Database",
             sub: "Prisma \u00b7 PostgreSQL",
             xP: 0.8,
-            yP: 0.18,
+            yP: 0.15,
             color: "rgba(51, 103, 145, 1)",
           },
         ];
@@ -844,7 +927,7 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         var prodscope = {
           label: "PRODSCOPE",
           xP: 0.5,
-          yP: 0.52,
+          yP: 0.48,
           color: "rgba(61, 220, 132, 1)",
         };
 
@@ -853,8 +936,8 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
             id: "vscode",
             label: "VS CODE",
             sub: "Extension",
-            xP: 0.34,
-            yP: 0.85,
+            xP: 0.3,
+            yP: 0.84,
             color: "rgba(91, 154, 245, 1)",
           },
           {
@@ -862,23 +945,23 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
             label: "",
             sub: "",
             xP: 0.62,
-            yP: 0.85,
+            yP: 0.84,
             color: "rgba(227, 179, 65, 1)",
           },
           {
             id: "chatgpt",
             label: "LLMs MCP",
             sub: "",
-            xP: 0.65,
-            yP: 0.85,
+            xP: 0.68,
+            yP: 0.84,
             color: "rgba(116, 195, 104, 1)",
           },
           {
             id: "gemini",
             label: "",
             sub: "",
-            xP: 0.68,
-            yP: 0.85,
+            xP: 0.74,
+            yP: 0.84,
             color: "rgba(136, 132, 216, 1)",
           },
         ];
@@ -887,24 +970,24 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         var inboundLinks = [
           {
             fromXP: 0.2,
-            fromYP: 0.28,
+            fromYP: 0.26,
             toXP: prodscope.xP,
-            toYP: prodscope.yP - 0.06,
-            speed: 0.004,
+            toYP: prodscope.yP - 0.07,
+            speed: 0.003,
           },
           {
             fromXP: 0.5,
-            fromYP: 0.28,
+            fromYP: 0.26,
             toXP: prodscope.xP,
-            toYP: prodscope.yP - 0.06,
-            speed: 0.005,
+            toYP: prodscope.yP - 0.07,
+            speed: 0.004,
           },
           {
             fromXP: 0.8,
-            fromYP: 0.28,
+            fromYP: 0.26,
             toXP: prodscope.xP,
-            toYP: prodscope.yP - 0.06,
-            speed: 0.004,
+            toYP: prodscope.yP - 0.07,
+            speed: 0.003,
           },
         ];
 
@@ -912,9 +995,9 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         var outboundLinks = [
           {
             fromXP: prodscope.xP,
-            fromYP: prodscope.yP + 0.06,
-            toXP: 0.34,
-            toYP: 0.85,
+            fromYP: prodscope.yP + 0.07,
+            toXP: 0.3,
+            toYP: 0.78,
             speed: 0.003,
             color: "rgba(91, 154, 245, 0.9)",
           },
@@ -924,8 +1007,8 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         var mcpLinks = [
           {
             fromXP: prodscope.xP,
-            fromYP: prodscope.yP + 0.06,
-            toXP: 0.62,
+            fromYP: prodscope.yP + 0.07,
+            toXP: 0.68,
             toYP: 0.78,
             speed: 0.003,
             color: "rgba(227, 179, 65, 0.9)",
@@ -970,11 +1053,11 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
           var c = this.color.replace(/[\d.]+\)$/, alpha + ")");
 
           ctx.save();
-          ctx.font = "600 9px 'JetBrains Mono', monospace";
+          ctx.font = "600 11px 'JetBrains Mono', monospace";
           ctx.textAlign = "center";
-          var tw = ctx.measureText(this.content).width + 8;
-          ctx.fillStyle = "rgba(0,0,0," + this.opacity * 0.55 + ")";
-          ctx.fillRect(x - tw / 2, y - 22, tw, 14);
+          var tw = ctx.measureText(this.content).width + 10;
+          ctx.fillStyle = "rgba(0,0,0," + this.opacity * 0.6 + ")";
+          ctx.fillRect(x - tw / 2, y - 24, tw, 17);
           ctx.fillStyle = c;
           ctx.fillText(this.content, x, y - 11);
           ctx.restore();
@@ -1006,7 +1089,7 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
           ctx.save();
           ctx.translate(cx, cy);
           ctx.strokeStyle = "rgba(97, 218, 251, 0.7)";
-          ctx.lineWidth = 0.8;
+          ctx.lineWidth = 1.2;
           for (var i = 0; i < 3; i++) {
             ctx.save();
             ctx.rotate((Math.PI / 3) * i);
@@ -1016,7 +1099,7 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
             ctx.restore();
           }
           ctx.beginPath();
-          ctx.arc(0, 0, 1.8, 0, Math.PI * 2);
+          ctx.arc(0, 0, 2.5, 0, Math.PI * 2);
           ctx.fillStyle = "rgba(97, 218, 251, 1)";
           ctx.fill();
           ctx.restore();
@@ -1038,7 +1121,7 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
           ctx.strokeStyle = "rgba(104, 159, 56, 0.8)";
           ctx.lineWidth = 1;
           ctx.stroke();
-          ctx.font = "700 6px 'JetBrains Mono', monospace";
+          ctx.font = "700 8px 'JetBrains Mono', monospace";
           ctx.fillStyle = "rgba(104, 159, 56, 1)";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
@@ -1054,7 +1137,7 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
             h = sz * 0.48,
             ey = sz * 0.15;
           ctx.strokeStyle = "rgba(51, 103, 145, 0.8)";
-          ctx.lineWidth = 0.9;
+          ctx.lineWidth = 1.3;
           ctx.beginPath();
           ctx.moveTo(-w, -h + ey);
           ctx.lineTo(-w, h - ey);
@@ -1075,32 +1158,32 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         }
 
         function drawProductionBox() {
-          var bx = sdkNodes[0].xP * W - 65;
-          var by = sdkNodes[0].yP * H - 48;
-          var bw = (sdkNodes[2].xP - sdkNodes[0].xP) * W + 130;
-          var bh = 95;
+          var bx = sdkNodes[0].xP * W - 90;
+          var by = sdkNodes[0].yP * H - 60;
+          var bw = (sdkNodes[2].xP - sdkNodes[0].xP) * W + 180;
+          var bh = 140;
 
           // Gradient fill
           var gf = ctx.createLinearGradient(bx, by, bx, by + bh);
-          gf.addColorStop(0, "rgba(255,255,255,0.035)");
-          gf.addColorStop(1, "rgba(255,255,255,0.008)");
+          gf.addColorStop(0, "rgba(255,255,255,0.04)");
+          gf.addColorStop(1, "rgba(255,255,255,0.01)");
           ctx.fillStyle = gf;
           ctx.fillRect(bx, by, bw, bh);
 
           // Outer border
-          ctx.strokeStyle = "rgba(255,255,255,0.12)";
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = "rgba(255,255,255,0.14)";
+          ctx.lineWidth = 1.5;
           ctx.strokeRect(bx, by, bw, bh);
 
           // Inner border (double-line effect)
           ctx.strokeStyle = "rgba(255,255,255,0.04)";
-          ctx.strokeRect(bx + 3, by + 3, bw - 6, bh - 6);
+          ctx.strokeRect(bx + 4, by + 4, bw - 8, bh - 8);
 
           // Label
-          ctx.font = "700 9px 'JetBrains Mono', monospace";
-          ctx.fillStyle = "rgba(255,255,255,0.4)";
+          ctx.font = "700 12px 'JetBrains Mono', monospace";
+          ctx.fillStyle = "rgba(255,255,255,0.45)";
           ctx.textAlign = "left";
-          ctx.fillText("YOUR PRODUCTION APP", bx + 10, by + 15);
+          ctx.fillText("YOUR PRODUCTION APP", bx + 14, by + 22);
 
           // SDK nodes with logos
           sdkNodes.forEach(function (n, i) {
@@ -1108,28 +1191,19 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
               ny = n.yP * H;
 
             // Logo above
-            if (i === 0) drawReactLogo(nx, ny - 12, 15);
-            else if (i === 1) drawNodeLogo(nx, ny - 12, 30);
-            else drawDBLogo(nx, ny - 12, 25);
-
-            // Glow in node's color
-            // ctx.beginPath();
-            // ctx.arc(nx, ny + 5, 22, 0, Math.PI * 2);
-            // var g = ctx.createRadialGradient(nx, ny + 5, 0, nx, ny + 5, 22);
-            // g.addColorStop(0, n.color.replace("1)", "0.12)"));
-            // g.addColorStop(1, "rgba(0,0,0,0)");
-            // ctx.fillStyle = g;
-            // ctx.fill();
+            if (i === 0) drawReactLogo(nx, ny - 8, 20);
+            else if (i === 1) drawNodeLogo(nx, ny - 8, 40);
+            else drawDBLogo(nx, ny - 8, 34);
 
             // Labels
-            ctx.font = "600 10px 'JetBrains Mono', monospace";
-            ctx.fillStyle = "rgba(255,255,255,0.65)";
+            ctx.font = "600 13px 'JetBrains Mono', monospace";
+            ctx.fillStyle = "rgba(255,255,255,0.7)";
             ctx.textAlign = "center";
-            ctx.fillText(n.label, nx, ny + 22);
+            ctx.fillText(n.label, nx, ny + 30);
 
-            ctx.font = "400 8px 'JetBrains Mono', monospace";
-            ctx.fillStyle = "rgba(255,255,255,0.25)";
-            ctx.fillText(n.sub, nx, ny + 34);
+            ctx.font = "400 10px 'JetBrains Mono', monospace";
+            ctx.fillStyle = "rgba(255,255,255,0.3)";
+            ctx.fillText(n.sub, nx, ny + 46);
           });
         }
 
@@ -1139,50 +1213,48 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
           // Large glow
           ctx.beginPath();
-          ctx.arc(nx, ny, 50, 0, Math.PI * 2);
-          var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 50);
-          g.addColorStop(0, "rgba(61, 220, 132, 0.18)");
+          ctx.arc(nx, ny, 70, 0, Math.PI * 2);
+          var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 70);
+          g.addColorStop(0, "rgba(61, 220, 132, 0.08)");
           g.addColorStop(1, "rgba(0,0,0,0)");
           ctx.fillStyle = g;
           ctx.fill();
 
-          // Pulsing ring
-          var pulse = Math.sin(time * 2) * 0.3 + 0.7;
-          ctx.beginPath();
-          ctx.arc(nx, ny, 20, 0, Math.PI * 2);
-          ctx.strokeStyle = "rgba(61, 220, 132, " + pulse * 0.4 + ")";
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-
           // Logo image or fallback dot
           if (isLoaded(logos.prodscope)) {
             ctx.save();
-            var logoSizeX = 120;
-            var logoSizeY = 150;
-            ctx.drawImage(logos.prodscope, nx - (logoSizeX-5) / 2, ny - (logoSizeY-5) / 2, logoSizeX, logoSizeY);
+            var logoSizeX = 56;
+            var logoSizeY = 56;
+            ctx.drawImage(
+              logos.prodscope,
+              nx - (logoSizeX - 5) / 2,
+              ny - (logoSizeY - 5) / 2,
+              logoSizeX,
+              logoSizeY,
+            );
             ctx.restore();
           } else {
             ctx.beginPath();
-            ctx.arc(nx, ny, 5, 0, Math.PI * 2);
+            ctx.arc(nx, ny, 7, 0, Math.PI * 2);
             ctx.fillStyle = prodscope.color;
-            ctx.shadowBlur = 16;
+            ctx.shadowBlur = 20;
             ctx.shadowColor = prodscope.color;
             ctx.fill();
             ctx.shadowBlur = 0;
           }
 
           // Label
-          ctx.font = "700 13px 'JetBrains Mono', monospace";
-          ctx.fillStyle = "rgba(61, 220, 132, 1)";
+          ctx.font = "700 16px 'JetBrains Mono', monospace";
+          ctx.fillStyle = "white";
           ctx.textAlign = "center";
-          ctx.fillText("PRODSCOPE", nx, ny + 40);
+          ctx.fillText("PRODSCOPE", nx, ny + 50);
 
-          ctx.font = "400 9px 'JetBrains Mono', monospace";
-          ctx.fillStyle = "rgba(255,255,255,0.3)";
+          ctx.font = "400 11px 'JetBrains Mono', monospace";
+          ctx.fillStyle = "rgba(255,255,255,0.35)";
           ctx.fillText(
             "errors \u00b7 latency \u00b7 sessions \u00b7 traces",
             nx,
-            ny + 54,
+            ny + 68,
           );
         }
 
@@ -1212,8 +1284,8 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
             // Glow
             ctx.beginPath();
-            ctx.arc(nx, ny, 32, 0, Math.PI * 2);
-            var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 32);
+            ctx.arc(nx, ny, 44, 0, Math.PI * 2);
+            var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 44);
             g.addColorStop(0, node.color.replace("1)", "0.14)"));
             g.addColorStop(1, "rgba(0,0,0,0)");
             ctx.fillStyle = g;
@@ -1222,26 +1294,26 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
             // Logo image
             var img = logos[node.id];
             var flt = logoFilters[node.id];
-            if (img && flt) drawLogoImage(img, nx, ny - 4, 22, flt);
+            if (img && flt) drawLogoImage(img, nx, ny - 4, 30, flt);
 
             // Label
-            ctx.font = "700 10px 'JetBrains Mono', monospace";
-            ctx.fillStyle = "rgba(255,255,255,0.75)";
+            ctx.font = "700 13px 'JetBrains Mono', monospace";
+            ctx.fillStyle = "rgba(255,255,255,0.8)";
             ctx.textAlign = "center";
-            ctx.fillText(node.label, nx, ny + 26);
+            ctx.fillText(node.label, nx, ny + 32);
 
-            ctx.font = "400 8px 'JetBrains Mono', monospace";
+            ctx.font = "400 10px 'JetBrains Mono', monospace";
             ctx.fillStyle = node.color.replace("1)", "0.55)");
-            ctx.fillText(node.sub, nx, ny + 38);
+            ctx.fillText(node.sub, nx, ny + 46);
           });
         }
 
         function drawArrowTip(x1, y1, x2, y2, color) {
           var angle = Math.atan2(y2 - y1, x2 - x1);
-          var len = 7;
+          var len = 10;
           ctx.setLineDash([]);
           ctx.strokeStyle = color;
-          ctx.lineWidth = 1.2;
+          ctx.lineWidth = 1.8;
           ctx.beginPath();
           ctx.moveTo(
             x2 - Math.cos(angle - 0.42) * len,
@@ -1257,7 +1329,7 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
         function drawLinkGroup(links, dash, defaultStroke) {
           ctx.setLineDash(dash);
-          ctx.lineWidth = 1;
+          ctx.lineWidth = 1.5;
           links.forEach(function (l) {
             var sc = l.color
               ? l.color.replace(/[\d.]+\)$/, "0.1)")
@@ -1288,12 +1360,16 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
         /* ---- Arrow labels ---- */
         function drawLabels() {
-          ctx.font = "italic 9px 'JetBrains Mono', monospace";
+          ctx.font = "italic 11px 'JetBrains Mono', monospace";
           ctx.textAlign = "center";
 
           // "raw telemetry" on inbound
+          ctx.fillStyle = "rgba(255,255,255,0.25)";
+          ctx.fillText("raw telemetry", 0.5 * W, 0.35 * H);
+
+          // "insights" label between ProdScope and outputs
           ctx.fillStyle = "rgba(255,255,255,0.2)";
-          ctx.fillText("raw telemetry", 0.5 * W, 0.38 * H);
+          ctx.fillText("actionable insights", 0.5 * W, 0.68 * H);
         }
 
         /* ---- Packet text pools ---- */
@@ -1399,7 +1475,7 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
       })();
 
       const revealElements = document.querySelectorAll(
-        ".section-header, .feature-card, .step, .metric-card, .pricing-card",
+        ".section-header, .feature-card, .step, .metric-card, .cta-section",
       );
       revealElements.forEach((el) => el.classList.add("reveal"));
 
@@ -1407,11 +1483,11 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              // Add slight staggered delay based on order
               setTimeout(() => {
                 entry.target.classList.add("active");
               }, 100);
-              revealObserver.unobserve(entry.target);
+            } else {
+              entry.target.classList.remove("active");
             }
           });
         },
@@ -1421,6 +1497,44 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
       document
         .querySelectorAll(".reveal")
         .forEach((el) => revealObserver.observe(el));
+
+      // Terminal annotations: replay arrows + label fade on every scroll
+      const terminalAnnotated = document.querySelector(".terminal-annotated");
+      if (terminalAnnotated) {
+        const arrowPaths = terminalAnnotated.querySelectorAll(".arrow-path");
+        const arrowHeads = terminalAnnotated.querySelectorAll(".arrow-head");
+        const annotations = terminalAnnotated.querySelectorAll(".annotation");
+
+        // Pause all animations initially until in view
+        function resetAnimations() {
+          arrowPaths.forEach((p) => { p.style.animation = "none"; });
+          arrowHeads.forEach((h) => { h.style.animation = "none"; });
+          annotations.forEach((a) => { a.style.animation = "none"; });
+        }
+
+        function playAnimations() {
+          // Force reflow between remove and re-add
+          arrowPaths.forEach((p) => { p.style.animation = ""; void p.offsetWidth; });
+          arrowHeads.forEach((h) => { h.style.animation = ""; void h.offsetWidth; });
+          annotations.forEach((a) => { a.style.animation = ""; void a.offsetWidth; });
+        }
+
+        resetAnimations();
+
+        const termObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                playAnimations();
+              } else {
+                resetAnimations();
+              }
+            });
+          },
+          { threshold: 0.15 },
+        );
+        termObserver.observe(terminalAnnotated);
+      }
     </script>
   </body>
 </html>
