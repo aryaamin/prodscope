@@ -77,7 +77,7 @@ nav {
 .brand:hover { text-decoration: none; color: var(--blue); }
 
 .brand-logo {
-  height: 150px;
+  height: 40px;
   width: auto;
   vertical-align: middle;
 }

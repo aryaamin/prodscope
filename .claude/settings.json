@@ -91,7 +91,8 @@
       "Bash(convert /home/arya/prodscope/packages/vscode-extension/icon.svg -resize 128x128 /home/arya/prodscope/packages/vscode-extension/icon.png)",
       "Bash(convert -background none /home/arya/prodscope/packages/website/public/favicon.svg -resize 128x128 /home/arya/prodscope/packages/vscode-extension/icon.png)",
       "Read(//home/arya/.claude/**)",
-      "Bash(git commit -m ':*)"
+      "Bash(git commit -m ':*)",
+      "Bash(find /home/arya/prodscope/packages -name \"src\" -type d -exec find {} -maxdepth 2 -type f \\\\;)"
     ],
     "additionalDirectories": [
       "/home/arya/prodscope-demo",
