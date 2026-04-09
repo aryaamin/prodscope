@@ -7,10 +7,10 @@
   "engines": {
     "vscode": "^1.90.0"
   },
-  "license": "MIT",
+  "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://github.com/prodscope/prodscope",
+    "url": "https://github.com/aryaamin/prodscope.git",
     "directory": "packages/vscode-extension"
   },
   "homepage": "https://prodscope.dev",

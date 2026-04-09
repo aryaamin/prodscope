@@ -1,25 +1,25 @@
 import { Router, type Request, type Response } from "express";
 import { getPostgres } from "../db/postgres.js";
-import { createHash, randomBytes } from "crypto";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { env } from "../env.js";
 
 const router: ReturnType<typeof Router> = Router();
+const BCRYPT_ROUNDS = 12;
 
-function hashPassword(password: string): string {
-  const salt = randomBytes(16).toString("hex");
-  const hash = createHash("sha256")
-    .update(salt + password)
-    .digest("hex");
-  return `${salt}:${hash}`;
+async function hashPassword(password: string): Promise<string> {
+  return bcrypt.hash(password, BCRYPT_ROUNDS);
 }
 
-function verifyPassword(password: string, stored: string): boolean {
-  const [salt, hash] = stored.split(":");
-  const attempt = createHash("sha256")
-    .update(salt + password)
-    .digest("hex");
-  return hash === attempt;
+async function verifyPassword(password: string, stored: string): Promise<boolean> {
+  // Support legacy SHA256 hashes (salt:hash format) during migration
+  if (stored.includes(":") && !stored.startsWith("$2")) {
+    const { createHash } = await import("node:crypto");
+    const [salt, hash] = stored.split(":");
+    const attempt = createHash("sha256").update(salt + password).digest("hex");
+    return hash === attempt;
+  }
+  return bcrypt.compare(password, stored);
 }
 
 /** POST /auth/signup */
@@ -37,7 +37,7 @@ router.post("/auth/signup", async (req: Request, res: Response) => {
     return;
   }
 
-  const passwordHash = hashPassword(password);
+  const passwordHash = await hashPassword(password);
   const result = await db.query(
     "INSERT INTO users (email, password_hash, name) VALUES ($1, $2, $3) RETURNING id, email, name",
     [email, passwordHash, name ?? ""],
@@ -71,7 +71,7 @@ router.post("/auth/login", async (req: Request, res: Response) => {
   }
 
   const user = result.rows[0];
-  if (!verifyPassword(password, user.password_hash)) {
+  if (!(await verifyPassword(password, user.password_hash))) {
     res.status(401).json({ error: "Invalid credentials" });
     return;
   }

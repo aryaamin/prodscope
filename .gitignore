@@ -8,3 +8,22 @@ dist/
 coverage/
 *.vsix
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.Spotlight-V100
+.Trashes
+
+# Source maps (uploaded, not committed)
+*.map

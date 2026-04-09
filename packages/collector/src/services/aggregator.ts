@@ -4,10 +4,11 @@ import { getClickHouse } from "../db/clickhouse.js";
 export async function runAggregation(): Promise<void> {
   const ch = getClickHouse();
 
-  const windows: Array<{ name: string; interval: string }> = [
-    { name: "1h", interval: "1 HOUR" },
-    { name: "24h", interval: "24 HOUR" },
-    { name: "7d", interval: "7 DAY" },
+  // Each window uses a ClickHouse interval function to avoid string interpolation in SQL
+  const windows: Array<{ name: string; intervalExpr: string }> = [
+    { name: "1h", intervalExpr: "toIntervalHour(1)" },
+    { name: "24h", intervalExpr: "toIntervalHour(24)" },
+    { name: "7d", intervalExpr: "toIntervalDay(7)" },
   ];
 
   for (const w of windows) {
@@ -19,7 +20,7 @@ export async function runAggregation(): Promise<void> {
           fn.function,
           fn.file,
           fn.line,
-          '${w.name}' AS window,
+          {windowName:String} AS window,
           fn.call_count,
           fn.total_ms,
           fn.avg_ms,
@@ -48,7 +49,7 @@ export async function runAggregation(): Promise<void> {
             uniqExact(session_id)               AS unique_sessions
           FROM spans
           WHERE
-            start_time >= now() - INTERVAL ${w.interval}
+            start_time >= now() - ${w.intervalExpr}
             AND function != ''
           GROUP BY project_id, function, file
         ) AS fn
@@ -58,11 +59,12 @@ export async function runAggregation(): Promise<void> {
             uniqExact(session_id) AS total_sessions
           FROM spans
           WHERE
-            start_time >= now() - INTERVAL ${w.interval}
+            start_time >= now() - ${w.intervalExpr}
             AND session_id != ''
           GROUP BY project_id
         ) AS total_sess ON fn.project_id = total_sess.project_id
       `,
+      query_params: { windowName: w.name },
     });
   }
 }

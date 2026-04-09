@@ -67,11 +67,29 @@ export function activate(context: vscode.ExtensionContext) {
     ),
   );
 
-  // WebSocket client — just update status bar, don't refetch
+  // WebSocket client — auto-refresh when new data arrives for the active file
   wsClient = new WebSocketClient(config, statusBar);
   wsClient.onEvent((event) => {
     log.info(`WS event: ${event.type}`);
-    // No automatic refetch — user can manually refresh
+
+    const editor = vscode.window.activeTextEditor;
+    if (!editor || editor.document.uri.scheme !== "file") return;
+
+    const relPath = toRelative(editor.document.uri.fsPath);
+
+    // Check if the incoming data relates to the currently open file
+    const items: any[] = event.data ?? [];
+    const isRelevant = items.some(
+      (item: any) => item?.file === relPath || item?.file?.endsWith(relPath),
+    );
+
+    if (isRelevant) {
+      log.info(`WS: refreshing ${relPath} due to incoming ${event.type}`);
+      fetchedFiles.delete(relPath);
+      refreshEditor(editor, config, codeLensProvider);
+      insightProvider.updateForFile(relPath);
+      fetchedFiles.add(relPath);
+    }
   });
   wsClient.connect();
 

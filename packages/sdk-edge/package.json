@@ -1,9 +1,19 @@
 {
   "name": "@prodscope/sdk-edge",
   "version": "0.1.0",
+  "description": "Lightweight ProdScope SDK for edge runtimes (Cloudflare Workers, Deno Deploy, Supabase Edge Functions)",
+  "private": true,
+  "license": "UNLICENSED",
+  "homepage": "https://prodscope.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aryaamin/prodscope.git",
+    "directory": "packages/sdk-edge"
+  },
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "keywords": ["observability", "telemetry", "edge", "cloudflare-workers", "deno", "supabase"],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",

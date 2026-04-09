@@ -7,10 +7,15 @@ export async function apiKeyAuth(
   res: Response,
   next: NextFunction,
 ): Promise<void> {
-  const apiKey = req.headers["x-api-key"] as string | undefined;
+  const apiKey = (req.headers["x-api-key"] as string | undefined) ?? req.body?._apiKey;
   if (!apiKey) {
     res.status(401).json({ error: "Missing x-api-key header" });
     return;
+  }
+
+  // Clean up inline key so it doesn't get stored with telemetry
+  if (req.body?._apiKey) {
+    delete req.body._apiKey;
   }
 
   const db = getPostgres();

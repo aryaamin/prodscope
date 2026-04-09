@@ -155,8 +155,13 @@ export function startInsightGenerator(intervalMs = 60_000): void {
         });
         const files: Array<{ file: string }> = await filesResult.json();
 
-        for (const { file } of files) {
-          await generateInsight({ projectId: id, file }).catch(console.error);
+        // Process up to 5 files concurrently to avoid overwhelming the API
+        const CONCURRENCY = 5;
+        for (let i = 0; i < files.length; i += CONCURRENCY) {
+          const batch = files.slice(i, i + CONCURRENCY);
+          await Promise.allSettled(
+            batch.map(({ file }) => generateInsight({ projectId: id, file })),
+          );
         }
       }
     } catch (err) {

@@ -73,13 +73,24 @@ export class Transport {
         (batch.dbQueries?.length ?? 0);
       if (totalItems === 0) return;
 
-      const blob = new Blob([JSON.stringify(batch)], {
-        type: "application/json",
+      // Use fetch with keepalive instead of sendBeacon to avoid leaking API key in URL
+      const body = JSON.stringify(batch);
+      fetch(`${this.ingestUrl}/v1/ingest`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": this.apiKey,
+        },
+        body,
+        keepalive: true,
+      }).catch(() => {
+        // Last-resort fallback: sendBeacon with key embedded in payload
+        const payload = JSON.stringify({ ...batch, _apiKey: this.apiKey });
+        navigator.sendBeacon(
+          `${this.ingestUrl}/v1/ingest`,
+          new Blob([payload], { type: "application/json" }),
+        );
       });
-      navigator.sendBeacon(
-        `${this.ingestUrl}/v1/ingest?key=${this.apiKey}`,
-        blob,
-      );
     };
 
     window.addEventListener("visibilitychange", () => {

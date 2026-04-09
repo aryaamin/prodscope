@@ -10,6 +10,8 @@ export interface ProdScopeEdgeConfig {
   apiKey: string;
   ingestUrl?: string;
   gitSha?: string;
+  /** Optional callback for flush errors — by default errors are logged to console. */
+  onError?: (err: unknown) => void;
 }
 
 interface SpanData {
@@ -82,7 +84,7 @@ export async function flush(): Promise<void> {
   const ingestUrl = _config.ingestUrl ?? "https://ingest.prodscope.dev";
 
   try {
-    await fetch(`${ingestUrl}/v1/ingest`, {
+    const res = await fetch(`${ingestUrl}/v1/ingest`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,8 +92,12 @@ export async function flush(): Promise<void> {
       },
       body: JSON.stringify(batch),
     });
-  } catch {
-    // Silently drop
+    if (!res.ok) {
+      const msg = `ProdScope flush failed: ${res.status} ${res.statusText}`;
+      (_config.onError ?? console.error)(msg);
+    }
+  } catch (err) {
+    (_config.onError ?? console.error)(err);
   }
 }
 

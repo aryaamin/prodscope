@@ -3,6 +3,12 @@
   "private": true,
   "version": "0.1.0",
   "description": "Developer observability platform — production data mapped to your code",
+  "author": "aryaamin",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aryaamin/prodscope.git"
+  },
   "scripts": {
     "build": "pnpm -r build",
     "dev": "pnpm -r --parallel dev",

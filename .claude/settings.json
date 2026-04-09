@@ -93,7 +93,8 @@
       "Read(//home/arya/.claude/**)",
       "Bash(git commit -m ':*)",
       "Bash(find /home/arya/prodscope/packages -name \"src\" -type d -exec find {} -maxdepth 2 -type f \\\\;)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(npx tsc:*)"
     ],
     "additionalDirectories": [
       "/home/arya/prodscope-demo",

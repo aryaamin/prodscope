@@ -2,9 +2,14 @@
   "name": "@prodscope/sdk-node",
   "version": "0.1.0",
   "description": "ProdScope Node.js SDK — auto-track functions, Express routes, Prisma/pg queries with file:line mapping",
-  "license": "MIT",
-  "publishConfig": { "access": "public" },
+  "private": true,
+  "license": "UNLICENSED",
   "homepage": "https://prodscope.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aryaamin/prodscope.git",
+    "directory": "packages/sdk-node"
+  },
   "keywords": ["observability", "telemetry", "monitoring", "node", "express", "prisma", "production"],
   "type": "module",
   "main": "dist/index.js",
@@ -33,9 +38,6 @@
     "dev": "tsc --watch",
     "test": "vitest run",
     "clean": "rm -rf dist"
-  },
-  "dependencies": {
-    "crypto": "^1.0.1"
   },
   "peerDependencies": {
     "express": ">=4.0.0",

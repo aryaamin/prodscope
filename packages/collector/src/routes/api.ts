@@ -5,10 +5,12 @@ import { generateInsight } from "../services/ai-insights.js";
 
 const router: ReturnType<typeof Router> = Router();
 
-/** GET /api/v1/function-stats?function=X&file=Y&window=1h|24h|7d */
+/** GET /api/v1/function-stats?function=X&file=Y&window=1h|24h|7d&limit=100&offset=0 */
 router.get("/api/v1/function-stats", async (req: Request, res: Response) => {
   const projectId = (req as any).projectId as string;
   const { function: fn, file, window: w } = req.query;
+  const limit = Math.min(Number.parseInt(req.query.limit as string, 10) || 100, 500);
+  const offset = Number.parseInt(req.query.offset as string, 10) || 0;
   const ch = getClickHouse();
 
   let query = `
@@ -33,17 +35,21 @@ router.get("/api/v1/function-stats", async (req: Request, res: Response) => {
     params.window = w as string;
   }
 
-  query += " ORDER BY call_count DESC LIMIT 100";
+  query += ` ORDER BY call_count DESC LIMIT {limit:UInt32} OFFSET {offset:UInt32}`;
+  params.limit = String(limit);
+  params.offset = String(offset);
 
   const result = await ch.query({ query, query_params: params, format: "JSONEachRow" });
   const rows = await result.json();
-  res.json(rows);
+  res.json({ data: rows, limit, offset, hasMore: (rows as any[]).length === limit });
 });
 
-/** GET /api/v1/errors?file=X&line=Y */
+/** GET /api/v1/errors?file=X&line=Y&limit=50&offset=0 */
 router.get("/api/v1/errors", async (req: Request, res: Response) => {
   const projectId = (req as any).projectId as string;
-  const { file, line, limit } = req.query;
+  const { file, line } = req.query;
+  const limit = Math.min(Number.parseInt(req.query.limit as string, 10) || 50, 500);
+  const offset = Number.parseInt(req.query.offset as string, 10) || 0;
   const ch = getClickHouse();
 
   let query = `
@@ -63,17 +69,21 @@ router.get("/api/v1/errors", async (req: Request, res: Response) => {
     params.line = line as string;
   }
 
-  query += ` ORDER BY timestamp DESC LIMIT ${parseInt(limit as string, 10) || 50}`;
+  query += ` ORDER BY timestamp DESC LIMIT {limit:UInt32} OFFSET {offset:UInt32}`;
+  params.limit = String(limit);
+  params.offset = String(offset);
 
   const result = await ch.query({ query, query_params: params, format: "JSONEachRow" });
   const rows = await result.json();
-  res.json(rows);
+  res.json({ data: rows, limit, offset, hasMore: (rows as any[]).length === limit });
 });
 
-/** GET /api/v1/slow-queries?threshold=100&file=X */
+/** GET /api/v1/slow-queries?threshold=100&file=X&limit=50&offset=0 */
 router.get("/api/v1/slow-queries", async (req: Request, res: Response) => {
   const projectId = (req as any).projectId as string;
-  const threshold = parseInt(req.query.threshold as string, 10) || 100;
+  const threshold = Number.parseInt(req.query.threshold as string, 10) || 100;
+  const limit = Math.min(Number.parseInt(req.query.limit as string, 10) || 50, 500);
+  const offset = Number.parseInt(req.query.offset as string, 10) || 0;
   const { file } = req.query;
   const ch = getClickHouse();
 
@@ -91,11 +101,13 @@ router.get("/api/v1/slow-queries", async (req: Request, res: Response) => {
     params.file = file as string;
   }
 
-  query += " ORDER BY duration_ms DESC LIMIT 50";
+  query += ` ORDER BY duration_ms DESC LIMIT {limit:UInt32} OFFSET {offset:UInt32}`;
+  params.limit = String(limit);
+  params.offset = String(offset);
 
   const result = await ch.query({ query, query_params: params, format: "JSONEachRow" });
   const rows = await result.json();
-  res.json(rows);
+  res.json({ data: rows, limit, offset, hasMore: (rows as any[]).length === limit });
 });
 
 /** GET /api/v1/ai-insight?file=X&function=Y */
@@ -127,14 +139,25 @@ router.get("/api/v1/ai-insight", async (req: Request, res: Response) => {
     return;
   }
 
-  // Generate fresh — requires Anthropic API key
+  // Kick off generation in the background and return immediately
   try {
-    const insight = await generateInsight({
-      projectId,
-      file: file as string,
-      functionName: fn as string | undefined,
-    });
-    res.json({ file, function: fn ?? "", insight, fresh: true });
+    if (refresh) {
+      // Explicit refresh — wait for the result
+      const insight = await generateInsight({
+        projectId,
+        file: file as string,
+        functionName: fn as string | undefined,
+      });
+      res.json({ file, function: fn ?? "", insight, fresh: true });
+    } else {
+      // No cache hit — start generating in background and return pending status
+      generateInsight({
+        projectId,
+        file: file as string,
+        functionName: fn as string | undefined,
+      }).catch(console.error);
+      res.json({ file, function: fn ?? "", insight: null, status: "generating", fresh: false });
+    }
   } catch (err: any) {
     if (err.message?.includes("ANTHROPIC_API_KEY")) {
       res.json({ file, function: fn ?? "", insight: "no_api_key", fresh: false });
@@ -166,7 +189,7 @@ router.get("/api/v1/live-sessions", async (req: Request, res: Response) => {
 
   const result = await ch.query({ query, query_params: params, format: "JSONEachRow" });
   const rows: Array<{ active_sessions: string }> = await result.json();
-  res.json({ activeSessions: parseInt(rows[0]?.active_sessions ?? "0", 10) });
+  res.json({ activeSessions: Number.parseInt(rows[0]?.active_sessions ?? "0", 10) });
 });
 
 /** GET /api/v1/trace/:traceId */
