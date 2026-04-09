@@ -32,9 +32,9 @@
         </a>
 
         <div class="nav-links">
+          <a href="#why">Why</a>
           <a href="#features">Features</a>
           <a href="#architecture">How it works</a>
-          <a href="#how">Setup</a>
           <a href="#sdk">SDK</a>
           <a href="https://app.prodscope.dev" class="btn btn-primary">
             Get started — free
@@ -50,8 +50,10 @@
       </p>
       <h1>See what your code does<br />in production.</h1>
       <p class="hero-sub">
-        Errors, latency, and user sessions — mapped to the exact line of code
-        that caused them. Inside VS Code. No dashboard, no context switching.
+        The first observability tool built for the person writing the code — not
+        the ops team watching dashboards. Errors, latency, and user sessions
+        mapped to the exact file:line, live inside VS Code. Plus an MCP server
+        so Claude and Cursor debug with real production data.
       </p>
       <div class="hero-actions">
         <a href="https://app.prodscope.dev" class="btn btn-primary"
@@ -117,14 +119,56 @@
           <!-- Arrow 1: "p99 1.2s" → latency label
                tip: (400, 90) = on "p99 1.2s" text
                tail: (830, 75) = near latency label -->
-          <path class="arrow-path arrow-path-1" d="M800 70 C 700 100, 380 60, 380 100" stroke="#e3b341" stroke-width="1.8" fill="none"/>
-          <path class="arrow-head arrow-head-1" d="M378 98 L380 100 L382 98" stroke="#e3b341" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path
+            class="arrow-path arrow-path-1"
+            d="M800 70 C 700 100, 380 60, 380 100"
+            stroke="#e3b341"
+            stroke-width="1.8"
+            fill="none"
+          />
+          <path
+            class="arrow-head arrow-head-1"
+            d="M378 98 L380 100 L382 98"
+            stroke="#e3b341"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"
+          />
 
-          <path class="arrow-path arrow-path-2" d="M800 230 C 760 240, 550 260, 570 360" stroke="#5b9af5" stroke-width="1.8" fill="none"/>
-          <path class="arrow-head arrow-head-2" d="M568 358 L570 360 L572 358" stroke="#5b9af5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path
+            class="arrow-path arrow-path-2"
+            d="M800 230 C 760 240, 550 260, 570 360"
+            stroke="#5b9af5"
+            stroke-width="1.8"
+            fill="none"
+          />
+          <path
+            class="arrow-head arrow-head-2"
+            d="M568 358 L570 360 L572 358"
+            stroke="#5b9af5"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"
+          />
 
-          <path class="arrow-path arrow-path-3" d="M800 340 C 720 350, 500 490, 475 390" stroke="#f47067" stroke-width="1.8" fill="none"/>
-          <path class="arrow-head arrow-head-3" d="M473 392 L475 390 L477 392" stroke="#f47067" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path
+            class="arrow-path arrow-path-3"
+            d="M800 340 C 720 350, 500 490, 475 390"
+            stroke="#f47067"
+            stroke-width="1.8"
+            fill="none"
+          />
+          <path
+            class="arrow-head arrow-head-3"
+            d="M473 392 L475 390 L477 392"
+            stroke="#f47067"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"
+          />
         </svg>
 
         <!-- Annotation labels (no arrows inside, positioned independently) -->
@@ -166,6 +210,142 @@
         <span>Cloudflare Workers</span>
       </div>
     </section> -->
+
+    <div class="sep"><hr /></div>
+
+    <!-- PROBLEM / GAP / SOLUTION -->
+    <section id="why" class="section pgs-section">
+      <div class="section-header">
+        <p class="section-title">&gt; the problem</p>
+        <h2 class="section-heading">
+          Developers ship code they can&rsquo;t see.
+        </h2>
+        <p class="section-desc">
+          The moment your code leaves your laptop, it disappears. What runs in
+          production is a black box &mdash; and the tools we&rsquo;ve been
+          handed weren&rsquo;t built for the person writing the code.
+        </p>
+      </div>
+
+      <div class="pgs-grid">
+        <div class="pgs-card pgs-problem">
+          <div class="pgs-tag"><span class="pgs-dot"></span> problem</div>
+          <h3>You&rsquo;re debugging blind.</h3>
+          <ul class="pgs-list">
+            <li>
+              <strong>87%</strong> of production bugs are reported by users, not
+              caught by developers.
+            </li>
+            <li>
+              The average engineer spends
+              <strong>13 hours/week</strong> reproducing issues they can&rsquo;t
+              see.
+            </li>
+            <li>
+              <strong>Every function you write</strong> runs invisibly &mdash;
+              you don&rsquo;t know which ones are slow, failing, or never
+              called.
+            </li>
+            <li>
+              When something breaks, you grep logs, ping teammates, and guess.
+            </li>
+          </ul>
+          <p class="pgs-quote">
+            &ldquo;Works on my machine&rdquo; is the industry&rsquo;s $300B/year
+            excuse.
+          </p>
+        </div>
+
+        <div class="pgs-card pgs-gap">
+          <div class="pgs-tag"><span class="pgs-dot"></span> the gap</div>
+          <h3>APM was built for ops, not coders.</h3>
+          <ul class="pgs-list">
+            <li>
+              <strong>Datadog, New Relic, Dynatrace</strong> &mdash; $500 to
+              $5,000/mo dashboards built for SRE teams.
+            </li>
+            <li>
+              <strong>Sentry</strong> shows errors but stops at the stack trace.
+              No latency. No user reach. No fix.
+            </li>
+            <li>
+              <strong>Logs &amp; traces</strong> live in a separate app,
+              separate auth, separate mental model from the code.
+            </li>
+            <li>
+              Nothing connects <strong>production telemetry</strong> to the
+              <strong>file:line</strong> a developer is actually editing.
+            </li>
+          </ul>
+          <p class="pgs-quote">
+            Developers don&rsquo;t need another dashboard. They need the answer,
+            on the line, in the editor.
+          </p>
+        </div>
+
+        <div class="pgs-card pgs-solution">
+          <div class="pgs-tag"><span class="pgs-dot"></span> solution</div>
+          <h3>ProdScope brings production to your cursor.</h3>
+          <ul class="pgs-list">
+            <li>
+              <strong>Every function annotated</strong> inline in VS Code:
+              calls, p50/p99, error rate, % of users reached.
+            </li>
+            <li>
+              <strong>AI that reads your telemetry</strong> and tells you
+              exactly which line to fix &mdash; and why.
+            </li>
+            <li>
+              <strong>MCP server</strong> so Claude, Cursor, and any AI coding
+              agent debugs with real production data, not guesses.
+            </li>
+            <li>
+              <strong>2-minute setup.</strong> One Vite plugin, one init call.
+              Works with React, Next.js, Express, Prisma, Cloudflare Workers.
+            </li>
+          </ul>
+          <p class="pgs-quote pgs-quote--green">
+            The first observability tool that actually makes you a better coder.
+          </p>
+        </div>
+      </div>
+
+      <!-- Why now -->
+      <div class="pgs-whynow">
+        <p class="pgs-whynow-title">
+          <span class="pgs-whynow-tag">&gt; why now</span>
+        </p>
+        <div class="pgs-whynow-grid">
+          <div class="pgs-whynow-item">
+            <div class="pgs-whynow-num">01</div>
+            <h4>AI writes more code than humans.</h4>
+            <p>
+              Claude Code, Cursor, and Copilot now ship production changes. They
+              need production context &mdash; not just the file tree. ProdScope
+              is how AI agents learn what&rsquo;s really happening.
+            </p>
+          </div>
+          <div class="pgs-whynow-item">
+            <div class="pgs-whynow-num">02</div>
+            <h4>APM budgets are collapsing.</h4>
+            <p>
+              Teams are cutting Datadog contracts. Developers want one tool that
+              lives in their editor &mdash; not a $60k/year dashboard nobody
+              opens.
+            </p>
+          </div>
+          <div class="pgs-whynow-item">
+            <div class="pgs-whynow-num">03</div>
+            <h4>The IDE is the platform.</h4>
+            <p>
+              VS Code has 15M+ daily developers. CodeLens and MCP make it the
+              perfect distribution surface for the next generation of developer
+              tools.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <div class="sep"><hr /></div>
 
@@ -233,7 +413,7 @@
             guesses.
           </p>
         </div>
-        <!-- <div class="feature-card">
+        <div class="feature-card">
           <p class="feature-num">[07]</p>
           <h3>Deploy comparisons</h3>
           <p>
@@ -248,14 +428,14 @@
             Follow a request from browser click to API call to database query.
             See exactly where time is spent, across every layer.
           </p>
-        </div> -->
+        </div>
       </div>
     </section>
 
     <div class="sep"><hr /></div>
 
     <!-- ARCHITECTURE DIAGRAM -->
-    <section id="architecture" class="section">
+    <!-- <section id="architecture" class="section">
       <div class="section-header">
         <p class="section-title">&gt; how it works</p>
         <h2 class="section-heading">From your code to your editor</h2>
@@ -267,7 +447,7 @@
       <div class="arch-canvas-wrap">
         <canvas id="arch-canvas"></canvas>
       </div>
-    </section>
+    </section> -->
 
     <div class="sep"><hr /></div>
 
@@ -1054,13 +1234,14 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
           var s = H / 520;
           ctx.save();
-          ctx.font = "600 " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
+          ctx.font =
+            "600 " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
           ctx.textAlign = "center";
           var tw = ctx.measureText(this.content).width + 8 * s;
           ctx.fillStyle = "rgba(0,0,0," + this.opacity * 0.6 + ")";
           ctx.fillRect(x - tw / 2, y - 18 * s, tw, 13 * s);
           ctx.fillStyle = c;
-          ctx.fillText(this.content, x, y - 8 * s);
+          ctx.fillText(this.content, x, y - 11);
           ctx.restore();
         };
 
@@ -1161,9 +1342,9 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         function drawProductionBox() {
           var s = H / 520; // scale factor
           var bx = sdkNodes[0].xP * W - 65 * s;
-          var by = sdkNodes[0].yP * H - 44 * s;
+          var by = sdkNodes[0].yP * H - 55 * s;
           var bw = (sdkNodes[2].xP - sdkNodes[0].xP) * W + 130 * s;
-          var bh = 100 * s;
+          var bh = 110 * s;
 
           // Gradient fill
           var gf = ctx.createLinearGradient(bx, by, bx, by + bh);
@@ -1174,18 +1355,18 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
           // Outer border
           ctx.strokeStyle = "rgba(255,255,255,0.14)";
-          ctx.lineWidth = 1;
+          ctx.lineWidth = 1.5;
           ctx.strokeRect(bx, by, bw, bh);
 
           // Inner border (double-line effect)
           ctx.strokeStyle = "rgba(255,255,255,0.04)";
-          ctx.strokeRect(bx + 3, by + 3, bw - 6, bh - 6);
+          ctx.strokeRect(bx + 4, by + 4, bw - 8, bh - 8);
 
           // Label
-          ctx.font = "700 " + Math.round(10 * s) + "px 'JetBrains Mono', monospace";
+          ctx.font = "700 12px 'JetBrains Mono', monospace";
           ctx.fillStyle = "rgba(255,255,255,0.45)";
           ctx.textAlign = "left";
-          ctx.fillText("YOUR PRODUCTION APP", bx + 10, by + 16 * s);
+          ctx.fillText("YOUR PRODUCTION APP", bx + 14, by + 22);
 
           // SDK nodes with logos
           sdkNodes.forEach(function (n, i) {
@@ -1193,24 +1374,24 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
               ny = n.yP * H;
 
             // Logo above
-            if (i === 0) drawReactLogo(nx, ny - 6 * s, 14 * s);
-            else if (i === 1) drawNodeLogo(nx, ny - 6 * s, 28 * s);
-            else drawDBLogo(nx, ny - 6 * s, 24 * s);
+            if (i === 0) drawReactLogo(nx, ny - 8, 20);
+            else if (i === 1) drawNodeLogo(nx, ny - 8, 40);
+            else drawDBLogo(nx, ny - 8, 34);
 
             // Labels
-            ctx.font = "600 " + Math.round(10 * s) + "px 'JetBrains Mono', monospace";
+            ctx.font = "600 13px 'JetBrains Mono', monospace";
             ctx.fillStyle = "rgba(255,255,255,0.7)";
             ctx.textAlign = "center";
-            ctx.fillText(n.label, nx, ny + 22 * s);
+            ctx.fillText(n.label, nx, ny + 30);
 
-            ctx.font = "400 " + Math.round(8 * s) + "px 'JetBrains Mono', monospace";
+            ctx.font = "400 10px 'JetBrains Mono', monospace";
             ctx.fillStyle = "rgba(255,255,255,0.3)";
-            ctx.fillText(n.sub, nx, ny + 34 * s);
+            ctx.fillText(n.sub, nx, ny + 46);
           });
         }
 
         function drawProdScope() {
-          var s = H / 520;
+          var s = H / 520; // scale factor
           var nx = prodscope.xP * W,
             ny = prodscope.yP * H;
 
@@ -1226,37 +1407,38 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
           // Logo image or fallback dot
           if (isLoaded(logos.prodscope)) {
             ctx.save();
-            var logoSz = 40 * s;
+            var logoSizeX = 56;
+            var logoSizeY = 56;
             ctx.drawImage(
               logos.prodscope,
-              nx - (logoSz - 4) / 2,
-              ny - (logoSz - 4) / 2,
-              logoSz,
-              logoSz,
+              nx - (logoSizeX - 5) / 2,
+              ny - (logoSizeY - 5) / 2,
+              logoSizeX,
+              logoSizeY,
             );
             ctx.restore();
           } else {
             ctx.beginPath();
-            ctx.arc(nx, ny, 5 * s, 0, Math.PI * 2);
+            ctx.arc(nx, ny, 7, 0, Math.PI * 2);
             ctx.fillStyle = prodscope.color;
-            ctx.shadowBlur = 14 * s;
+            ctx.shadowBlur = 20;
             ctx.shadowColor = prodscope.color;
             ctx.fill();
             ctx.shadowBlur = 0;
           }
 
           // Label
-          ctx.font = "700 " + Math.round(13 * s) + "px 'JetBrains Mono', monospace";
+          ctx.font = "700 16px 'JetBrains Mono', monospace";
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
-          ctx.fillText("PRODSCOPE", nx, ny + 36 * s);
+          ctx.fillText("PRODSCOPE", nx, ny + 50);
 
-          ctx.font = "400 " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
+          ctx.font = "400 11px 'JetBrains Mono', monospace";
           ctx.fillStyle = "rgba(255,255,255,0.35)";
           ctx.fillText(
             "errors \u00b7 latency \u00b7 sessions \u00b7 traces",
             nx,
-            ny + 50 * s,
+            ny + 68,
           );
         }
 
@@ -1280,7 +1462,7 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         };
 
         function drawOutputNodes() {
-          var s = H / 520;
+          var s = H / 520; // scale factor
           outputs.forEach(function (node) {
             var nx = node.xP * W,
               ny = node.yP * H;
@@ -1297,17 +1479,17 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
             // Logo image
             var img = logos[node.id];
             var flt = logoFilters[node.id];
-            if (img && flt) drawLogoImage(img, nx, ny - 3 * s, 22 * s, flt);
+            if (img && flt) drawLogoImage(img, nx, ny - 4, 30, flt);
 
             // Label
-            ctx.font = "700 " + Math.round(10 * s) + "px 'JetBrains Mono', monospace";
+            ctx.font = "700 13px 'JetBrains Mono', monospace";
             ctx.fillStyle = "rgba(255,255,255,0.8)";
             ctx.textAlign = "center";
-            ctx.fillText(node.label, nx, ny + 24 * s);
+            ctx.fillText(node.label, nx, ny + 32);
 
-            ctx.font = "400 " + Math.round(8 * s) + "px 'JetBrains Mono', monospace";
+            ctx.font = "400 10px 'JetBrains Mono', monospace";
             ctx.fillStyle = node.color.replace("1)", "0.55)");
-            ctx.fillText(node.sub, nx, ny + 36 * s);
+            ctx.fillText(node.sub, nx, ny + 46);
           });
         }
 
@@ -1365,8 +1547,9 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
         /* ---- Arrow labels ---- */
         function drawLabels() {
-          var s = H / 520;
-          ctx.font = "italic " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
+          var s = H / 520; // scale factor
+          ctx.font =
+            "italic " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
           ctx.textAlign = "center";
 
           // "raw telemetry" on inbound
@@ -1513,16 +1696,31 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
         // Pause all animations initially until in view
         function resetAnimations() {
-          arrowPaths.forEach((p) => { p.style.animation = "none"; });
-          arrowHeads.forEach((h) => { h.style.animation = "none"; });
-          annotations.forEach((a) => { a.style.animation = "none"; });
+          arrowPaths.forEach((p) => {
+            p.style.animation = "none";
+          });
+          arrowHeads.forEach((h) => {
+            h.style.animation = "none";
+          });
+          annotations.forEach((a) => {
+            a.style.animation = "none";
+          });
         }
 
         function playAnimations() {
           // Force reflow between remove and re-add
-          arrowPaths.forEach((p) => { p.style.animation = ""; void p.offsetWidth; });
-          arrowHeads.forEach((h) => { h.style.animation = ""; void h.offsetWidth; });
-          annotations.forEach((a) => { a.style.animation = ""; void a.offsetWidth; });
+          arrowPaths.forEach((p) => {
+            p.style.animation = "";
+            void p.offsetWidth;
+          });
+          arrowHeads.forEach((h) => {
+            h.style.animation = "";
+            void h.offsetWidth;
+          });
+          annotations.forEach((a) => {
+            a.style.animation = "";
+            void a.offsetWidth;
+          });
         }
 
         resetAnimations();
