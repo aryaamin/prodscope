@@ -31,6 +31,11 @@ body {
   line-height: 1.7;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(91, 154, 245, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 60%, rgba(61, 220, 132, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(136, 132, 216, 0.03) 0%, transparent 50%);
+  background-attachment: fixed;
 }
 
 ::selection { background: rgba(91, 154, 245, 0.25); }
@@ -452,9 +457,10 @@ nav {
 .arch-canvas-wrap {
   border: 1px solid var(--border);
   background: #080808;
-  height: 720px;
+  height: 520px;
   position: relative;
   overflow: hidden;
+  border-radius: 12px;
 }
 
 .arch-canvas-wrap canvas {
@@ -464,7 +470,7 @@ nav {
 }
 
 @media (max-width: 768px) {
-  .arch-canvas-wrap { height: 560px; }
+  .arch-canvas-wrap { height: 400px; }
 }
 
 /* ---- STEPS (how it works) ---- */
@@ -987,16 +993,14 @@ footer {
 .bg-grid {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
-  /* Techy grid pattern */
-  background-size: 50px 50px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 50px 50px, 50px 50px, 50px 50px;
+  background-image:
+    radial-gradient(circle 1px at 50px 50px, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   z-index: -2;
-  /* Fade out at the top and bottom so it doesn't look like a harsh box */
-  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
-  /* Slow pan effect */
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
   animation: panGrid 60s linear infinite;
 }
 

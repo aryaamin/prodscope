@@ -152,7 +152,7 @@
     </section>
 
     <!-- TRUST -->
-    <section class="trust">
+    <!-- <section class="trust">
       <p class="trust-label">works with</p>
       <div class="trust-list">
         <span>React</span>
@@ -165,7 +165,7 @@
         <span>Supabase Edge</span>
         <span>Cloudflare Workers</span>
       </div>
-    </section>
+    </section> -->
 
     <div class="sep"><hr /></div>
 
@@ -233,7 +233,7 @@
             guesses.
           </p>
         </div>
-        <div class="feature-card">
+        <!-- <div class="feature-card">
           <p class="feature-num">[07]</p>
           <h3>Deploy comparisons</h3>
           <p>
@@ -248,7 +248,7 @@
             Follow a request from browser click to API call to database query.
             See exactly where time is spent, across every layer.
           </p>
-        </div>
+        </div> -->
       </div>
     </section>
 
@@ -1052,14 +1052,15 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
           var alpha = this.opacity * 0.95;
           var c = this.color.replace(/[\d.]+\)$/, alpha + ")");
 
+          var s = H / 520;
           ctx.save();
-          ctx.font = "600 11px 'JetBrains Mono', monospace";
+          ctx.font = "600 " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
           ctx.textAlign = "center";
-          var tw = ctx.measureText(this.content).width + 10;
+          var tw = ctx.measureText(this.content).width + 8 * s;
           ctx.fillStyle = "rgba(0,0,0," + this.opacity * 0.6 + ")";
-          ctx.fillRect(x - tw / 2, y - 24, tw, 17);
+          ctx.fillRect(x - tw / 2, y - 18 * s, tw, 13 * s);
           ctx.fillStyle = c;
-          ctx.fillText(this.content, x, y - 11);
+          ctx.fillText(this.content, x, y - 8 * s);
           ctx.restore();
         };
 
@@ -1158,10 +1159,11 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         }
 
         function drawProductionBox() {
-          var bx = sdkNodes[0].xP * W - 90;
-          var by = sdkNodes[0].yP * H - 60;
-          var bw = (sdkNodes[2].xP - sdkNodes[0].xP) * W + 180;
-          var bh = 140;
+          var s = H / 520; // scale factor
+          var bx = sdkNodes[0].xP * W - 65 * s;
+          var by = sdkNodes[0].yP * H - 44 * s;
+          var bw = (sdkNodes[2].xP - sdkNodes[0].xP) * W + 130 * s;
+          var bh = 100 * s;
 
           // Gradient fill
           var gf = ctx.createLinearGradient(bx, by, bx, by + bh);
@@ -1172,18 +1174,18 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
           // Outer border
           ctx.strokeStyle = "rgba(255,255,255,0.14)";
-          ctx.lineWidth = 1.5;
+          ctx.lineWidth = 1;
           ctx.strokeRect(bx, by, bw, bh);
 
           // Inner border (double-line effect)
           ctx.strokeStyle = "rgba(255,255,255,0.04)";
-          ctx.strokeRect(bx + 4, by + 4, bw - 8, bh - 8);
+          ctx.strokeRect(bx + 3, by + 3, bw - 6, bh - 6);
 
           // Label
-          ctx.font = "700 12px 'JetBrains Mono', monospace";
+          ctx.font = "700 " + Math.round(10 * s) + "px 'JetBrains Mono', monospace";
           ctx.fillStyle = "rgba(255,255,255,0.45)";
           ctx.textAlign = "left";
-          ctx.fillText("YOUR PRODUCTION APP", bx + 14, by + 22);
+          ctx.fillText("YOUR PRODUCTION APP", bx + 10, by + 16 * s);
 
           // SDK nodes with logos
           sdkNodes.forEach(function (n, i) {
@@ -1191,30 +1193,31 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
               ny = n.yP * H;
 
             // Logo above
-            if (i === 0) drawReactLogo(nx, ny - 8, 20);
-            else if (i === 1) drawNodeLogo(nx, ny - 8, 40);
-            else drawDBLogo(nx, ny - 8, 34);
+            if (i === 0) drawReactLogo(nx, ny - 6 * s, 14 * s);
+            else if (i === 1) drawNodeLogo(nx, ny - 6 * s, 28 * s);
+            else drawDBLogo(nx, ny - 6 * s, 24 * s);
 
             // Labels
-            ctx.font = "600 13px 'JetBrains Mono', monospace";
+            ctx.font = "600 " + Math.round(10 * s) + "px 'JetBrains Mono', monospace";
             ctx.fillStyle = "rgba(255,255,255,0.7)";
             ctx.textAlign = "center";
-            ctx.fillText(n.label, nx, ny + 30);
+            ctx.fillText(n.label, nx, ny + 22 * s);
 
-            ctx.font = "400 10px 'JetBrains Mono', monospace";
+            ctx.font = "400 " + Math.round(8 * s) + "px 'JetBrains Mono', monospace";
             ctx.fillStyle = "rgba(255,255,255,0.3)";
-            ctx.fillText(n.sub, nx, ny + 46);
+            ctx.fillText(n.sub, nx, ny + 34 * s);
           });
         }
 
         function drawProdScope() {
+          var s = H / 520;
           var nx = prodscope.xP * W,
             ny = prodscope.yP * H;
 
           // Large glow
           ctx.beginPath();
-          ctx.arc(nx, ny, 70, 0, Math.PI * 2);
-          var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 70);
+          ctx.arc(nx, ny, 50 * s, 0, Math.PI * 2);
+          var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 50 * s);
           g.addColorStop(0, "rgba(61, 220, 132, 0.08)");
           g.addColorStop(1, "rgba(0,0,0,0)");
           ctx.fillStyle = g;
@@ -1223,38 +1226,37 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
           // Logo image or fallback dot
           if (isLoaded(logos.prodscope)) {
             ctx.save();
-            var logoSizeX = 56;
-            var logoSizeY = 56;
+            var logoSz = 40 * s;
             ctx.drawImage(
               logos.prodscope,
-              nx - (logoSizeX - 5) / 2,
-              ny - (logoSizeY - 5) / 2,
-              logoSizeX,
-              logoSizeY,
+              nx - (logoSz - 4) / 2,
+              ny - (logoSz - 4) / 2,
+              logoSz,
+              logoSz,
             );
             ctx.restore();
           } else {
             ctx.beginPath();
-            ctx.arc(nx, ny, 7, 0, Math.PI * 2);
+            ctx.arc(nx, ny, 5 * s, 0, Math.PI * 2);
             ctx.fillStyle = prodscope.color;
-            ctx.shadowBlur = 20;
+            ctx.shadowBlur = 14 * s;
             ctx.shadowColor = prodscope.color;
             ctx.fill();
             ctx.shadowBlur = 0;
           }
 
           // Label
-          ctx.font = "700 16px 'JetBrains Mono', monospace";
+          ctx.font = "700 " + Math.round(13 * s) + "px 'JetBrains Mono', monospace";
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
-          ctx.fillText("PRODSCOPE", nx, ny + 50);
+          ctx.fillText("PRODSCOPE", nx, ny + 36 * s);
 
-          ctx.font = "400 11px 'JetBrains Mono', monospace";
+          ctx.font = "400 " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
           ctx.fillStyle = "rgba(255,255,255,0.35)";
           ctx.fillText(
             "errors \u00b7 latency \u00b7 sessions \u00b7 traces",
             nx,
-            ny + 68,
+            ny + 50 * s,
           );
         }
 
@@ -1278,14 +1280,15 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         };
 
         function drawOutputNodes() {
+          var s = H / 520;
           outputs.forEach(function (node) {
             var nx = node.xP * W,
               ny = node.yP * H;
 
             // Glow
             ctx.beginPath();
-            ctx.arc(nx, ny, 44, 0, Math.PI * 2);
-            var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 44);
+            ctx.arc(nx, ny, 32 * s, 0, Math.PI * 2);
+            var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 32 * s);
             g.addColorStop(0, node.color.replace("1)", "0.14)"));
             g.addColorStop(1, "rgba(0,0,0,0)");
             ctx.fillStyle = g;
@@ -1294,26 +1297,27 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
             // Logo image
             var img = logos[node.id];
             var flt = logoFilters[node.id];
-            if (img && flt) drawLogoImage(img, nx, ny - 4, 30, flt);
+            if (img && flt) drawLogoImage(img, nx, ny - 3 * s, 22 * s, flt);
 
             // Label
-            ctx.font = "700 13px 'JetBrains Mono', monospace";
+            ctx.font = "700 " + Math.round(10 * s) + "px 'JetBrains Mono', monospace";
             ctx.fillStyle = "rgba(255,255,255,0.8)";
             ctx.textAlign = "center";
-            ctx.fillText(node.label, nx, ny + 32);
+            ctx.fillText(node.label, nx, ny + 24 * s);
 
-            ctx.font = "400 10px 'JetBrains Mono', monospace";
+            ctx.font = "400 " + Math.round(8 * s) + "px 'JetBrains Mono', monospace";
             ctx.fillStyle = node.color.replace("1)", "0.55)");
-            ctx.fillText(node.sub, nx, ny + 46);
+            ctx.fillText(node.sub, nx, ny + 36 * s);
           });
         }
 
         function drawArrowTip(x1, y1, x2, y2, color) {
+          var s = H / 520;
           var angle = Math.atan2(y2 - y1, x2 - x1);
-          var len = 10;
+          var len = 7 * s;
           ctx.setLineDash([]);
           ctx.strokeStyle = color;
-          ctx.lineWidth = 1.8;
+          ctx.lineWidth = 1.2 * s;
           ctx.beginPath();
           ctx.moveTo(
             x2 - Math.cos(angle - 0.42) * len,
@@ -1328,8 +1332,9 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         }
 
         function drawLinkGroup(links, dash, defaultStroke) {
+          var s = H / 520;
           ctx.setLineDash(dash);
-          ctx.lineWidth = 1.5;
+          ctx.lineWidth = 1 * s;
           links.forEach(function (l) {
             var sc = l.color
               ? l.color.replace(/[\d.]+\)$/, "0.1)")
@@ -1360,7 +1365,8 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
         /* ---- Arrow labels ---- */
         function drawLabels() {
-          ctx.font = "italic 11px 'JetBrains Mono', monospace";
+          var s = H / 520;
+          ctx.font = "italic " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
           ctx.textAlign = "center";
 
           // "raw telemetry" on inbound
