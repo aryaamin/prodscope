@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ProdScope — See what your code does in production</title>
+    <title>ProdScopeAI — AI-native observability for your code</title>
     <meta
       name="description"
-      content="Errors, latency, and user sessions — mapped to the exact line of code that caused them. Inside VS Code. Free and live."
+      content="The first AI-native observability tool. Claude reads your live production telemetry and tells you exactly what's broken, why, and how to fix it — inside VS Code. Free for all developers."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,14 +28,14 @@
             alt="ProdScope"
             class="brand-logo"
           />
-          <span class="brand-text">ProdScope</span>
+          <span class="brand-text">prodscope<span class="brand-ai">AI</span></span>
         </a>
 
         <div class="nav-links">
+          <a href="#ai">AI</a>
           <a href="#why">Why</a>
           <a href="#features">Features</a>
-          <a href="#architecture">How it works</a>
-          <a href="#sdk">SDK</a>
+          <a href="#sdk">Setup</a>
           <a href="https://app.prodscope.dev" class="btn btn-primary">
             Get started — free
           </a>
@@ -46,20 +46,21 @@
     <!-- HERO -->
     <section class="hero">
       <p class="hero-tag">
-        <span>&gt;</span> live now — free for all developers
+        <span>&gt;</span> the autonomous ai observability platform
       </p>
-      <h1>See what your code does<br />in production.</h1>
+      <h1>Make your code see how it performs in production.</h1>
       <p class="hero-sub">
-        The first observability tool built for the person writing the code — not
-        the ops team watching dashboards. Errors, latency, and user sessions
-        mapped to the exact file:line, live inside VS Code. Plus an MCP server
-        so Claude and Cursor debug with real production data.
+        ProdScopeAI build AI tools which reads your
+        live telemetry and writes the fix. Get instantly actionable code 
+        intelligence tied to the exact line you&rsquo;re editing 
+        &mdash; plus a powerful MCP server so your coding agent 
+        debugs with real production data, not guesses.
       </p>
       <div class="hero-actions">
         <a href="https://app.prodscope.dev" class="btn btn-primary"
-          >start for free</a
+          >Get started — free</a
         >
-        <a href="#how" class="btn">see how it works</a>
+        <a href="#how" class="btn">See how it works</a>
       </div>
 
       <!-- SVG filter for hand-drawn look -->
@@ -82,114 +83,89 @@
             />
           </filter>
         </defs>
-      </svg>
+      </svg>      <!-- HERO PROMPT STRIP — sample questions you ask Claude -->
+      <div class="hero-prompts">
+        <span class="hero-prompts-label">ask anything &rarr;</span>
+        <div class="hero-prompts-list">
+          <span class="hero-prompt">&ldquo;What&rsquo;s broken in checkout right now?&rdquo;</span>
+          <span class="hero-prompt">&ldquo;Suggest a fix for the Safari error on line 18.&rdquo;</span>
+          <span class="hero-prompt">&ldquo;Did yesterday&rsquo;s deploy regress anything?&rdquo;</span>
+          <span class="hero-prompt">&ldquo;Did changing UI increase clicks?&rdquo;</span>
+          <span class="hero-prompt">&ldquo;Users say search is slow on Fridays — why?&rdquo;</span>
+        </div>
+      </div>
 
-      <!-- TERMINAL MOCKUP WITH ANNOTATIONS -->
-      <div class="terminal-annotated">
-        <div class="terminal">
-          <div class="terminal-bar">
-            <div class="terminal-dots">
-              <span></span><span></span><span></span>
+      <!-- AI HERO MOCKUP: split terminal (code + Claude insight) -->
+      <div class="hero-mockup">
+        <div class="hero-mockup-bar">
+          <div class="terminal-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="hero-mockup-title">
+            <span class="mockup-tab">src/api.ts</span>
+            <span class="mockup-tab mockup-tab--active">
+              <span class="ai-dot"></span> ai insight &middot; claude
+            </span>
+          </span>
+        </div>
+
+        <div class="hero-mockup-body">
+          <!-- LEFT: code -->
+          <div class="hero-mockup-code">
+            <div class="hero-mockup-label">src/api.ts</div>
+            <pre><code><span class="line-num">15</span>  <span class="kw">export async function</span> <span class="fn">fetchProducts</span>(<span class="param">category</span>: <span class="type">string</span>) {
+<span class="line-num">  </span>  <span class="codelens">&nearr; 1,204 calls &middot; p50 245ms &middot; p99 1.2s &middot; 84% sessions</span>
+<span class="line-num">16</span>    <span class="kw">const</span> cached = <span class="fn">getFromCache</span>(category);
+<span class="line-num">17</span>    <span class="kw">if</span> (cached) <span class="kw">return</span> cached;
+<span class="line-num">18</span>    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">`/api/products?cat=${category}`</span>);
+<span class="line-num">  </span>  <span class="decoration-err">&#8627; 14 errors (Safari 17 only) &mdash; TypeError: undefined is not an object</span>
+<span class="line-num">19</span>    <span class="kw">return</span> res.<span class="fn">json</span>();
+<span class="line-num">20</span>  }</code></pre>
+          </div>
+
+          <!-- RIGHT: AI insight panel -->
+          <div class="hero-mockup-ai">
+            <div class="hero-mockup-label hero-mockup-label--ai">
+              <span class="ai-dot"></span> ai insight
+              <span class="mockup-meta">fetchProducts &middot; just now</span>
             </div>
-            <span class="terminal-title">src/api.ts — prodscope</span>
-          </div>
-          <div class="terminal-body">
-            <pre><code><span class="line-num"> 6</span>  <span class="kw">export async function</span> <span class="fn">fetchProducts</span>(<span class="param">category</span>: <span class="type">string</span>) {
-<span class="line-num">  </span>  <span class="codelens">&nearr; fetchProducts  77 calls  |  p50 245ms &middot; p99 1.2s  |  1 error (1.3%)  |  84% sessions</span>
-<span class="line-num"> 7</span>    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">`/api/products?cat=${category}`</span>);
-<span class="line-num"> 8</span>    <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> <span class="type">Error</span>(<span class="str">`Failed: ${res.status}`</span>);
-<span class="line-num">  </span>  <span class="decoration-err">&#8627; 1 error (Chrome 126)</span>
-<span class="line-num"> 9</span>    <span class="kw">return</span> res.<span class="fn">json</span>();
-<span class="line-num">10</span>  }
-<span class="line-num">  </span>
-<span class="line-num">27</span>  <span class="kw">export async function</span> <span class="fn">checkout</span>(<span class="param">cartId</span>: <span class="type">string</span>) {
-<span class="line-num">  </span>  <span class="codelens">&nearr; checkout  412 calls  |  p50 389ms &middot; p99 512ms  |  82 errors (19.9%)  |  62% sessions</span>
-<span class="line-num">28</span>    <span class="kw">await</span> <span class="fn">delay</span>(<span class="num">200</span> + Math.<span class="fn">random</span>() * <span class="num">300</span>);
-<span class="line-num">29</span>    <span class="kw">if</span> (Math.<span class="fn">random</span>() &lt; <span class="num">0.2</span>) {
-<span class="line-num">30</span>      <span class="kw">throw new</span> <span class="type">Error</span>(<span class="str">"Payment failed &mdash; card declined"</span>);
-<span class="line-num">  </span>  <span class="decoration-err">&#8627; 82 errors (Chrome, Safari/iOS)</span>
-<span class="line-num">31</span>    }
-<span class="line-num">32</span>    <span class="kw">return</span> { orderId: <span class="str">`ord-${Date.now()}`</span> };
-<span class="line-num">33</span>  }</code></pre>
-          </div>
-        </div>
-
-        <!-- Overlay SVG for all arrows -->
-        <svg class="arrows-overlay" viewBox="0 0 1100 460" fill="none">
-          <!-- Arrow 1: "p99 1.2s" → latency label
-               tip: (400, 90) = on "p99 1.2s" text
-               tail: (830, 75) = near latency label -->
-          <path
-            class="arrow-path arrow-path-1"
-            d="M800 70 C 700 100, 380 60, 380 100"
-            stroke="#e3b341"
-            stroke-width="1.8"
-            fill="none"
-          />
-          <path
-            class="arrow-head arrow-head-1"
-            d="M378 98 L380 100 L382 98"
-            stroke="#e3b341"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            fill="none"
-          />
-
-          <path
-            class="arrow-path arrow-path-2"
-            d="M800 230 C 760 240, 550 260, 570 360"
-            stroke="#5b9af5"
-            stroke-width="1.8"
-            fill="none"
-          />
-          <path
-            class="arrow-head arrow-head-2"
-            d="M568 358 L570 360 L572 358"
-            stroke="#5b9af5"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            fill="none"
-          />
-
-          <path
-            class="arrow-path arrow-path-3"
-            d="M800 340 C 720 350, 500 490, 475 390"
-            stroke="#f47067"
-            stroke-width="1.8"
-            fill="none"
-          />
-          <path
-            class="arrow-head arrow-head-3"
-            d="M473 392 L475 390 L477 392"
-            stroke="#f47067"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            fill="none"
-          />
-        </svg>
-
-        <!-- Annotation labels (no arrows inside, positioned independently) -->
-        <div class="annotation annotation-latency">
-          <div class="annotation-label annotation-label--amber">
-            <span class="annotation-tag">latency</span>
-            p99 at 1.2s — this endpoint<br />needs caching or pagination
-          </div>
-        </div>
-
-        <div class="annotation annotation-sessions">
-          <div class="annotation-label annotation-label--blue">
-            <span class="annotation-tag">sessions</span>
-            62% of users hit this path<br />— high-impact code
-          </div>
-        </div>
-
-        <div class="annotation annotation-errors">
-          <div class="annotation-label annotation-label--red">
-            <span class="annotation-tag">errors</span>
-            19.9% failure rate on checkout<br />— payment provider issue?
+            <div class="hero-mockup-ai-body">
+              <div class="ai-line">
+                <span class="ai-line-tag ai-line-tag--red">root cause</span>
+                <p>
+                  <strong>Safari 17</strong> ships <code>Array.at()</code>
+                  behind a flag. The cache key builder on line 16 calls
+                  <code>category.at(-1)</code>, returning
+                  <code>undefined</code> &mdash; which invalidates the
+                  cache and sends every Safari user to the failing
+                  network path on line 18.
+                </p>
+              </div>
+              <div class="ai-line">
+                <span class="ai-line-tag ai-line-tag--blue">impact</span>
+                <p>
+                  <strong>14 errors in last 6h</strong>, 100%
+                  Safari/iOS. Affects <strong>8% of your
+                  sessions</strong>. Trending up since Tuesday&rsquo;s
+                  deploy (<code>a3f9c2</code>).
+                </p>
+              </div>
+              <div class="ai-line">
+                <span class="ai-line-tag ai-line-tag--green">fix</span>
+                <p>
+                  Replace <code>category.at(-1)</code> with
+                  <code>category.slice(-1)</code> or ship the polyfill
+                  from PR&nbsp;#221. Verify with
+                  <code>verify_fix</code> after deploy.
+                </p>
+              </div>
+              <div class="ai-mockup-actions">
+                <span class="ai-mockup-btn">&uarr; apply fix</span>
+                <span class="ai-mockup-btn ai-mockup-btn--ghost">
+                  regenerate
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -213,6 +189,288 @@
 
     <div class="sep"><hr /></div>
 
+    <!-- AI INTELLIGENCE — headline feature section -->
+    <section id="ai" class="section ai-section">
+      <div class="section-header center">
+        <p class="section-title">&gt; autonomous intelligence</p>
+        <h2 class="section-heading">
+          Stop guessing. Let AI debug your live code.
+        </h2>
+        <p class="section-desc">
+          Strictly on-request, with no background jobs. Every AI
+          insight is grounded securely in your live telemetry and tied exactly to
+          the file:line you're working on.
+        </p>
+      </div>
+
+      <!-- Layer 1: File-scoped code intelligence -->
+      <div class="ai-layer-head">
+        <span class="ai-layer-num">01</span>
+        <div>
+          <div class="ai-layer-kicker">layer 1 &middot; inside vs code</div>
+          <h3 class="ai-layer-title">
+            File-scoped code intelligence
+          </h3>
+          <p class="ai-layer-desc">
+            Six tools that answer the questions a developer actually asks
+            while editing a file. Every answer references real errors,
+            real stacks, real users.
+          </p>
+        </div>
+      </div>
+
+      <div class="ai-bento">
+        <div class="ai-card ai-card--hero">
+          <div class="ai-card-top">
+            <span class="ai-tag">
+              <span class="ai-dot"></span> flagship
+            </span>
+            <span class="ai-num">01</span>
+          </div>
+          <h3>AI Insight per file</h3>
+          <p class="ai-card-desc">
+            Open any file in VS Code, click &ldquo;Generate insight&rdquo;.
+            Claude reads the last 24h of stats, errors, and slow queries
+            for that file and writes a plain-English brief &mdash; what it
+            does in production, what&rsquo;s degrading, who&rsquo;s
+            affected, and what to do next.
+          </p>
+          <div class="ai-card-sample">
+            <span class="ai-sample-prompt">
+              &rarr; fetchProducts is slow for Safari/iOS users
+            </span>
+            <span class="ai-sample-body">
+              p99 spiked from 340ms to 1.2s over the last 6 hours. 4 errors
+              on line 18, all from Safari 17. Root cause: the new
+              <code>Array.at()</code> fallback in the source map. Roll
+              back, or add the polyfill from PR #221.
+            </span>
+          </div>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-top">
+            <span class="ai-tag ai-tag--blue">pre-edit</span>
+            <span class="ai-num">02</span>
+          </div>
+          <h3>Pre-edit briefing</h3>
+          <p class="ai-card-desc">
+            Before you touch a function, Claude briefs you: who calls it,
+            how often it fails, which user segments are affected, and
+            which lines are the danger zones.
+          </p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-top">
+            <span class="ai-tag ai-tag--green">fix</span>
+            <span class="ai-num">03</span>
+          </div>
+          <h3>Suggest fix</h3>
+          <p class="ai-card-desc">
+            Claude reads the real error messages and stack traces to
+            pinpoint the actual root cause &mdash; race condition, null
+            access, DB timeout &mdash; and returns a copy-ready fix.
+          </p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-top">
+            <span class="ai-tag ai-tag--amber">verify</span>
+            <span class="ai-num">04</span>
+          </div>
+          <h3>Verify fix</h3>
+          <p class="ai-card-desc">
+            Compare before and after git SHAs. Claude reports whether
+            error rates and latency actually moved, and flags regressions
+            the diff missed.
+          </p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-top">
+            <span class="ai-tag ai-tag--purple">priority</span>
+            <span class="ai-num">05</span>
+          </div>
+          <h3>Developer priority queue</h3>
+          <p class="ai-card-desc">
+            &ldquo;What should I work on next?&rdquo; Claude ranks real
+            issues by user impact (error_rate &times; session_reach
+            &times; call_count). No alert fatigue, no noise.
+          </p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-top">
+            <span class="ai-tag ai-tag--red">trace</span>
+            <span class="ai-num">06</span>
+          </div>
+          <h3>Trace user symptom</h3>
+          <p class="ai-card-desc">
+            Type &ldquo;checkout feels slow on mobile&rdquo; and Claude
+            walks your telemetry backwards from the symptom to the
+            responsible line of code.
+          </p>
+        </div>
+      </div>
+
+      <!-- Layer 2: Project-wide analysis engine -->
+      <div class="ai-layer-head ai-layer-head--spaced">
+        <span class="ai-layer-num">02</span>
+        <div>
+          <div class="ai-layer-kicker">layer 2 &middot; whole project</div>
+          <h3 class="ai-layer-title">Project-wide analysis engine</h3>
+          <p class="ai-layer-desc">
+            Five more Claude-powered reports over your entire project.
+            Cached until you refresh, so re-reading costs zero tokens.
+          </p>
+        </div>
+      </div>
+
+      <div class="ai-bento ai-bento--analysis">
+        <div class="ai-card">
+          <div class="ai-card-top">
+            <span class="ai-tag ai-tag--red">anomalies</span>
+            <span class="ai-num">07</span>
+          </div>
+          <h3>Anomaly detection</h3>
+          <p class="ai-card-desc">
+            Baselines every function against its own history. Claude
+            flags latency spikes, error-rate jumps, traffic drops, and
+            session-impact changes &mdash; with the actual numbers, not
+            thresholds.
+          </p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-top">
+            <span class="ai-tag ai-tag--amber">root cause</span>
+            <span class="ai-num">08</span>
+          </div>
+          <h3>Root cause correlation</h3>
+          <p class="ai-card-desc">
+            When multiple things break at once, Claude correlates across
+            functions, errors, queries, and deploys to find the single
+            upstream cause &mdash; not just a list of symptoms.
+          </p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-top">
+            <span class="ai-tag ai-tag--blue">patterns</span>
+            <span class="ai-num">09</span>
+          </div>
+          <h3>Behavioral patterns</h3>
+          <p class="ai-card-desc">
+            Rush hours, weekday vs weekend, post-deploy regressions. Claude
+            names the recurring behaviors in your traffic so you can plan
+            around them.
+          </p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-top">
+            <span class="ai-tag ai-tag--purple">issues</span>
+            <span class="ai-num">10</span>
+          </div>
+          <h3>Proactive issue detection</h3>
+          <p class="ai-card-desc">
+            Active incidents, silent failures, slow degradation, and
+            reliability risks &mdash; ranked by how many real users they
+            touch. Only things with concrete evidence.
+          </p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-top">
+            <span class="ai-tag ai-tag--green">digest</span>
+            <span class="ai-num">11</span>
+          </div>
+          <h3>Weekly digest</h3>
+          <p class="ai-card-desc">
+            A 2-minute weekly read covering health, top regressions, what
+            improved, deploy impact, and the week&rsquo;s priority fixes
+            &mdash; ready to paste into Slack or a standup.
+          </p>
+        </div>
+      </div>
+
+      <!-- Layer 3: MCP server for coding agents -->
+      <div class="ai-layer-head ai-layer-head--spaced">
+        <span class="ai-layer-num">03</span>
+        <div>
+          <div class="ai-layer-kicker">layer 3 &middot; coding agents</div>
+          <h3 class="ai-layer-title">
+            19-tool MCP server for Claude Code &amp; Cursor
+          </h3>
+          <p class="ai-layer-desc">
+            Ship your telemetry as MCP tools so any coding agent debugs
+            with live production data. No log diving, no hallucinations,
+            no hand-crafted prompts.
+          </p>
+        </div>
+      </div>
+
+      <div class="mcp-grid">
+        <div class="mcp-group">
+          <div class="mcp-group-label">queries</div>
+          <div class="mcp-group-tools">
+            <span class="mcp-chip"><span class="td td-blue"></span>get_function_stats</span>
+            <span class="mcp-chip"><span class="td td-blue"></span>get_hot_paths</span>
+            <span class="mcp-chip"><span class="td td-blue"></span>get_live_sessions</span>
+            <span class="mcp-chip"><span class="td td-blue"></span>get_trace</span>
+            <span class="mcp-chip"><span class="td td-red"></span>get_errors_at_line</span>
+            <span class="mcp-chip"><span class="td td-amber"></span>get_slow_queries</span>
+          </div>
+        </div>
+        <div class="mcp-group">
+          <div class="mcp-group-label">trends &amp; comparisons</div>
+          <div class="mcp-group-tools">
+            <span class="mcp-chip"><span class="td td-amber"></span>get_function_trend</span>
+            <span class="mcp-chip"><span class="td td-amber"></span>get_error_trends</span>
+            <span class="mcp-chip"><span class="td td-amber"></span>get_time_of_day_pattern</span>
+            <span class="mcp-chip"><span class="td td-amber"></span>get_weekday_weekend_pattern</span>
+            <span class="mcp-chip"><span class="td td-purple"></span>compare_periods</span>
+            <span class="mcp-chip"><span class="td td-purple"></span>compare_deploys</span>
+          </div>
+        </div>
+        <div class="mcp-group">
+          <div class="mcp-group-label">ai-powered</div>
+          <div class="mcp-group-tools">
+            <span class="mcp-chip"><span class="td td-green"></span>get_ai_insight</span>
+            <span class="mcp-chip"><span class="td td-green"></span>get_analysis</span>
+            <span class="mcp-chip"><span class="td td-green"></span>pre_edit_briefing</span>
+            <span class="mcp-chip"><span class="td td-green"></span>suggest_fix</span>
+            <span class="mcp-chip"><span class="td td-green"></span>verify_fix</span>
+            <span class="mcp-chip"><span class="td td-green"></span>dev_priority_queue</span>
+            <span class="mcp-chip"><span class="td td-green"></span>trace_symptom</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mcp-prompts-row">
+        <div class="mcp-prompts-label">&gt; sample prompts to your agent</div>
+        <div class="mcp-prompts-inline">
+          <span class="mcp-prompt-chip">
+            &ldquo;What&rsquo;s broken in production right now?&rdquo;
+          </span>
+          <span class="mcp-prompt-chip">
+            &ldquo;Did last Tuesday&rsquo;s deploy cause the checkout
+            regression?&rdquo;
+          </span>
+          <span class="mcp-prompt-chip">
+            &ldquo;Users say search is slow on Fridays &mdash; why?&rdquo;
+          </span>
+          <span class="mcp-prompt-chip">
+            &ldquo;Write me a fix for the error on line 42 of
+            checkout.ts.&rdquo;
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <div class="sep"><hr /></div>
+
     <!-- PROBLEM / GAP / SOLUTION -->
     <section id="why" class="section pgs-section">
       <div class="section-header">
@@ -229,12 +487,14 @@
 
       <div class="pgs-grid">
         <div class="pgs-card pgs-problem">
-          <div class="pgs-tag"><span class="pgs-dot"></span> problem</div>
+          <div class="pgs-tag">
+            <span class="pgs-dot"></span> problem
+          </div>
           <h3>You&rsquo;re debugging blind.</h3>
           <ul class="pgs-list">
             <li>
-              <strong>87%</strong> of production bugs are reported by users, not
-              caught by developers.
+              <strong>87%</strong> of production bugs are reported by users,
+              not caught by developers.
             </li>
             <li>
               The average engineer spends
@@ -251,13 +511,15 @@
             </li>
           </ul>
           <p class="pgs-quote">
-            &ldquo;Works on my machine&rdquo; is the industry&rsquo;s $300B/year
-            excuse.
+            &ldquo;Works on my machine&rdquo; is the industry&rsquo;s
+            $300B/year excuse.
           </p>
         </div>
 
         <div class="pgs-card pgs-gap">
-          <div class="pgs-tag"><span class="pgs-dot"></span> the gap</div>
+          <div class="pgs-tag">
+            <span class="pgs-dot"></span> the gap
+          </div>
           <h3>APM was built for ops, not coders.</h3>
           <ul class="pgs-list">
             <li>
@@ -265,8 +527,8 @@
               $5,000/mo dashboards built for SRE teams.
             </li>
             <li>
-              <strong>Sentry</strong> shows errors but stops at the stack trace.
-              No latency. No user reach. No fix.
+              <strong>Sentry</strong> shows errors but stops at the stack
+              trace. No latency. No user reach. No fix.
             </li>
             <li>
               <strong>Logs &amp; traces</strong> live in a separate app,
@@ -278,13 +540,15 @@
             </li>
           </ul>
           <p class="pgs-quote">
-            Developers don&rsquo;t need another dashboard. They need the answer,
-            on the line, in the editor.
+            Developers don&rsquo;t need another dashboard. They need the
+            answer, on the line, in the editor.
           </p>
         </div>
 
         <div class="pgs-card pgs-solution">
-          <div class="pgs-tag"><span class="pgs-dot"></span> solution</div>
+          <div class="pgs-tag">
+            <span class="pgs-dot"></span> solution
+          </div>
           <h3>ProdScope brings production to your cursor.</h3>
           <ul class="pgs-list">
             <li>
@@ -305,7 +569,8 @@
             </li>
           </ul>
           <p class="pgs-quote pgs-quote--green">
-            The first observability tool that actually makes you a better coder.
+            The first observability tool that actually makes you a better
+            coder.
           </p>
         </div>
       </div>
@@ -320,18 +585,18 @@
             <div class="pgs-whynow-num">01</div>
             <h4>AI writes more code than humans.</h4>
             <p>
-              Claude Code, Cursor, and Copilot now ship production changes. They
-              need production context &mdash; not just the file tree. ProdScope
-              is how AI agents learn what&rsquo;s really happening.
+              Claude Code, Cursor, and Copilot now ship production changes.
+              They need production context &mdash; not just the file tree.
+              ProdScope is how AI agents learn what&rsquo;s really happening.
             </p>
           </div>
           <div class="pgs-whynow-item">
             <div class="pgs-whynow-num">02</div>
             <h4>APM budgets are collapsing.</h4>
             <p>
-              Teams are cutting Datadog contracts. Developers want one tool that
-              lives in their editor &mdash; not a $60k/year dashboard nobody
-              opens.
+              Teams are cutting Datadog contracts. Developers want one tool
+              that lives in their editor &mdash; not a $60k/year dashboard
+              nobody opens.
             </p>
           </div>
           <div class="pgs-whynow-item">
@@ -339,8 +604,8 @@
             <h4>The IDE is the platform.</h4>
             <p>
               VS Code has 15M+ daily developers. CodeLens and MCP make it the
-              perfect distribution surface for the next generation of developer
-              tools.
+              perfect distribution surface for the next generation of
+              developer tools.
             </p>
           </div>
         </div>
@@ -382,10 +647,12 @@
         </div>
         <div class="feature-card">
           <p class="feature-num">[03]</p>
-          <h3>AI-powered insights</h3>
+          <h3>11 AI tools, grounded in telemetry</h3>
           <p>
-            AI analyzes your telemetry and tells you what's broken, who's
-            affected, and what to fix — in plain English.
+            Claude reads your live data to brief you before edits, suggest
+            real fixes, verify deploys, rank priorities, and trace user
+            symptoms back to code. See the
+            <a href="#ai">AI section</a> for the full list.
           </p>
         </div>
         <div class="feature-card">
@@ -406,11 +673,11 @@
         </div>
         <div class="feature-card">
           <p class="feature-num">[06]</p>
-          <h3>MCP for AI coding assistants</h3>
+          <h3>19-tool MCP for coding agents</h3>
           <p>
-            Ask Claude Code "what's failing in checkout?" and it queries your
-            live production data via MCP — debug with real telemetry, not
-            guesses.
+            Claude Code and Cursor get direct access to your telemetry via
+            MCP &mdash; stats, trends, anomalies, deploy diffs, and fix
+            suggestions. Real data, not hallucinations.
           </p>
         </div>
         <div class="feature-card">
@@ -806,37 +1073,83 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         </div>
 
         <div class="tracked">
-          <p class="tracked-title">available tools</p>
+          <p class="tracked-title">available tools &mdash; 19 total</p>
           <div class="mcp-tools">
             <div class="mcp-tool">
               <code>get_function_stats</code
               ><span>call count, latency, error rate</span>
             </div>
             <div class="mcp-tool">
-              <code>get_errors_at_line</code
-              ><span>errors at file:line with stacks</span>
-            </div>
-            <div class="mcp-tool">
-              <code>get_slow_queries</code><span>slowest db queries</span>
-            </div>
-            <div class="mcp-tool">
               <code>get_hot_paths</code
-              ><span>most-called function journeys</span>
-            </div>
-            <div class="mcp-tool">
-              <code>compare_deploys</code
-              ><span>diff deploys by latency &amp; errors</span>
+              ><span>most-called functions in a window</span>
             </div>
             <div class="mcp-tool">
               <code>get_live_sessions</code
               ><span>active sessions in real-time</span>
             </div>
             <div class="mcp-tool">
-              <code>get_ai_insight</code
-              ><span>ai analysis of what's wrong</span>
+              <code>get_trace</code
+              ><span>full request trace with spans</span>
             </div>
             <div class="mcp-tool">
-              <code>get_trace</code><span>full request trace with spans</span>
+              <code>get_errors_at_line</code
+              ><span>errors at file:line with stacks</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_slow_queries</code
+              ><span>slowest db queries</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_function_trend</code
+              ><span>function metrics over time</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_error_trends</code
+              ><span>error rates over time</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_time_of_day_pattern</code
+              ><span>hourly traffic / error patterns</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_weekday_weekend_pattern</code
+              ><span>weekday vs weekend behavior</span>
+            </div>
+            <div class="mcp-tool">
+              <code>compare_periods</code
+              ><span>diff any two time windows</span>
+            </div>
+            <div class="mcp-tool">
+              <code>compare_deploys</code
+              ><span>diff deploys by latency &amp; errors</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_ai_insight</code
+              ><span>claude insight for a file</span>
+            </div>
+            <div class="mcp-tool">
+              <code>get_analysis</code
+              ><span>anomalies, patterns, issues, digest</span>
+            </div>
+            <div class="mcp-tool">
+              <code>pre_edit_briefing</code
+              ><span>what to know before editing</span>
+            </div>
+            <div class="mcp-tool">
+              <code>suggest_fix</code
+              ><span>root cause + code suggestion</span>
+            </div>
+            <div class="mcp-tool">
+              <code>verify_fix</code
+              ><span>did my deploy actually fix it?</span>
+            </div>
+            <div class="mcp-tool">
+              <code>dev_priority_queue</code
+              ><span>what to work on next</span>
+            </div>
+            <div class="mcp-tool">
+              <code>trace_symptom</code
+              ><span>symptom &rarr; responsible code</span>
             </div>
           </div>
         </div>
@@ -953,8 +1266,8 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
       <div class="cta-includes">
         <span>Unlimited projects</span>
         <span>VS Code extension</span>
-        <span>MCP server</span>
-        <span>AI insights</span>
+        <span>11 AI tools</span>
+        <span>19-tool MCP server</span>
         <span>Deploy comparisons</span>
       </div>
     </section>
@@ -1234,12 +1547,11 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
           var s = H / 520;
           ctx.save();
-          ctx.font =
-            "600 " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
+          ctx.font = "600 " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
           ctx.textAlign = "center";
-          var tw = ctx.measureText(this.content).width + 8 * s;
+          var tw = ctx.measureText(this.content).width + 8*s;
           ctx.fillStyle = "rgba(0,0,0," + this.opacity * 0.6 + ")";
-          ctx.fillRect(x - tw / 2, y - 18 * s, tw, 13 * s);
+          ctx.fillRect(x - tw / 2, y - 18*s, tw, 13*s);
           ctx.fillStyle = c;
           ctx.fillText(this.content, x, y - 11);
           ctx.restore();
@@ -1341,10 +1653,10 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
         function drawProductionBox() {
           var s = H / 520; // scale factor
-          var bx = sdkNodes[0].xP * W - 65 * s;
-          var by = sdkNodes[0].yP * H - 55 * s;
-          var bw = (sdkNodes[2].xP - sdkNodes[0].xP) * W + 130 * s;
-          var bh = 110 * s;
+          var bx = sdkNodes[0].xP * W - 65*s;
+          var by = sdkNodes[0].yP * H - 55*s;
+          var bw = (sdkNodes[2].xP - sdkNodes[0].xP) * W + 130*s;
+          var bh = 110*s;
 
           // Gradient fill
           var gf = ctx.createLinearGradient(bx, by, bx, by + bh);
@@ -1397,8 +1709,8 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
           // Large glow
           ctx.beginPath();
-          ctx.arc(nx, ny, 50 * s, 0, Math.PI * 2);
-          var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 50 * s);
+          ctx.arc(nx, ny, 50*s, 0, Math.PI * 2);
+          var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 50*s);
           g.addColorStop(0, "rgba(61, 220, 132, 0.08)");
           g.addColorStop(1, "rgba(0,0,0,0)");
           ctx.fillStyle = g;
@@ -1469,8 +1781,8 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
             // Glow
             ctx.beginPath();
-            ctx.arc(nx, ny, 32 * s, 0, Math.PI * 2);
-            var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 32 * s);
+            ctx.arc(nx, ny, 32*s, 0, Math.PI * 2);
+            var g = ctx.createRadialGradient(nx, ny, 0, nx, ny, 32*s);
             g.addColorStop(0, node.color.replace("1)", "0.14)"));
             g.addColorStop(1, "rgba(0,0,0,0)");
             ctx.fillStyle = g;
@@ -1494,12 +1806,12 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         }
 
         function drawArrowTip(x1, y1, x2, y2, color) {
-          var s = H / 520;
+          var s = H/520;
           var angle = Math.atan2(y2 - y1, x2 - x1);
-          var len = 7 * s;
+          var len = 7*s;
           ctx.setLineDash([]);
           ctx.strokeStyle = color;
-          ctx.lineWidth = 1.2 * s;
+          ctx.lineWidth = 1.2*s;
           ctx.beginPath();
           ctx.moveTo(
             x2 - Math.cos(angle - 0.42) * len,
@@ -1514,9 +1826,9 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         }
 
         function drawLinkGroup(links, dash, defaultStroke) {
-          var s = H / 520;
+          var s = H/520;
           ctx.setLineDash(dash);
-          ctx.lineWidth = 1 * s;
+          ctx.lineWidth = 1*s;
           links.forEach(function (l) {
             var sc = l.color
               ? l.color.replace(/[\d.]+\)$/, "0.1)")
@@ -1547,9 +1859,8 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
         /* ---- Arrow labels ---- */
         function drawLabels() {
-          var s = H / 520; // scale factor
-          ctx.font =
-            "italic " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
+          var s = H/520; // scale factor
+          ctx.font = "italic " + Math.round(9 * s) + "px 'JetBrains Mono', monospace";
           ctx.textAlign = "center";
 
           // "raw telemetry" on inbound
@@ -1696,31 +2007,16 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
         // Pause all animations initially until in view
         function resetAnimations() {
-          arrowPaths.forEach((p) => {
-            p.style.animation = "none";
-          });
-          arrowHeads.forEach((h) => {
-            h.style.animation = "none";
-          });
-          annotations.forEach((a) => {
-            a.style.animation = "none";
-          });
+          arrowPaths.forEach((p) => { p.style.animation = "none"; });
+          arrowHeads.forEach((h) => { h.style.animation = "none"; });
+          annotations.forEach((a) => { a.style.animation = "none"; });
         }
 
         function playAnimations() {
           // Force reflow between remove and re-add
-          arrowPaths.forEach((p) => {
-            p.style.animation = "";
-            void p.offsetWidth;
-          });
-          arrowHeads.forEach((h) => {
-            h.style.animation = "";
-            void h.offsetWidth;
-          });
-          annotations.forEach((a) => {
-            a.style.animation = "";
-            void a.offsetWidth;
-          });
+          arrowPaths.forEach((p) => { p.style.animation = ""; void p.offsetWidth; });
+          arrowHeads.forEach((h) => { h.style.animation = ""; void h.offsetWidth; });
+          annotations.forEach((a) => { a.style.animation = ""; void a.offsetWidth; });
         }
 
         resetAnimations();
