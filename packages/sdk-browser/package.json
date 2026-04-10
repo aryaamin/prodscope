@@ -1,8 +1,7 @@
 {
   "name": "@prodscope/sdk-browser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ProdScope browser SDK — auto-track functions, clicks, fetches, and errors with file:line mapping",
-  "private": true,
   "license": "UNLICENSED",
   "homepage": "https://prodscope.dev",
   "repository": {
@@ -10,10 +9,19 @@
     "url": "https://github.com/aryaamin/prodscope.git",
     "directory": "packages/sdk-browser"
   },
-  "keywords": ["observability", "telemetry", "monitoring", "vite", "production", "error-tracking"],
+  "keywords": [
+    "observability",
+    "telemetry",
+    "monitoring",
+    "vite",
+    "production",
+    "error-tracking"
+  ],
   "type": "module",
   "main": "dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "types": "dist/index.d.ts",
   "exports": {
     ".": {

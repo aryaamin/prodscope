@@ -2,7 +2,6 @@
   "name": "@prodscope/sdk-edge",
   "version": "0.1.0",
   "description": "Lightweight ProdScope SDK for edge runtimes (Cloudflare Workers, Deno Deploy, Supabase Edge Functions)",
-  "private": true,
   "license": "UNLICENSED",
   "homepage": "https://prodscope.dev",
   "repository": {

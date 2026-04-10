@@ -1,8 +1,7 @@
 {
   "name": "@prodscope/mcp-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ProdScope MCP server — query live production telemetry from Claude Code",
-  "private": true,
   "license": "UNLICENSED",
   "homepage": "https://prodscope.dev",
   "repository": {
@@ -10,9 +9,17 @@
     "url": "https://github.com/aryaamin/prodscope.git",
     "directory": "packages/mcp-server"
   },
-  "keywords": ["mcp", "claude", "observability", "telemetry", "ai"],
+  "keywords": [
+    "mcp",
+    "claude",
+    "observability",
+    "telemetry",
+    "ai"
+  ],
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "bin": {
     "prodscope-mcp": "dist/index.js"
   },
