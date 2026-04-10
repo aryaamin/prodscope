@@ -141,10 +141,10 @@ router.get("/api/v1/ai-insight", async (req: Request, res: Response) => {
     return;
   }
 
-  // Kick off generation in the background and return immediately
+  // AI insights are strictly on-request: only generate when refresh=true.
+  // A cache miss without refresh returns null so the UI can show a "generate" prompt.
   try {
-    if (refresh) {
-      // Explicit refresh — wait for the result
+    if (refresh === "true") {
       const insight = await generateInsight({
         projectId,
         file: file as string,
@@ -152,13 +152,7 @@ router.get("/api/v1/ai-insight", async (req: Request, res: Response) => {
       });
       res.json({ file, function: fn ?? "", insight, fresh: true });
     } else {
-      // No cache hit — start generating in background and return pending status
-      generateInsight({
-        projectId,
-        file: file as string,
-        functionName: fn as string | undefined,
-      }).catch(console.error);
-      res.json({ file, function: fn ?? "", insight: null, status: "generating", fresh: false });
+      res.json({ file, function: fn ?? "", insight: null, status: "not_generated", fresh: false });
     }
   } catch (err: any) {
     if (err.message?.includes("ANTHROPIC_API_KEY")) {

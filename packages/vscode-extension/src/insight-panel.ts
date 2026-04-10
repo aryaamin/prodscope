@@ -18,6 +18,11 @@ export class InsightPanelProvider implements vscode.WebviewViewProvider {
     this.log.info("Insight panel resolved");
     this.view = webviewView;
     webviewView.webview.options = { enableScripts: true };
+    webviewView.webview.onDidReceiveMessage((msg) => {
+      if (msg?.type === "generate") {
+        this.refresh();
+      }
+    });
     this.render();
   }
 
@@ -47,7 +52,9 @@ export class InsightPanelProvider implements vscode.WebviewViewProvider {
       if (res.ok) {
         const data = await res.json() as any;
         this.log.info(`Insight data: ${JSON.stringify(data).slice(0, 200)}`);
-        this.currentInsight = data.insight ?? "No insight available yet.";
+        // Backend returns insight:null + status:"not_generated" on cache miss.
+        // We leave currentInsight empty so the UI shows the "Generate" CTA.
+        this.currentInsight = data.insight ?? "";
       } else {
         const body = await res.text();
         this.log.error(`Insight error response: ${res.status} ${body}`);
@@ -123,7 +130,11 @@ export class InsightPanelProvider implements vscode.WebviewViewProvider {
     } else if (this.currentInsight) {
       body = `<div class="insight">${renderMarkdown(this.currentInsight)}</div>`;
     } else if (fileName) {
-      body = '<div class="empty">No insight data for this file yet.</div>';
+      body = `<div class="generate">
+        <div class="generate-title">No AI insight yet</div>
+        <div class="generate-desc">Insights are generated on demand to avoid unnecessary API usage.</div>
+        <button class="generate-btn" onclick="vscode.postMessage({type:'generate'})">Generate insight</button>
+      </div>`;
     } else {
       body = '<div class="empty">Open a file with ProdScope tracking to see AI insights.</div>';
     }
@@ -223,11 +234,41 @@ export class InsightPanelProvider implements vscode.WebviewViewProvider {
       margin-top: 4px;
     }
     .setup-link:hover { text-decoration: underline; }
+    .generate {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 4px 0;
+    }
+    .generate-title {
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--vscode-foreground);
+    }
+    .generate-desc {
+      font-size: 11px;
+      color: var(--vscode-descriptionForeground);
+      line-height: 1.5;
+    }
+    .generate-btn {
+      margin-top: 4px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-family: inherit;
+      color: var(--vscode-button-foreground);
+      background: var(--vscode-button-background);
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+    .generate-btn:hover { background: var(--vscode-button-hoverBackground); }
   </style>
 </head>
 <body>
   ${fileName ? `<div class="file-name">${escapeHtml(fileName)}</div>` : ""}
   ${body}
+  <script>const vscode = acquireVsCodeApi();</script>
 </body>
 </html>`;
   }

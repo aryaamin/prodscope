@@ -8,8 +8,6 @@ import { bootstrapPostgres } from "./db/postgres.js";
 import { apiKeyAuth } from "./middleware/auth.js";
 import { setupWebSocket } from "./services/websocket.js";
 import { startAggregator } from "./services/aggregator.js";
-import { startInsightGenerator } from "./services/ai-insights.js";
-import { startAnalysisEngine } from "./services/ai-analysis.js";
 import ingestRouter from "./routes/ingest.js";
 import sourceMapRouter from "./routes/source-maps.js";
 import apiRouter from "./routes/api.js";
@@ -78,10 +76,9 @@ async function start() {
 
   // Start background services
   startAggregator(10_000);
-  if (env.anthropicApiKey) {
-    startInsightGenerator(60_000);
-    startAnalysisEngine(30 * 60 * 1000); // every 30 minutes
-  }
+  // AI insights and analyses run strictly on-request via API endpoints
+  // (POST /api/v1/ai-insight?refresh=true, POST /api/v1/analysis/:type,
+  // POST /api/v1/code-intel/:type) to avoid burning Anthropic credits.
 
   server.listen(env.port, () => {
     console.log(`ProdScope collector listening on :${env.port}`);
