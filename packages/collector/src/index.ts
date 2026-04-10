@@ -23,6 +23,7 @@ const app: ReturnType<typeof express> = express();
 //     allowedHeaders: ["Content-Type", "x-api-key", "Authorization"],
 //   }),
 // );
+app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
 // Rate limiters
