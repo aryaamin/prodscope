@@ -10,9 +10,19 @@
     "directory": "packages/sdk-edge"
   },
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "keywords": ["observability", "telemetry", "edge", "cloudflare-workers", "deno", "supabase"],
+  "keywords": [
+    "observability",
+    "telemetry",
+    "edge",
+    "cloudflare-workers",
+    "deno",
+    "supabase"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",

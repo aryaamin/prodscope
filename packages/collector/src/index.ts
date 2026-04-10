@@ -44,7 +44,7 @@ const ingestLimiter = rateLimit({
 
 const apiLimiter = rateLimit({
   windowMs: 60 * 1000,
-  limit: 120,
+  limit: 1000,
   standardHeaders: "draft-7",
   legacyHeaders: false,
   message: { error: "API rate limit exceeded" },
