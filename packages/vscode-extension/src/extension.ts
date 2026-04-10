@@ -198,7 +198,8 @@ async function refreshEditor(
 
     let stats: any[] = [];
     if (statsRes.ok) {
-      stats = await statsRes.json() as any[];
+      const data = await statsRes.json();
+      stats = Array.isArray(data) ? data : [];
       log.info(`Got ${stats.length} function stats`);
       codeLensProvider.updateStats(absPath, stats);
     }
@@ -206,7 +207,8 @@ async function refreshEditor(
     const annotations: LineAnnotation[] = [];
 
     if (errorsRes.ok) {
-      const errors = await errorsRes.json() as any[];
+      const data = await errorsRes.json();
+      const errors = Array.isArray(data) ? data : [];
       log.info(`Got ${errors.length} errors`);
 
       // Group errors by line
