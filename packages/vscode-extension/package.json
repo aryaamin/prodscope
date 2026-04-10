@@ -43,6 +43,22 @@
       {
         "command": "prodscope.refreshInsight",
         "title": "ProdScope: Refresh AI Insight"
+      },
+      {
+        "command": "prodscope.briefing",
+        "title": "ProdScope: Production Briefing for This File"
+      },
+      {
+        "command": "prodscope.suggestFix",
+        "title": "ProdScope: Suggest Fix for This File"
+      },
+      {
+        "command": "prodscope.priorityQueue",
+        "title": "ProdScope: What Should I Fix Next?"
+      },
+      {
+        "command": "prodscope.traceSymptom",
+        "title": "ProdScope: Trace User-Reported Issue"
       }
     ],
     "viewsContainers": {

@@ -60,4 +60,16 @@ export async function bootstrapPostgres(): Promise<void> {
       UNIQUE(project_id, file, function)
     )
   `);
+
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS ai_analyses (
+      id           TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+      project_id   TEXT NOT NULL REFERENCES projects(id),
+      type         TEXT NOT NULL,
+      analysis     TEXT NOT NULL,
+      data_points  INT DEFAULT 0,
+      generated_at TIMESTAMPTZ DEFAULT now(),
+      UNIQUE(project_id, type)
+    )
+  `);
 }

@@ -2,6 +2,8 @@ import { Router, type Request, type Response } from "express";
 import { getClickHouse } from "../db/clickhouse.js";
 import { getPostgres } from "../db/postgres.js";
 import { generateInsight } from "../services/ai-insights.js";
+import { runAnalysis, type AnalysisType } from "../services/ai-analysis.js";
+import { runCodeIntel, type CodeIntelType } from "../services/ai-code-intel.js";
 
 const router: ReturnType<typeof Router> = Router();
 
@@ -306,6 +308,121 @@ router.get("/api/v1/compare-deploys", async (req: Request, res: Response) => {
       p99LatencyChange: (stats2.p99_latency ?? 0) - (stats1.p99_latency ?? 0),
     },
   });
+});
+
+const VALID_ANALYSIS_TYPES = new Set(["anomalies", "root_cause", "patterns", "issues", "weekly_digest"]);
+
+/**
+ * GET /api/v1/analysis/:type — get cached AI analysis (anomalies, root_cause, patterns, issues, weekly_digest)
+ * POST /api/v1/analysis/:type — trigger a fresh analysis
+ */
+router.get("/api/v1/analysis/:type", async (req: Request, res: Response) => {
+  const projectId = (req as any).projectId as string;
+  const type = req.params.type as string;
+
+  if (!VALID_ANALYSIS_TYPES.has(type)) {
+    res.status(400).json({ error: `Invalid analysis type. Valid: ${[...VALID_ANALYSIS_TYPES].join(", ")}` });
+    return;
+  }
+
+  const db = getPostgres();
+  const cached = await db.query(
+    `SELECT analysis, data_points, generated_at FROM ai_analyses
+     WHERE project_id = $1 AND type = $2`,
+    [projectId, type],
+  );
+
+  if (cached.rows.length > 0) {
+    res.json({
+      type,
+      analysis: cached.rows[0].analysis,
+      dataPoints: cached.rows[0].data_points,
+      generatedAt: cached.rows[0].generated_at,
+      fresh: false,
+    });
+    return;
+  }
+
+  res.json({ type, analysis: null, status: "not_generated_yet", fresh: false });
+});
+
+router.post("/api/v1/analysis/:type", async (req: Request, res: Response) => {
+  const projectId = (req as any).projectId as string;
+  const type = req.params.type as string;
+  const wait = req.query.wait === "true";
+
+  if (!VALID_ANALYSIS_TYPES.has(type)) {
+    res.status(400).json({ error: `Invalid analysis type. Valid: ${[...VALID_ANALYSIS_TYPES].join(", ")}` });
+    return;
+  }
+
+  if (wait) {
+    try {
+      const result = await runAnalysis({ projectId, type: type as AnalysisType });
+      res.json(result);
+    } catch (err: any) {
+      if (err.message?.includes("ANTHROPIC_API_KEY")) {
+        res.json({ type, analysis: null, error: "no_api_key" });
+      } else {
+        throw err;
+      }
+    }
+  } else {
+    runAnalysis({ projectId, type: type as AnalysisType }).catch(console.error);
+    res.status(202).json({ type, status: "generating" });
+  }
+});
+
+// ─── Code Intelligence Endpoints ────────────────────────────────────────
+
+const VALID_CODE_INTEL_TYPES = new Set([
+  "pre_edit_briefing", "suggest_fix", "verify_fix", "dev_priority_queue", "trace_symptom",
+]);
+
+/**
+ * POST /api/v1/code-intel/:type
+ * Developer-focused AI analysis tied to specific code locations.
+ *
+ * Types:
+ *   pre_edit_briefing — "I'm about to edit this function, what should I know?"
+ *   suggest_fix       — "This function keeps failing, what's the actual fix?"
+ *   verify_fix        — "I deployed a fix, did it work?" (needs beforeSha + afterSha)
+ *   dev_priority_queue — "What should I work on next?"
+ *   trace_symptom     — "Users report X, which code is responsible?" (needs symptom)
+ */
+router.post("/api/v1/code-intel/:type", async (req: Request, res: Response) => {
+  const projectId = (req as any).projectId as string;
+  const type = req.params.type as string;
+
+  if (!VALID_CODE_INTEL_TYPES.has(type)) {
+    res.status(400).json({
+      error: `Invalid code intel type. Valid: ${[...VALID_CODE_INTEL_TYPES].join(", ")}`,
+    });
+    return;
+  }
+
+  const { file, function: fn, beforeSha, afterSha, symptom } = req.body ?? {};
+
+  try {
+    const result = await runCodeIntel({
+      projectId,
+      type: type as CodeIntelType,
+      file,
+      function: fn,
+      beforeSha,
+      afterSha,
+      symptom,
+    });
+    res.json(result);
+  } catch (err: any) {
+    if (err.message?.includes("ANTHROPIC_API_KEY")) {
+      res.json({ type, result: null, error: "no_api_key" });
+    } else if (err.message?.includes("is required")) {
+      res.status(400).json({ error: err.message });
+    } else {
+      throw err;
+    }
+  }
 });
 
 export default router;

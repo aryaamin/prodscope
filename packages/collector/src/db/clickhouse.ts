@@ -88,7 +88,7 @@ export async function initClickHouse(): Promise<void> {
         function         String,
         file             String,
         line             UInt32,
-        window           Enum8('1h'=0, '24h'=1, '7d'=2),
+        window           Enum8('1h'=0, '24h'=1, '7d'=2, '30d'=3, '90d'=4),
         call_count       UInt64,
         total_ms         Float64,
         avg_ms           Float64,
@@ -104,6 +104,80 @@ export async function initClickHouse(): Promise<void> {
       )
       ENGINE = ReplacingMergeTree(updated_at)
       ORDER BY (project_id, function, file, window)
+    `,
+  });
+
+  // Daily snapshots — permanent storage, no TTL.
+  // One row per project+function+file+date, used for trend analysis and pattern detection.
+  await ch.command({
+    query: `
+      CREATE TABLE IF NOT EXISTS daily_snapshots (
+        project_id       String,
+        function         String,
+        file             String,
+        line             UInt32,
+        date             Date,
+        day_of_week      UInt8,
+        hour_bucket      UInt8 DEFAULT 0,
+        call_count       UInt64,
+        total_ms         Float64,
+        avg_ms           Float64,
+        p50_ms           Float64,
+        p99_ms           Float64,
+        error_count      UInt64,
+        error_rate       Float64,
+        unique_sessions  UInt64,
+        total_sessions   UInt64,
+        session_reach_pct Float64,
+        updated_at       DateTime64(3, 'UTC')
+      )
+      ENGINE = ReplacingMergeTree(updated_at)
+      ORDER BY (project_id, file, function, date, hour_bucket)
+    `,
+  });
+
+  // Error daily rollups — track error trends over time without needing raw data
+  await ch.command({
+    query: `
+      CREATE TABLE IF NOT EXISTS error_daily_rollups (
+        project_id  String,
+        file        String,
+        function    String,
+        error_type  String,
+        message     String,
+        date        Date,
+        day_of_week UInt8,
+        count       UInt64,
+        unique_sessions UInt64,
+        first_seen  DateTime64(3, 'UTC'),
+        last_seen   DateTime64(3, 'UTC'),
+        updated_at  DateTime64(3, 'UTC')
+      )
+      ENGINE = ReplacingMergeTree(updated_at)
+      ORDER BY (project_id, file, function, error_type, message, date)
+    `,
+  });
+
+  // Query daily rollups — track DB query performance trends
+  await ch.command({
+    query: `
+      CREATE TABLE IF NOT EXISTS query_daily_rollups (
+        project_id   String,
+        file         String,
+        table_name   String,
+        operation    String,
+        date         Date,
+        day_of_week  UInt8,
+        call_count   UInt64,
+        avg_ms       Float64,
+        p50_ms       Float64,
+        p99_ms       Float64,
+        max_ms       Float64,
+        total_rows   UInt64,
+        updated_at   DateTime64(3, 'UTC')
+      )
+      ENGINE = ReplacingMergeTree(updated_at)
+      ORDER BY (project_id, file, table_name, operation, date)
     `,
   });
 

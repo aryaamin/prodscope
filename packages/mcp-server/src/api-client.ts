@@ -64,4 +64,82 @@ export class ApiClient {
   async compareDeploys(params: { sha1: string; sha2: string }) {
     return this.get("/api/v1/compare-deploys", params as Record<string, string>);
   }
+
+  // ─── Trends & Patterns ─────────────────────────────────────────────
+
+  async getFunctionTrend(params: { file: string; function?: string; days?: string }) {
+    return this.get("/api/v1/trends/function", params as Record<string, string>);
+  }
+
+  async getErrorTrends(params: { file?: string; days?: string }) {
+    return this.get("/api/v1/trends/errors", params as Record<string, string>);
+  }
+
+  async getQueryTrends(params: { file?: string; days?: string }) {
+    return this.get("/api/v1/trends/queries", params as Record<string, string>);
+  }
+
+  async getTimeOfDayPattern(params: { file?: string; function?: string }) {
+    return this.get("/api/v1/patterns/time-of-day", params as Record<string, string>);
+  }
+
+  async getWeekdayWeekendPattern(params: { file?: string; function?: string }) {
+    return this.get("/api/v1/patterns/weekday-weekend", params as Record<string, string>);
+  }
+
+  async comparePeriods(params: {
+    file?: string;
+    function?: string;
+    period1_start: string;
+    period1_end: string;
+    period2_start: string;
+    period2_end: string;
+  }) {
+    return this.get("/api/v1/patterns/compare-periods", params as Record<string, string>);
+  }
+
+  // ─── AI Analysis ───────────────────────────────────────────────────
+
+  async getAnalysis(type: string) {
+    return this.get(`/api/v1/analysis/${type}`);
+  }
+
+  async triggerAnalysis(type: string, wait = false) {
+    const url = new URL(`/api/v1/analysis/${type}`, this.config.apiUrl);
+    if (wait) url.searchParams.set("wait", "true");
+
+    const res = await fetch(url.toString(), {
+      method: "POST",
+      headers: { "x-api-key": this.config.apiKey },
+    });
+
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`API error ${res.status}: ${body}`);
+    }
+
+    return res.json();
+  }
+
+  // ─── Code Intelligence ─────────────────────────────────────────────
+
+  async runCodeIntel(type: string, body: Record<string, string | undefined>) {
+    const url = new URL(`/api/v1/code-intel/${type}`, this.config.apiUrl);
+
+    const res = await fetch(url.toString(), {
+      method: "POST",
+      headers: {
+        "x-api-key": this.config.apiKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`API error ${res.status}: ${text}`);
+    }
+
+    return res.json();
+  }
 }

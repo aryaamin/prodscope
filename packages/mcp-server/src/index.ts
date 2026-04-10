@@ -206,6 +206,235 @@ server.tool(
   },
 );
 
+// Tool 9: get_function_trend
+server.tool(
+  "get_function_trend",
+  "Get daily time series for a function over time — see how call count, latency, error rate, and session reach change day by day. Great for spotting gradual degradation or improvement.",
+  {
+    file: z.string().describe("File path"),
+    function: z.string().optional().describe("Function name"),
+    days: z.string().optional().describe("Number of days to look back (default: 30, max: 365)"),
+  },
+  async ({ file, function: fn, days }) => {
+    const data = await api.getFunctionTrend({ file, function: fn, days });
+    const rows = data.data ?? [];
+    if (rows.length === 0) {
+      return { content: [{ type: "text" as const, text: "No trend data found. Daily snapshots may not have been generated yet." }] };
+    }
+    const lines = rows.map((r: any) =>
+      `${r.date} (${["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][r.day_of_week] ?? "?"})  ` +
+      `calls: ${r.call_count}  |  avg: ${Number(r.avg_ms).toFixed(0)}ms  |  p99: ${Number(r.p99_ms).toFixed(0)}ms  |  ` +
+      `errors: ${r.error_count} (${(Number(r.error_rate) * 100).toFixed(1)}%)  |  reach: ${Number(r.session_reach_pct).toFixed(0)}%`
+    );
+    return { content: [{ type: "text" as const, text: `Trend for ${file}${fn ? `:${fn}` : ""} (${rows.length} days)\n\n${lines.join("\n")}` }] };
+  },
+);
+
+// Tool 10: get_error_trends
+server.tool(
+  "get_error_trends",
+  "Get daily error count trends grouped by error type and message. Shows how errors are trending over days/weeks.",
+  {
+    file: z.string().optional().describe("File path to filter by"),
+    days: z.string().optional().describe("Number of days (default: 30)"),
+  },
+  async ({ file, days }) => {
+    const data = await api.getErrorTrends({ file, days });
+    return { content: [{ type: "text" as const, text: JSON.stringify(data.data ?? [], null, 2) }] };
+  },
+);
+
+// Tool 11: get_time_of_day_pattern
+server.tool(
+  "get_time_of_day_pattern",
+  "Get hourly traffic and error heatmap — which hours of the day have the most traffic, highest error rates, and worst latency.",
+  {
+    file: z.string().optional().describe("File path"),
+    function: z.string().optional().describe("Function name"),
+  },
+  async ({ file, function: fn }) => {
+    const data = await api.getTimeOfDayPattern({ file, function: fn });
+    const rows = data.data ?? [];
+    if (rows.length === 0) {
+      return { content: [{ type: "text" as const, text: "No hourly pattern data found yet." }] };
+    }
+    const lines = rows.map((r: any) =>
+      `${String(r.hour).padStart(2, "0")}:00  calls: ${r.call_count}  |  avg: ${Number(r.avg_ms).toFixed(0)}ms  |  ` +
+      `p99: ${Number(r.p99_ms).toFixed(0)}ms  |  errors: ${r.error_count} (${(Number(r.error_rate) * 100).toFixed(1)}%)`
+    );
+    return { content: [{ type: "text" as const, text: `Hourly Pattern (last 7 days)\n\n${lines.join("\n")}` }] };
+  },
+);
+
+// Tool 12: get_weekday_weekend_pattern
+server.tool(
+  "get_weekday_weekend_pattern",
+  "Compare weekday vs weekend behavior — traffic volume, latency, error rates, and user counts.",
+  {
+    file: z.string().optional().describe("File path"),
+    function: z.string().optional().describe("Function name"),
+  },
+  async ({ file, function: fn }) => {
+    const data = await api.getWeekdayWeekendPattern({ file, function: fn });
+    const rows = data.data ?? [];
+    if (rows.length === 0) {
+      return { content: [{ type: "text" as const, text: "No weekday/weekend data found yet." }] };
+    }
+    const lines = rows.map((r: any) =>
+      `${r.period.toUpperCase()}\n` +
+      `  Calls: ${r.call_count}  |  avg: ${Number(r.avg_ms).toFixed(0)}ms  |  p99: ${Number(r.p99_ms).toFixed(0)}ms\n` +
+      `  Errors: ${r.error_count} (${(Number(r.error_rate) * 100).toFixed(1)}%)  |  Sessions: ${r.unique_sessions}`
+    );
+    return { content: [{ type: "text" as const, text: lines.join("\n\n") }] };
+  },
+);
+
+// Tool 13: compare_periods
+server.tool(
+  "compare_periods",
+  "Compare two arbitrary date ranges side by side — e.g., this week vs last week, or before/after a release.",
+  {
+    period1_start: z.string().describe("Start date of first period (YYYY-MM-DD)"),
+    period1_end: z.string().describe("End date of first period (YYYY-MM-DD)"),
+    period2_start: z.string().describe("Start date of second period (YYYY-MM-DD)"),
+    period2_end: z.string().describe("End date of second period (YYYY-MM-DD)"),
+    file: z.string().optional().describe("File path to filter by"),
+    function: z.string().optional().describe("Function name to filter by"),
+  },
+  async ({ period1_start, period1_end, period2_start, period2_end, file, function: fn }) => {
+    const data = await api.comparePeriods({
+      period1_start, period1_end, period2_start, period2_end, file, function: fn,
+    });
+    const d = data.diff ?? {};
+    const text = [
+      `Period 1 (${period1_start} to ${period1_end}):`,
+      `  Calls: ${data.period1?.call_count ?? 0}  |  avg: ${Number(data.period1?.avg_ms ?? 0).toFixed(0)}ms  |  errors: ${(Number(data.period1?.error_rate ?? 0) * 100).toFixed(1)}%`,
+      ``,
+      `Period 2 (${period2_start} to ${period2_end}):`,
+      `  Calls: ${data.period2?.call_count ?? 0}  |  avg: ${Number(data.period2?.avg_ms ?? 0).toFixed(0)}ms  |  errors: ${(Number(data.period2?.error_rate ?? 0) * 100).toFixed(1)}%`,
+      ``,
+      `Changes:`,
+      `  Calls: ${d.call_count_change > 0 ? "+" : ""}${d.call_count_change ?? 0}`,
+      `  Avg latency: ${d.avg_ms_change > 0 ? "+" : ""}${Number(d.avg_ms_change ?? 0).toFixed(1)}ms`,
+      `  Error rate: ${d.error_rate_change > 0 ? "+" : ""}${(Number(d.error_rate_change ?? 0) * 100).toFixed(2)}%`,
+    ].join("\n");
+    return { content: [{ type: "text" as const, text }] };
+  },
+);
+
+// Tool 14: get_analysis
+server.tool(
+  "get_analysis",
+  "Get AI-powered deep analysis of production data. Types: 'anomalies' (deviations from baselines), 'root_cause' (why things broke), 'patterns' (time/day behaviors), 'issues' (proactive problem detection ranked by impact), 'weekly_digest' (comprehensive weekly report).",
+  {
+    type: z
+      .enum(["anomalies", "root_cause", "patterns", "issues", "weekly_digest"])
+      .describe("Type of analysis to retrieve"),
+    refresh: z
+      .enum(["true", "false"])
+      .optional()
+      .describe("Force regeneration (default: false, uses cached)"),
+  },
+  async ({ type, refresh }) => {
+    if (refresh === "true") {
+      const result = await api.triggerAnalysis(type, true);
+      return {
+        content: [{
+          type: "text" as const,
+          text: result.analysis ?? `Analysis triggered. Status: ${result.status ?? "unknown"}`,
+        }],
+      };
+    }
+
+    const data = await api.getAnalysis(type);
+    if (data.analysis) {
+      const age = data.generatedAt
+        ? `\n\n---\nGenerated: ${data.generatedAt} | Data points analyzed: ${data.dataPoints ?? "?"}`
+        : "";
+      return { content: [{ type: "text" as const, text: data.analysis + age }] };
+    }
+
+    // No cached result — trigger generation
+    await api.triggerAnalysis(type, false);
+    return {
+      content: [{
+        type: "text" as const,
+        text: `No cached ${type} analysis found. Generation has been triggered — try again in a minute.`,
+      }],
+    };
+  },
+);
+
+// ─── Developer Code Intelligence Tools ──────────────────────────────
+
+// Tool 15: pre_edit_briefing
+server.tool(
+  "pre_edit_briefing",
+  "Get a production briefing before editing a file or function. Tells you: current health, known errors with exact lines, who's affected, DB query issues, danger zones. Like a handoff note from the on-call engineer.",
+  {
+    file: z.string().describe("File path you're about to edit"),
+    function: z.string().optional().describe("Specific function (optional — omit for whole-file briefing)"),
+  },
+  async ({ file, function: fn }) => {
+    const data = await api.runCodeIntel("pre_edit_briefing", { file, function: fn });
+    return { content: [{ type: "text" as const, text: data.result ?? "No briefing available." }] };
+  },
+);
+
+// Tool 16: suggest_fix
+server.tool(
+  "suggest_fix",
+  "Analyze production errors for a file/function and suggest specific code fixes. For each error: root cause analysis, exact fix with pseudocode, and how to verify the fix worked. Also surfaces slow queries and performance fixes.",
+  {
+    file: z.string().describe("File path with issues"),
+    function: z.string().optional().describe("Specific function to analyze"),
+  },
+  async ({ file, function: fn }) => {
+    const data = await api.runCodeIntel("suggest_fix", { file, function: fn });
+    return { content: [{ type: "text" as const, text: data.result ?? "No fix suggestions — no errors found for this code." }] };
+  },
+);
+
+// Tool 17: verify_fix
+server.tool(
+  "verify_fix",
+  "Check whether a deployed fix actually worked by comparing before/after production data. Gives a verdict (YES/PARTIALLY/NO), shows error rate change, latency impact, and remaining issues.",
+  {
+    file: z.string().describe("File that was fixed"),
+    function: z.string().optional().describe("Specific function that was fixed"),
+    beforeSha: z.string().describe("Git SHA before the fix"),
+    afterSha: z.string().describe("Git SHA after the fix"),
+  },
+  async ({ file, function: fn, beforeSha, afterSha }) => {
+    const data = await api.runCodeIntel("verify_fix", { file, function: fn, beforeSha, afterSha });
+    return { content: [{ type: "text" as const, text: data.result ?? "Not enough data to verify yet." }] };
+  },
+);
+
+// Tool 18: dev_priority_queue
+server.tool(
+  "dev_priority_queue",
+  "Get a prioritized list of what to fix next, ranked by user impact. Each item has: the specific problem, which file:line, how many users it affects, difficulty estimate, the exact fix to apply, and expected result.",
+  {},
+  async () => {
+    const data = await api.runCodeIntel("dev_priority_queue", {});
+    return { content: [{ type: "text" as const, text: data.result ?? "No issues found — codebase is clean." }] };
+  },
+);
+
+// Tool 19: trace_symptom
+server.tool(
+  "trace_symptom",
+  "Trace a user-reported problem back to the responsible code. Give it a symptom like 'checkout is slow' or 'login fails on mobile' and it searches production data to find the exact function, error, and line responsible.",
+  {
+    symptom: z.string().describe("User-reported symptom or problem description (e.g., 'checkout timeout', 'blank page on Safari', 'order stuck')"),
+  },
+  async ({ symptom }) => {
+    const data = await api.runCodeIntel("trace_symptom", { symptom });
+    return { content: [{ type: "text" as const, text: data.result ?? "No matching production data found for this symptom." }] };
+  },
+);
+
 // Start the server
 async function main() {
   const transport = new StdioServerTransport();

@@ -9,9 +9,11 @@ import { apiKeyAuth } from "./middleware/auth.js";
 import { setupWebSocket } from "./services/websocket.js";
 import { startAggregator } from "./services/aggregator.js";
 import { startInsightGenerator } from "./services/ai-insights.js";
+import { startAnalysisEngine } from "./services/ai-analysis.js";
 import ingestRouter from "./routes/ingest.js";
 import sourceMapRouter from "./routes/source-maps.js";
 import apiRouter from "./routes/api.js";
+import trendsRouter from "./routes/trends.js";
 import authRouter from "./routes/auth.js";
 
 const app: ReturnType<typeof express> = express();
@@ -62,6 +64,7 @@ app.use(authLimiter, authRouter);
 app.use(apiKeyAuth, ingestLimiter, ingestRouter);
 app.use(apiKeyAuth, sourceMapRouter);
 app.use(apiKeyAuth, apiLimiter, apiRouter);
+app.use(apiKeyAuth, apiLimiter, trendsRouter);
 
 const server = http.createServer(app);
 
@@ -77,6 +80,7 @@ async function start() {
   startAggregator(10_000);
   if (env.anthropicApiKey) {
     startInsightGenerator(60_000);
+    startAnalysisEngine(30 * 60 * 1000); // every 30 minutes
   }
 
   server.listen(env.port, () => {

@@ -133,6 +133,31 @@ export function activate(context: vscode.ExtensionContext) {
         fetchedFiles.add(relPath);
       }
     }),
+
+    // Code intelligence commands
+    vscode.commands.registerCommand("prodscope.briefing", () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) return;
+      const relPath = toRelative(editor.document.uri.fsPath);
+      runCodeIntelCommand(config, "pre_edit_briefing", { file: relPath }, `Production Briefing: ${relPath}`);
+    }),
+    vscode.commands.registerCommand("prodscope.suggestFix", () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) return;
+      const relPath = toRelative(editor.document.uri.fsPath);
+      runCodeIntelCommand(config, "suggest_fix", { file: relPath }, `Fix Suggestions: ${relPath}`);
+    }),
+    vscode.commands.registerCommand("prodscope.priorityQueue", () => {
+      runCodeIntelCommand(config, "dev_priority_queue", {}, "Developer Priority Queue");
+    }),
+    vscode.commands.registerCommand("prodscope.traceSymptom", async () => {
+      const symptom = await vscode.window.showInputBox({
+        prompt: "Describe the user-reported issue",
+        placeHolder: "e.g., checkout is slow, login fails on mobile, blank page after signup",
+      });
+      if (!symptom) return;
+      runCodeIntelCommand(config, "trace_symptom", { symptom }, `Tracing: ${symptom}`);
+    }),
   );
 
   // Initial refresh for already-open file
@@ -241,6 +266,49 @@ function simplifyUA(ua: string): string {
   if (ua.includes("Chrome")) return "Chrome";
   if (ua.includes("Firefox")) return "Firefox";
   return "Other";
+}
+
+async function runCodeIntelCommand(
+  config: { apiUrl: string; apiKey: string },
+  type: string,
+  body: Record<string, string>,
+  title: string,
+): Promise<void> {
+  const panel = vscode.window.createWebviewPanel(
+    "prodscope.codeIntel",
+    title,
+    vscode.ViewColumn.Beside,
+    { enableScripts: false },
+  );
+
+  panel.webview.html = `<html><body style="padding:20px;font-family:var(--vscode-font-family);color:var(--vscode-foreground);background:var(--vscode-editor-background)"><h2>${title}</h2><p>Analyzing production data...</p></body></html>`;
+
+  try {
+    const res = await fetch(`${config.apiUrl}/api/v1/code-intel/${type}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": config.apiKey,
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      panel.webview.html = `<html><body style="padding:20px;font-family:var(--vscode-font-family);color:var(--vscode-foreground);background:var(--vscode-editor-background)"><h2>${title}</h2><p style="color:var(--vscode-errorForeground)">Error: ${res.status} ${res.statusText}</p></body></html>`;
+      return;
+    }
+
+    const data = await res.json() as { result?: string };
+    const markdown = (data.result ?? "No results.")
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/\n/g, "<br>")
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/`(.*?)`/g, "<code style='background:var(--vscode-textCodeBlock-background);padding:2px 4px;border-radius:3px'>$1</code>");
+
+    panel.webview.html = `<html><body style="padding:20px;font-family:var(--vscode-font-family);color:var(--vscode-foreground);background:var(--vscode-editor-background);line-height:1.6"><h2>${title}</h2><div>${markdown}</div></body></html>`;
+  } catch (err: any) {
+    panel.webview.html = `<html><body style="padding:20px;font-family:var(--vscode-font-family);color:var(--vscode-foreground);background:var(--vscode-editor-background)"><h2>${title}</h2><p style="color:var(--vscode-errorForeground)">Failed to connect: ${err.message}</p></body></html>`;
+  }
 }
 
 export function deactivate() {
