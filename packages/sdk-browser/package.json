@@ -1,6 +1,6 @@
 {
   "name": "@prodscope/sdk-browser",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "ProdScope browser SDK — auto-track functions, clicks, fetches, and errors with file:line mapping",
   "license": "UNLICENSED",
   "homepage": "https://prodscope.dev",

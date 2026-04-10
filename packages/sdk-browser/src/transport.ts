@@ -45,16 +45,17 @@ export class Transport {
 
     try {
       const url = `${this.ingestUrl}/v1/ingest`;
+      const body = JSON.stringify(batch);
+      const headers = { "Content-Type": "application/json", "x-api-key": this.apiKey };
 
-      await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": this.apiKey,
-        },
-        body: JSON.stringify(batch),
-        keepalive: true,
-      });
+      let res = await fetch(url, { method: "POST", headers, body, keepalive: true });
+
+      // Retry once after Retry-After delay on 429
+      if (res.status === 429) {
+        const retryAfter = Number.parseInt(res.headers.get("Retry-After") ?? "5", 10);
+        await new Promise((r) => setTimeout(r, retryAfter * 1000));
+        await fetch(url, { method: "POST", headers, body, keepalive: true });
+      }
     } catch {
       // Silently drop on failure — SDK should never break the host app
     }

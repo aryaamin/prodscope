@@ -21,6 +21,11 @@ export function captureFetches(transport: Transport): () => void {
       input instanceof Request ? input.url : String(input);
     const method = init?.method ?? (input instanceof Request ? input.method : "GET");
 
+    // Don't trace the SDK's own ingest calls — would cause an infinite loop
+    if (url.includes("/v1/ingest")) {
+      return originalFetch(input, init);
+    }
+
     // Inject trace header for distributed tracing
     const headers = new Headers(init?.headers ?? {});
     headers.set("x-prodscope-trace-id", traceId);

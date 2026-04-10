@@ -36,8 +36,9 @@ const authLimiter = rateLimit({
 });
 
 const ingestLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  limit: 1000, // 300 requests per minute per IP
+  windowMs: 60 * 1000,
+  limit: 1000, // 1000 requests per minute per project
+  keyGenerator: (req) => (req as any).projectId ?? req.ip ?? "unknown",
   standardHeaders: "draft-7",
   legacyHeaders: false,
   message: { error: "Ingest rate limit exceeded" },
