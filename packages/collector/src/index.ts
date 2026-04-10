@@ -16,13 +16,13 @@ import authRouter from "./routes/auth.js";
 
 const app: ReturnType<typeof express> = express();
 
-app.use(
-  cors({
-    origin: env.corsOrigins === "*" ? true : env.corsOrigins.split(",").map((o) => o.trim()),
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "x-api-key", "Authorization"],
-  }),
-);
+// app.use(
+//   cors({
+//     origin: env.corsOrigins === "*" ? true : env.corsOrigins.split(",").map((o) => o.trim()),
+//     methods: ["GET", "POST", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "x-api-key", "Authorization"],
+//   }),
+// );
 app.use(express.json({ limit: "10mb" }));
 
 // Rate limiters
