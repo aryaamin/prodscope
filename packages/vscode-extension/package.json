@@ -2,7 +2,7 @@
   "name": "prodscope-vscode",
   "displayName": "ProdScope",
   "description": "Live production observability inside VS Code — CodeLens, gutter decorations, and AI insights mapped to your code",
-  "version": "0.1.3",
+  "version": "0.1.10",
   "publisher": "prodscope",
   "engines": {
     "vscode": "^1.90.0"

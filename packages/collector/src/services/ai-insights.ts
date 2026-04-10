@@ -100,13 +100,24 @@ ${JSON.stringify(data.errors, null, 2)}
 Database query performance:
 ${JSON.stringify(data.slowQueries, null, 2)}
 
-Provide:
-1. A brief summary of what's happening in this code in production
-2. Any performance concerns (latency, error rates)
-3. Who is affected (if determinable from user agents or session patterns)
-4. Specific, actionable suggestions for improvement
+Respond with exactly these markdown sections, in this order, each as an H3:
 
-Keep it under 200 words. Be direct and specific.`;
+### Summary
+One sentence on what this file is doing in production.
+
+### Root cause
+The single most important problem (latency, errors, or regression). Be specific — cite function name, line, error message. If there's no real problem, say so.
+
+### Impact
+Who/how many are affected. Use concrete numbers from the data (errors, sessions, % of traffic). One or two sentences.
+
+### Fix
+The specific, actionable change. Cite file:line. If a code change, show it inline. One or two sentences.
+
+Rules:
+- Keep the entire response under 180 words.
+- Use **bold** for numbers and key terms, \`code\` for identifiers and values.
+- Do not add any sections beyond the four above. Do not add a preamble.`;
 
   const response = await client.messages.create({
     model: "claude-sonnet-4-20250514",

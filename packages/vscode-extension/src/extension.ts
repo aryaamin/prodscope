@@ -184,31 +184,59 @@ async function refreshEditor(
   log.info(`Fetching data for: ${filePath}`);
 
   try {
-    // Fetch function stats and errors in parallel
-    const [statsRes, errorsRes] = await Promise.all([
-      fetch(
-        `${config.apiUrl}/api/v1/function-stats?file=${encodeURIComponent(filePath)}&window=1h`,
-        { headers: { "x-api-key": config.apiKey } },
-      ),
-      fetch(
-        `${config.apiUrl}/api/v1/errors?file=${encodeURIComponent(filePath)}&limit=100`,
-        { headers: { "x-api-key": config.apiKey } },
-      ),
-    ]);
+    // Fetch function stats and errors in parallel. Be defensive in case
+    // Promise.all or the fetch calls return unexpected values.
+    let statsRes: any = undefined;
+    let errorsRes: any = undefined;
+    let statsUrl = `${config.apiUrl}/api/v1/function-stats?file=${encodeURIComponent(filePath)}&window=1h`
+    log.info(`Stats fetch: ${statsUrl}`);
+    try {
+      const results = await Promise.all([
+        fetch(
+          statsUrl,
+          { headers: { "x-api-key": config.apiKey } },
+        ),
+        fetch(
+          `${config.apiUrl}/api/v1/errors?file=${encodeURIComponent(filePath)}&limit=100`,
+          { headers: { "x-api-key": config.apiKey } },
+        ),
+      ]);
+      statsRes = results?.[0];
+      log.info(`Got this shit0 ${statsRes}`);
+      errorsRes = results?.[1];
+    } catch (fetchErr: any) {
+      log.error(`Parallel fetch failed: ${fetchErr?.message ?? String(fetchErr)}`);
+    }
 
     let stats: any[] = [];
-    if (statsRes.ok) {
-      const data = await statsRes.json();
-      stats = Array.isArray(data) ? data : [];
+    if (statsRes && typeof statsRes.ok !== "undefined" && statsRes.ok) {
+      try {
+        const data = await statsRes.json();
+        // Backend may return either an array or an object with a `data` array.
+        const maybeArray = Array.isArray(data) ? data : (Array.isArray((data as any)?.data) ? (data as any).data : []);
+        stats = Array.isArray(maybeArray) ? maybeArray : [];
+      } catch (e: any) {
+        log.error(`Failed parsing function-stats JSON: ${e?.message ?? String(e)}`);
+        stats = [];
+      }
+      log.info(`Got this shit ${stats}`);
       log.info(`Got ${stats.length} function stats`);
       codeLensProvider.updateStats(absPath, stats);
+    } else {
+      log.info("No function stats fetched");
     }
 
     const annotations: LineAnnotation[] = [];
 
-    if (errorsRes.ok) {
-      const data = await errorsRes.json();
-      const errors = Array.isArray(data) ? data : [];
+    if (errorsRes && typeof errorsRes.ok !== "undefined" && errorsRes.ok) {
+      let errors: any[] = [];
+      try {
+        const data = await errorsRes.json();
+        errors = Array.isArray(data) ? data : [];
+      } catch (e: any) {
+        log.error(`Failed parsing errors JSON: ${e?.message ?? String(e)}`);
+        errors = [];
+      }
       log.info(`Got ${errors.length} errors`);
 
       // Group errors by line
@@ -225,7 +253,11 @@ async function refreshEditor(
         }
       }
 
-      for (const [line, data] of errorsByLine) {
+      for (const entry of errorsByLine) {
+        // be defensive when destructuring map entries
+        const pair = Array.isArray(entry) ? entry : [entry[0], entry[1]];
+        const line = pair[0] as number;
+        const data = pair[1] as { count: number; message: string; userAgents: Set<string> };
         const uaText = data.userAgents.size > 0
           ? ` (${Array.from(data.userAgents).join(", ")})`
           : "";
@@ -235,6 +267,8 @@ async function refreshEditor(
           text: `${data.count} errors${uaText}`,
         });
       }
+    } else {
+      log.info("No errors fetched");
     }
 
     // Add inline annotations from stats — compact summary per function line
