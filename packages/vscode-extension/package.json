@@ -2,7 +2,7 @@
   "name": "prodscope-vscode",
   "displayName": "ProdScope",
   "description": "Live production observability inside VS Code — CodeLens, gutter decorations, and AI insights mapped to your code",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "publisher": "prodscope",
   "engines": {
     "vscode": "^1.90.0"
@@ -47,6 +47,10 @@
       {
         "command": "prodscope.refreshAll",
         "title": "ProdScope: Refresh All (Stats, Errors, Insight)"
+      },
+      {
+        "command": "prodscope.refreshStats",
+        "title": "ProdScope: Refresh Stats & Errors"
       },
       {
         "command": "prodscope.briefing",
