@@ -1,0 +1,32 @@
+[Unit]
+Description=Prodscope Remedy — AI remediation agent
+After=network-online.target prodscope-collector.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=prodscope
+Group=prodscope
+WorkingDirectory=/opt/prodscope/remedy
+EnvironmentFile=/opt/prodscope/remedy/.env
+ExecStart=/usr/bin/node /opt/prodscope/remedy/dist/index.js
+Restart=on-failure
+RestartSec=10
+KillSignal=SIGTERM
+TimeoutStopSec=60
+
+# Worktrees live here; ensure it exists and is writable by the service user.
+ReadWritePaths=/var/lib/remedy/worktrees
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target

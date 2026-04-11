@@ -102,7 +102,13 @@
       "Bash(ls /home/arya/prodscope/packages/collector/src/services/ai-*.ts)",
       "Bash(pnpm --filter vscode-extension build)",
       "Bash(pnpm --filter website build)",
-      "Bash(wc -l /home/arya/prodscope/packages/vscode-extension/src/*.ts /home/arya/prodscope/packages/vscode-extension/package.json)"
+      "Bash(wc -l /home/arya/prodscope/packages/vscode-extension/src/*.ts /home/arya/prodscope/packages/vscode-extension/package.json)",
+      "Bash(npx --yes html-validate index.html)",
+      "Bash(npm view:*)",
+      "Bash(tar -xzf anthropic-ai-claude-agent-sdk-*.tgz)",
+      "Read(//tmp/remedy-probe/package/**)",
+      "Bash(sed -n '1998,2050p' /tmp/remedy-probe/package/sdk.d.ts)",
+      "Bash(sed -n '2600,2680p' /tmp/remedy-probe/package/sdk.d.ts)"
     ],
     "additionalDirectories": [
       "/home/arya/prodscope-demo",
