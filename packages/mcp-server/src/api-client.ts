@@ -37,6 +37,15 @@ export class ApiClient {
     return this.get("/api/v1/errors", params as Record<string, string>);
   }
 
+  async getLogsAtLine(params: {
+    file: string;
+    line?: string;
+    level?: string;
+    limit?: string;
+  }) {
+    return this.get("/api/v1/logs", params as Record<string, string>);
+  }
+
   async getSlowQueries(params: { threshold?: string; file?: string }) {
     return this.get("/api/v1/slow-queries", params as Record<string, string>);
   }

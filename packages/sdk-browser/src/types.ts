@@ -8,7 +8,28 @@ export interface ProdScopeConfig {
     errors?: boolean;
     dbQueries?: boolean;
     functions?: boolean;
+    logs?: boolean;
   };
+  logs?: {
+    minLevel?: LogLevel;
+    maxPerFlush?: number;
+  };
+}
+
+export type LogLevel = "debug" | "info" | "warn" | "error";
+
+export interface LogData {
+  level: LogLevel;
+  message: string;
+  attributes?: Record<string, string>;
+  file?: string;
+  line?: number;
+  function?: string;
+  traceId?: string;
+  spanId?: string;
+  sessionId?: string;
+  gitSha?: string;
+  timestamp: string;
 }
 
 export interface SpanData {
@@ -66,4 +87,5 @@ export interface IngestBatch {
   spans?: SpanData[];
   errors?: ErrorData[];
   dbQueries?: DbQueryData[];
+  logs?: LogData[];
 }

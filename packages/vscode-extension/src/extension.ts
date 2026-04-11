@@ -209,10 +209,12 @@ async function refreshEditor(
     const headers = { "x-api-key": config.apiKey };
     const statsUrl = `${config.apiUrl}/api/v1/function-stats?file=${encodeURIComponent(filePath)}&window=1h`;
     const errorsUrl = `${config.apiUrl}/api/v1/errors?file=${encodeURIComponent(filePath)}&limit=200`;
+    const logsUrl = `${config.apiUrl}/api/v1/logs?file=${encodeURIComponent(filePath)}&limit=200`;
 
-    const [statsRes, errorsRes] = await Promise.all([
+    const [statsRes, errorsRes, logsRes] = await Promise.all([
       fetch(statsUrl, { headers }).catch((e) => { log.error(`stats fetch failed: ${e?.message}`); return null; }),
       fetch(errorsUrl, { headers }).catch((e) => { log.error(`errors fetch failed: ${e?.message}`); return null; }),
+      fetch(logsUrl, { headers }).catch((e) => { log.error(`logs fetch failed: ${e?.message}`); return null; }),
     ]);
 
     let stats: any[] = [];
@@ -285,6 +287,67 @@ async function refreshEditor(
       }
     } else {
       log.info("No errors fetched");
+    }
+
+    if (logsRes?.ok) {
+      let logs: any[] = [];
+      try {
+        const data: any = await logsRes.json();
+        logs = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
+      } catch (e: any) {
+        log.error(`Failed parsing logs JSON: ${e?.message ?? String(e)}`);
+      }
+      log.info(`Got ${logs.length} logs`);
+
+      // Group logs by line. Surface: level mix + count, with a few recent lines in hover.
+      const logsByLine = new Map<
+        number,
+        {
+          count: number;
+          levels: Record<string, number>;
+          recent: Array<{ level: string; message: string; ts: string }>;
+        }
+      >();
+      for (const l of logs) {
+        if (!l.line || l.line <= 0) continue;
+        const existing = logsByLine.get(l.line);
+        if (existing) {
+          existing.count++;
+          existing.levels[l.level] = (existing.levels[l.level] ?? 0) + 1;
+          if (existing.recent.length < 5) {
+            existing.recent.push({ level: l.level, message: l.message, ts: l.timestamp });
+          }
+        } else {
+          logsByLine.set(l.line, {
+            count: 1,
+            levels: { [l.level]: 1 },
+            recent: [{ level: l.level, message: l.message, ts: l.timestamp }],
+          });
+        }
+      }
+
+      for (const entry of logsByLine) {
+        const line = entry[0] as number;
+        const data = entry[1] as {
+          count: number;
+          levels: Record<string, number>;
+          recent: Array<{ level: string; message: string; ts: string }>;
+        };
+        const levelSummary = Object.entries(data.levels)
+          .sort((a, b) => b[1] - a[1])
+          .map(([lvl, n]) => `${n} ${lvl}`)
+          .join("/");
+        annotations.push({
+          line,
+          type: "log",
+          text: `${data.count} logs (${levelSummary})`,
+          hoverLines: data.recent.map(
+            (r) => `\`[${r.level}]\` ${r.message} — _${r.ts}_`,
+          ),
+        });
+      }
+    } else {
+      log.info("No logs fetched");
     }
 
     // Add inline annotations from stats — compact summary per function line

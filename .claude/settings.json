@@ -108,7 +108,13 @@
       "Bash(tar -xzf anthropic-ai-claude-agent-sdk-*.tgz)",
       "Read(//tmp/remedy-probe/package/**)",
       "Bash(sed -n '1998,2050p' /tmp/remedy-probe/package/sdk.d.ts)",
-      "Bash(sed -n '2600,2680p' /tmp/remedy-probe/package/sdk.d.ts)"
+      "Bash(sed -n '2600,2680p' /tmp/remedy-probe/package/sdk.d.ts)",
+      "Bash(grep -n \"get_errors_at_line\\\\|errors_at_line\\\\|getErrorsAtLine\" /home/arya/prodscope/packages/collector/src/routes/api.ts /home/arya/prodscope/packages/mcp-server/src/*.ts)",
+      "Bash(npm --workspace @prodscope/sdk-node run build)",
+      "Bash(pnpm --filter @prodscope/sdk-node --filter @prodscope/sdk-browser --filter @prodscope/collector --filter @prodscope/remedy --filter @prodscope/mcp-server build)",
+      "Bash(pnpm --filter @prodscope/vscode-extension build)",
+      "Bash(pnpm --filter prodscope-vscode build)",
+      "Bash(pnpm --filter @prodscope/website build)"
     ],
     "additionalDirectories": [
       "/home/arya/prodscope-demo",

@@ -80,6 +80,44 @@ router.get("/api/v1/errors", async (req: Request, res: Response) => {
   res.json({ data: rows, limit, offset, hasMore: (rows as any[]).length === limit });
 });
 
+/** GET /api/v1/logs?file=X&line=Y&level=warn&limit=50&offset=0 */
+router.get("/api/v1/logs", async (req: Request, res: Response) => {
+  const projectId = (req as any).projectId as string;
+  const { file, line, level } = req.query;
+  const limit = Math.min(Number.parseInt(req.query.limit as string, 10) || 50, 500);
+  const offset = Number.parseInt(req.query.offset as string, 10) || 0;
+  const ch = getClickHouse();
+
+  let query = `
+    SELECT level, message, attributes, file, line, function,
+           trace_id, span_id, session_id, git_sha, timestamp
+    FROM logs
+    WHERE project_id = {projectId:String}
+  `;
+  const params: Record<string, string> = { projectId };
+
+  if (file) {
+    query += " AND file = {file:String}";
+    params.file = file as string;
+  }
+  if (line) {
+    query += " AND line = {line:UInt32}";
+    params.line = line as string;
+  }
+  if (level) {
+    query += " AND level = {level:String}";
+    params.level = level as string;
+  }
+
+  query += ` ORDER BY timestamp DESC LIMIT {limit:UInt32} OFFSET {offset:UInt32}`;
+  params.limit = String(limit);
+  params.offset = String(offset);
+
+  const result = await ch.query({ query, query_params: params, format: "JSONEachRow" });
+  const rows = await result.json();
+  res.json({ data: rows, limit, offset, hasMore: (rows as any[]).length === limit });
+});
+
 /** GET /api/v1/slow-queries?threshold=100&file=X&limit=50&offset=0 */
 router.get("/api/v1/slow-queries", async (req: Request, res: Response) => {
   const projectId = (req as any).projectId as string;

@@ -780,6 +780,23 @@ nav {
   margin-bottom: 10px;
 }
 
+.sdk-step-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 7px;
+  border-radius: 100px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  vertical-align: middle;
+}
+.sdk-step-tag--new {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
 /* Sub-tabs (prisma/pg, global/npx) */
 .sub-tabs {
   display: flex;

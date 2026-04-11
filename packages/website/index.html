@@ -971,6 +971,31 @@
               <pre><code><span class="const">VITE_PRODSCOPE_API_KEY</span>=<span class="str">ps_live_xxxxxxxxxxxx</span></code></pre>
             </div>
           </div>
+
+          <div class="sdk-step">
+            <div class="sdk-step-head">
+              <span class="sdk-step-n">4</span>
+              <span class="sdk-step-title">Drop <code>log()</code> calls in your code <span class="sdk-step-tag sdk-step-tag--new">new</span></span>
+            </div>
+            <p class="sdk-step-desc">
+              Structured logs with auto file:line. They stream to your editor
+              beside errors and feed Remedy's root-cause context.
+            </p>
+            <div class="code-block">
+              <div class="code-label">checkout.ts</div>
+              <pre><code><span class="kw">import</span> { log } <span class="kw">from</span> <span class="str">"@prodscope/sdk-browser"</span>
+
+<span class="kw">async function</span> <span class="fn">checkout</span>(cart) {
+  <span class="fn">log</span>(<span class="str">"info"</span>, <span class="str">"checkout started"</span>, { items: cart.length })
+  <span class="kw">try</span> {
+    <span class="kw">await</span> <span class="fn">submit</span>(cart)
+  } <span class="kw">catch</span> (err) {
+    <span class="fn">log</span>(<span class="str">"warn"</span>, <span class="str">"checkout retry"</span>, { reason: err.message })
+    <span class="kw">throw</span> err
+  }
+}</code></pre>
+            </div>
+          </div>
         </div>
 
         <div class="tracked">
@@ -994,6 +1019,9 @@
             >
             <span class="tracked-item"
               ><span class="td td-amber"></span>p50 / p99 latency</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-blue"></span>user <code>log()</code> calls</span
             >
           </div>
         </div>
@@ -1077,6 +1105,30 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
               </div>
             </div>
           </div>
+
+          <div class="sdk-step">
+            <div class="sdk-step-head">
+              <span class="sdk-step-n">4</span>
+              <span class="sdk-step-title">Drop <code>log()</code> calls in your code <span class="sdk-step-tag sdk-step-tag--new">new</span></span>
+            </div>
+            <p class="sdk-step-desc">
+              Structured logs with auto file:line. Visible in your editor, and
+              feed Remedy's root-cause context for auto-fix PRs.
+            </p>
+            <div class="code-block">
+              <div class="code-label">payment.ts</div>
+              <pre><code><span class="kw">import</span> { log } <span class="kw">from</span> <span class="str">"@prodscope/sdk-node"</span>
+
+<span class="kw">export async function</span> <span class="fn">charge</span>(order) {
+  <span class="fn">log</span>(<span class="str">"info"</span>, <span class="str">"charging order"</span>, { orderId: order.id, amount: order.total })
+  <span class="kw">const</span> res = <span class="kw">await</span> stripe.charges.<span class="fn">create</span>(order)
+  <span class="kw">if</span> (res.status !== <span class="str">"succeeded"</span>) {
+    <span class="fn">log</span>(<span class="str">"error"</span>, <span class="str">"charge failed"</span>, { orderId: order.id, code: res.failure_code })
+  }
+  <span class="kw">return</span> res
+}</code></pre>
+            </div>
+          </div>
         </div>
 
         <div class="tracked">
@@ -1100,6 +1152,9 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
             >
             <span class="tracked-item"
               ><span class="td td-green"></span>slow query detection</span
+            >
+            <span class="tracked-item"
+              ><span class="td td-blue"></span>user <code>log()</code> calls</span
             >
           </div>
         </div>

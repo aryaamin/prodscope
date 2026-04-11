@@ -25,6 +25,13 @@ export interface TelemetryContext {
     p99_ms: number;
     call_count: number;
   }>;
+  recentLogs: Array<{
+    level: string;
+    message: string;
+    line: number;
+    timestamp: string;
+    attributes: Record<string, string>;
+  }>;
   existingInsight: string;
 }
 
@@ -89,6 +96,30 @@ export async function gatherTelemetryContext(
   });
   const slowQueries = (await queriesRes.json()) as TelemetryContext["slowQueries"];
 
+  // Pull recent user logs from the same file around the window the error was
+  // active. These are the "what was happening just before" narrative — often
+  // the deciding signal for root cause.
+  const logsRes = await ch.query({
+    query: `
+      SELECT level, message, line, timestamp, attributes
+      FROM logs
+      WHERE project_id = {projectId:String}
+        AND file = {file:String}
+        AND timestamp >= parseDateTime64BestEffort({since:String}) - INTERVAL 5 MINUTE
+        AND timestamp <= parseDateTime64BestEffort({until:String}) + INTERVAL 1 MINUTE
+      ORDER BY timestamp DESC
+      LIMIT 40
+    `,
+    query_params: {
+      projectId: sig.projectId,
+      file: sig.file,
+      since: sig.firstSeen,
+      until: sig.lastSeen,
+    },
+    format: "JSONEachRow",
+  });
+  const recentLogs = (await logsRes.json()) as TelemetryContext["recentLogs"];
+
   const db = getPostgres();
   const { rows } = await db.query<{ insight: string }>(
     `SELECT insight FROM ai_insights
@@ -102,6 +133,7 @@ export async function gatherTelemetryContext(
     recentErrors,
     functionStats,
     slowQueries,
+    recentLogs,
     existingInsight: rows[0]?.insight ?? "",
   };
 }
@@ -146,6 +178,23 @@ export function formatContextForPrompt(ctx: TelemetryContext): string {
     for (const s of ctx.functionStats) {
       lines.push(
         `- ${s.window}: calls=${s.call_count}, avg=${s.avg_ms?.toFixed?.(1) ?? s.avg_ms}ms, p99=${s.p99_ms?.toFixed?.(1) ?? s.p99_ms}ms, error_rate=${(Number(s.error_rate) * 100).toFixed(2)}%`,
+      );
+    }
+    lines.push("");
+  }
+
+  if (ctx.recentLogs.length > 0) {
+    lines.push(`## Recent user logs in this file (around error window)`);
+    lines.push(
+      `These come from sdk.log() calls in the code. They're the "what was happening just before" narrative and are often the deciding signal for root cause.`,
+    );
+    for (const l of ctx.recentLogs) {
+      const attrs =
+        l.attributes && Object.keys(l.attributes).length > 0
+          ? ` ${JSON.stringify(l.attributes)}`
+          : "";
+      lines.push(
+        `- [${l.level.toUpperCase()}] line ${l.line} @ ${l.timestamp}: ${l.message}${attrs}`,
       );
     }
     lines.push("");

@@ -8,6 +8,13 @@ export interface ProdScopeConfig {
     errors?: boolean;
     dbQueries?: boolean;
     functions?: boolean;
+    logs?: boolean;
+  };
+  logs?: {
+    /** Drop logs below this level. Default: "info" in prod, "debug" otherwise. */
+    minLevel?: LogLevel;
+    /** Max logs per flush window; excess is dropped. Default: 200. */
+    maxPerFlush?: number;
   };
 }
 
@@ -46,6 +53,22 @@ export interface ErrorData {
   timestamp: string;
 }
 
+export type LogLevel = "debug" | "info" | "warn" | "error";
+
+export interface LogData {
+  level: LogLevel;
+  message: string;
+  attributes?: Record<string, string>;
+  file?: string;
+  line?: number;
+  function?: string;
+  traceId?: string;
+  spanId?: string;
+  sessionId?: string;
+  gitSha?: string;
+  timestamp: string;
+}
+
 export interface DbQueryData {
   traceId?: string;
   spanId?: string;
@@ -64,4 +87,5 @@ export interface IngestBatch {
   spans?: SpanData[];
   errors?: ErrorData[];
   dbQueries?: DbQueryData[];
+  logs?: LogData[];
 }

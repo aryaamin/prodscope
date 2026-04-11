@@ -91,6 +91,29 @@ safeTool(
   },
 );
 
+// Tool: get_logs_at_line — user-emitted structured logs from sdk.log()
+safeTool(
+  "get_logs_at_line",
+  "Get recent user-emitted logs (from sdk.log()) for a file and optional line. Shows what was happening in the code around an error.",
+  {
+    file: z.string().describe("File path"),
+    line: z.string().optional().describe("Line number"),
+    level: z.string().optional().describe("Filter: debug|info|warn|error"),
+    limit: z.string().optional().describe("Max logs to return (default: 50)"),
+  },
+  async ({ file, line, level, limit }) => {
+    const data = await api.getLogsAtLine({ file, line, level, limit });
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(data, null, 2),
+        },
+      ],
+    };
+  },
+);
+
 // Tool 3: get_slow_queries
 safeTool(
   "get_slow_queries",

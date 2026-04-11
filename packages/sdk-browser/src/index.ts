@@ -1,16 +1,18 @@
-import type { ProdScopeConfig } from "./types.js";
+import type { ProdScopeConfig, LogLevel } from "./types.js";
 import { Transport } from "./transport.js";
 import { captureClicks } from "./capture/clicks.js";
 import { captureFetches } from "./capture/fetches.js";
 import { captureErrors } from "./capture/errors.js";
 import { trackFunction } from "./capture/functions.js";
+import { captureCallSite } from "./callsite.js";
 import { generateId, generateSpanId, getSessionId, now } from "./utils.js";
 
-export type { ProdScopeConfig, SpanData, ErrorData, DbQueryData, IngestBatch } from "./types.js";
+export type { ProdScopeConfig, SpanData, ErrorData, DbQueryData, LogData, LogLevel, IngestBatch } from "./types.js";
 export { trackFunction } from "./capture/functions.js";
 export { tracked, traced } from "./decorator.js";
 
 let transport: Transport | null = null;
+let activeConfig: ProdScopeConfig | null = null;
 const teardowns: Array<() => void> = [];
 
 /**
@@ -29,6 +31,7 @@ const teardowns: Array<() => void> = [];
 export function init(config: ProdScopeConfig): void {
   if (transport) return; // Already initialized
 
+  activeConfig = config;
   const ingestUrl = config.ingestUrl ?? "https://ingest.prodscope.dev";
   transport = new Transport(ingestUrl, config.apiKey);
   transport.setupUnloadFlush();
@@ -78,6 +81,76 @@ export function track<T extends (...args: any[]) => any>(
   return lazy;
 }
 
+const LEVEL_RANK: Record<LogLevel, number> = {
+  debug: 10,
+  info: 20,
+  warn: 30,
+  error: 40,
+};
+
+let logsInWindow = 0;
+let logWindowResetAt = 0;
+
+/**
+ * Emit a user-land structured log from the browser.
+ *
+ * ```ts
+ * import { log } from "@prodscope/sdk-browser";
+ * log("warn", "checkout retry", { orderId });
+ * ```
+ */
+export function log(
+  level: LogLevel,
+  message: string,
+  attributes: Record<string, unknown> = {},
+  file = "",
+  line = 0,
+): void {
+  if (!transport || !activeConfig) return;
+  if (activeConfig.capture?.logs === false) return;
+
+  const minLevel = activeConfig.logs?.minLevel ?? "info";
+  if (LEVEL_RANK[level] < LEVEL_RANK[minLevel]) return;
+
+  const windowMs = 2000;
+  const maxPerFlush = activeConfig.logs?.maxPerFlush ?? 200;
+  const ts = Date.now();
+  if (ts > logWindowResetAt) {
+    logWindowResetAt = ts + windowMs;
+    logsInWindow = 0;
+  }
+  if (logsInWindow >= maxPerFlush) return;
+  logsInWindow++;
+
+  if (!file) {
+    const site = captureCallSite();
+    if (site) {
+      file = site.file;
+      line = site.line;
+    }
+  }
+
+  const attrs: Record<string, string> = {};
+  for (const [k, v] of Object.entries(attributes)) {
+    if (v === undefined || v === null) continue;
+    attrs[k] = typeof v === "string" ? v : JSON.stringify(v);
+  }
+
+  transport.enqueue({
+    logs: [
+      {
+        level,
+        message,
+        attributes: attrs,
+        file,
+        line,
+        timestamp: now(),
+        sessionId: getSessionId(),
+      },
+    ],
+  });
+}
+
 /** Send a custom named event with metadata. */
 export function event(name: string, metadata: Record<string, string> = {}): void {
   if (!transport) return;
@@ -107,4 +180,5 @@ export function destroy(): void {
   teardowns.length = 0;
   transport?.flush();
   transport = null;
+  activeConfig = null;
 }

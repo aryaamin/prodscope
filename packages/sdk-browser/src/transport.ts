@@ -21,6 +21,9 @@ export class Transport {
     if (batch.dbQueries) {
       this.queue.dbQueries = (this.queue.dbQueries ?? []).concat(batch.dbQueries);
     }
+    if (batch.logs) {
+      this.queue.logs = (this.queue.logs ?? []).concat(batch.logs);
+    }
 
     if (!this.flushTimer) {
       this.flushTimer = setTimeout(() => this.flush(), 2000);
@@ -39,7 +42,8 @@ export class Transport {
     const totalItems =
       (batch.spans?.length ?? 0) +
       (batch.errors?.length ?? 0) +
-      (batch.dbQueries?.length ?? 0);
+      (batch.dbQueries?.length ?? 0) +
+      (batch.logs?.length ?? 0);
 
     if (totalItems === 0) return;
 
@@ -71,7 +75,8 @@ export class Transport {
       const totalItems =
         (batch.spans?.length ?? 0) +
         (batch.errors?.length ?? 0) +
-        (batch.dbQueries?.length ?? 0);
+        (batch.dbQueries?.length ?? 0) +
+        (batch.logs?.length ?? 0);
       if (totalItems === 0) return;
 
       // Use fetch with keepalive instead of sendBeacon to avoid leaking API key in URL

@@ -204,4 +204,30 @@ export async function initClickHouse(): Promise<void> {
       TTL toDateTime(timestamp) + INTERVAL 30 DAY
     `,
   });
+
+  // User-emitted structured logs from sdk.log().
+  // Short TTL (7 days) vs errors/spans because volume is much higher.
+  await ch.command({
+    query: `
+      CREATE TABLE IF NOT EXISTS logs (
+        project_id   String,
+        level        Enum8('debug'=0, 'info'=1, 'warn'=2, 'error'=3),
+        message      String,
+        attributes   Map(String, String),
+        file         String DEFAULT '',
+        line         UInt32 DEFAULT 0,
+        function     String DEFAULT '',
+        trace_id     String DEFAULT '',
+        span_id      String DEFAULT '',
+        session_id   String DEFAULT '',
+        git_sha      String DEFAULT '',
+        timestamp    DateTime64(3, 'UTC'),
+        created_at   DateTime64(3, 'UTC') DEFAULT now64(3)
+      )
+      ENGINE = MergeTree()
+      PARTITION BY toYYYYMMDD(timestamp)
+      ORDER BY (project_id, file, line, timestamp)
+      TTL toDateTime(timestamp) + INTERVAL 7 DAY
+    `,
+  });
 }

@@ -1,9 +1,9 @@
-import type { ProdScopeConfig } from "./types.js";
+import type { ProdScopeConfig, LogLevel } from "./types.js";
 import { Transport } from "./transport.js";
 import { generateId, generateSpanId, now } from "./utils.js";
 import { captureCallSite } from "./callsite.js";
 
-export type { ProdScopeConfig, SpanData, ErrorData, DbQueryData, IngestBatch } from "./types.js";
+export type { ProdScopeConfig, SpanData, ErrorData, DbQueryData, LogData, LogLevel, IngestBatch } from "./types.js";
 export { tracked, traced } from "./decorator.js";
 
 let transport: Transport | null = null;
@@ -167,6 +167,82 @@ export function track<T extends (...args: any[]) => any>(
 
   Object.defineProperty(wrapped, "name", { value: name });
   return wrapped;
+}
+
+const LEVEL_RANK: Record<LogLevel, number> = {
+  debug: 10,
+  info: 20,
+  warn: 30,
+  error: 40,
+};
+
+let logsInWindow = 0;
+let logWindowResetAt = 0;
+
+function defaultMinLevel(): LogLevel {
+  return process.env.NODE_ENV === "production" ? "info" : "debug";
+}
+
+/**
+ * Emit a user-land structured log. Captured file:line is attached via the
+ * build plugin (preferred) or a runtime stack walk as a fallback.
+ *
+ * ```ts
+ * import { log } from "@prodscope/sdk-node";
+ * log("warn", "cart empty after checkout", { userId });
+ * ```
+ */
+export function log(
+  level: LogLevel,
+  message: string,
+  attributes: Record<string, unknown> = {},
+  file = "",
+  line = 0,
+): void {
+  if (!transport || !config) return;
+  if (config.capture?.logs === false) return;
+
+  const minLevel = config.logs?.minLevel ?? defaultMinLevel();
+  if (LEVEL_RANK[level] < LEVEL_RANK[minLevel]) return;
+
+  // Simple per-flush-window rate limit so a hot loop can't flood the wire.
+  const windowMs = 2000;
+  const maxPerFlush = config.logs?.maxPerFlush ?? 200;
+  const ts = Date.now();
+  if (ts > logWindowResetAt) {
+    logWindowResetAt = ts + windowMs;
+    logsInWindow = 0;
+  }
+  if (logsInWindow >= maxPerFlush) return;
+  logsInWindow++;
+
+  if (!file) {
+    const site = captureCallSite();
+    if (site) {
+      file = site.file;
+      line = site.line;
+    }
+  }
+
+  const attrs: Record<string, string> = {};
+  for (const [k, v] of Object.entries(attributes)) {
+    if (v === undefined || v === null) continue;
+    attrs[k] = typeof v === "string" ? v : JSON.stringify(v);
+  }
+
+  transport.enqueue({
+    logs: [
+      {
+        level,
+        message,
+        attributes: attrs,
+        file,
+        line,
+        timestamp: now(),
+        gitSha: config.gitSha ?? "",
+      },
+    ],
+  });
 }
 
 /** Send a custom named event. */
