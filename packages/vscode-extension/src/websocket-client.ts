@@ -10,6 +10,7 @@ export class WebSocketClient {
   private handlers: EventHandler[] = [];
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private statusBar: vscode.StatusBarItem;
+  private isIntentionallyClosed = false;
 
   constructor(config: ExtensionConfig, statusBar: vscode.StatusBarItem) {
     this.config = config;
@@ -19,6 +20,7 @@ export class WebSocketClient {
   connect(): void {
     const url = `${this.config.wsUrl}?projectId=${this.config.projectId}&apiKey=${this.config.apiKey}`;
 
+    this.isIntentionallyClosed = false;
     this.ws = new WebSocket(url);
 
     this.ws.on("open", () => {
@@ -41,6 +43,10 @@ export class WebSocketClient {
     this.ws.on("close", () => {
       this.statusBar.text = "$(radio-tower) ProdScope";
       this.statusBar.color = "#71717a";
+      if (this.isIntentionallyClosed) {
+        this.statusBar.tooltip = "ProdScope: Disconnected";
+        return;
+      }
       this.statusBar.tooltip = "ProdScope: Disconnected — reconnecting...";
       this.scheduleReconnect();
     });
@@ -60,6 +66,7 @@ export class WebSocketClient {
       clearTimeout(this.reconnectTimer);
       this.reconnectTimer = null;
     }
+    this.isIntentionallyClosed = true;
     this.ws?.close();
     this.ws = null;
     this.statusBar.color = "#71717a";

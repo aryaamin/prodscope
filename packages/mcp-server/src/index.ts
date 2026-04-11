@@ -14,8 +14,29 @@ const server = new McpServer({
   version: "0.1.0",
 });
 
+type ToolResult = { content: { type: "text"; text: string }[]; isError?: boolean };
+
+function safeTool(
+  name: string,
+  description: string,
+  schema: any,
+  handler: (args: any) => Promise<ToolResult>,
+): void {
+  server.tool(name, description, schema, async (args: any) => {
+    try {
+      return await handler(args);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      return {
+        isError: true,
+        content: [{ type: "text" as const, text: `Tool ${name} failed: ${message}` }],
+      };
+    }
+  });
+}
+
 // Tool 1: get_function_stats
-server.tool(
+safeTool(
   "get_function_stats",
   "Get detailed production metrics for a function: call count, p50/p99 latency, error count/rate, unique sessions, session reach %, and calls per session. Available across time windows (1h, 24h, 7d).",
   {
@@ -49,7 +70,7 @@ server.tool(
 );
 
 // Tool 2: get_errors_at_line
-server.tool(
+safeTool(
   "get_errors_at_line",
   "Get recent errors resolved to a specific file and line, with stack traces and user context.",
   {
@@ -71,7 +92,7 @@ server.tool(
 );
 
 // Tool 3: get_slow_queries
-server.tool(
+safeTool(
   "get_slow_queries",
   "Get database queries above a latency threshold, with calling file and line.",
   {
@@ -95,7 +116,7 @@ server.tool(
 );
 
 // Tool 4: get_ai_insight
-server.tool(
+safeTool(
   "get_ai_insight",
   "Get Claude-generated natural language insight for a file or function — describes what is happening, who is affected, and what to do.",
   {
@@ -120,7 +141,7 @@ server.tool(
 );
 
 // Tool 5: get_live_sessions
-server.tool(
+safeTool(
   "get_live_sessions",
   "Get active user count in a given route or flow right now.",
   {
@@ -140,7 +161,7 @@ server.tool(
 );
 
 // Tool 6: get_trace
-server.tool(
+safeTool(
   "get_trace",
   "Get the full distributed trace for a session — every span from click to DB query.",
   {
@@ -160,7 +181,7 @@ server.tool(
 );
 
 // Tool 7: get_hot_paths
-server.tool(
+safeTool(
   "get_hot_paths",
   "Get the most-called code paths ranked by traffic volume. Includes call count, latency, error rate, session reach, and calls per session.",
   {
@@ -186,7 +207,7 @@ server.tool(
 );
 
 // Tool 8: compare_deploys
-server.tool(
+safeTool(
   "compare_deploys",
   "Diff error rates and latency between two git SHAs to detect regressions.",
   {
@@ -207,7 +228,7 @@ server.tool(
 );
 
 // Tool 9: get_function_trend
-server.tool(
+safeTool(
   "get_function_trend",
   "Get daily time series for a function over time — see how call count, latency, error rate, and session reach change day by day. Great for spotting gradual degradation or improvement.",
   {
@@ -231,7 +252,7 @@ server.tool(
 );
 
 // Tool 10: get_error_trends
-server.tool(
+safeTool(
   "get_error_trends",
   "Get daily error count trends grouped by error type and message. Shows how errors are trending over days/weeks.",
   {
@@ -245,7 +266,7 @@ server.tool(
 );
 
 // Tool 11: get_time_of_day_pattern
-server.tool(
+safeTool(
   "get_time_of_day_pattern",
   "Get hourly traffic and error heatmap — which hours of the day have the most traffic, highest error rates, and worst latency.",
   {
@@ -267,7 +288,7 @@ server.tool(
 );
 
 // Tool 12: get_weekday_weekend_pattern
-server.tool(
+safeTool(
   "get_weekday_weekend_pattern",
   "Compare weekday vs weekend behavior — traffic volume, latency, error rates, and user counts.",
   {
@@ -290,7 +311,7 @@ server.tool(
 );
 
 // Tool 13: compare_periods
-server.tool(
+safeTool(
   "compare_periods",
   "Compare two arbitrary date ranges side by side — e.g., this week vs last week, or before/after a release.",
   {
@@ -323,7 +344,7 @@ server.tool(
 );
 
 // Tool 14: get_analysis
-server.tool(
+safeTool(
   "get_analysis",
   "Get AI-powered deep analysis of production data. Types: 'anomalies' (deviations from baselines), 'root_cause' (why things broke), 'patterns' (time/day behaviors), 'issues' (proactive problem detection ranked by impact), 'weekly_digest' (comprehensive weekly report).",
   {
@@ -368,7 +389,7 @@ server.tool(
 // ─── Developer Code Intelligence Tools ──────────────────────────────
 
 // Tool 15: pre_edit_briefing
-server.tool(
+safeTool(
   "pre_edit_briefing",
   "Get a production briefing before editing a file or function. Tells you: current health, known errors with exact lines, who's affected, DB query issues, danger zones. Like a handoff note from the on-call engineer.",
   {
@@ -382,7 +403,7 @@ server.tool(
 );
 
 // Tool 16: suggest_fix
-server.tool(
+safeTool(
   "suggest_fix",
   "Analyze production errors for a file/function and suggest specific code fixes. For each error: root cause analysis, exact fix with pseudocode, and how to verify the fix worked. Also surfaces slow queries and performance fixes.",
   {
@@ -396,7 +417,7 @@ server.tool(
 );
 
 // Tool 17: verify_fix
-server.tool(
+safeTool(
   "verify_fix",
   "Check whether a deployed fix actually worked by comparing before/after production data. Gives a verdict (YES/PARTIALLY/NO), shows error rate change, latency impact, and remaining issues.",
   {
@@ -412,7 +433,7 @@ server.tool(
 );
 
 // Tool 18: dev_priority_queue
-server.tool(
+safeTool(
   "dev_priority_queue",
   "Get a prioritized list of what to fix next, ranked by user impact. Each item has: the specific problem, which file:line, how many users it affects, difficulty estimate, the exact fix to apply, and expected result.",
   {},
@@ -423,7 +444,7 @@ server.tool(
 );
 
 // Tool 19: trace_symptom
-server.tool(
+safeTool(
   "trace_symptom",
   "Trace a user-reported problem back to the responsible code. Give it a symptom like 'checkout is slow' or 'login fails on mobile' and it searches production data to find the exact function, error, and line responsible.",
   {
