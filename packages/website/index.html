@@ -32,11 +32,12 @@
         </a>
 
         <div class="nav-links">
+          <a href="#why">Why?</a>
           <a href="#ai">AI</a>
-          <a href="#why">Why</a>
-          <a href="#features">Features</a>
-          <a href="#sdk">Setup</a>
-          <a href="https://app.prodscope.dev" class="btn btn-primary">
+          <!-- <a href="#how">Quick start</a> -->
+          <a href="#sdk">SDK</a>
+          <a href="#remedy" class="nav-remedy">Remedy <span class="nav-soon">soon</span></a>
+          <a href="#how" class="btn btn-primary">
             Get started — free
           </a>
         </div>
@@ -57,10 +58,8 @@
         debugs with real production data, not guesses.
       </p>
       <div class="hero-actions">
-        <a href="https://app.prodscope.dev" class="btn btn-primary"
-          >Get started — free</a
-        >
-        <a href="#how" class="btn">See how it works</a>
+        <a href="#how" class="btn btn-primary">Get started — free</a>
+        <a href="#ai" class="btn">See how it works</a>
       </div>
 
       <!-- SVG filter for hand-drawn look -->
@@ -479,6 +478,7 @@
           Developers ship code they can&rsquo;t see.
         </h2>
         <p class="section-desc">
+          <!-- <strong>Everything you need to understand production.</strong> -->
           The moment your code leaves your laptop, it disappears. What runs in
           production is a black box &mdash; and the tools we&rsquo;ve been
           handed weren&rsquo;t built for the person writing the code.
@@ -575,6 +575,37 @@
         </div>
       </div>
 
+      <!-- Before / after comparison -->
+      <div class="pgs-compare">
+        <p class="pgs-compare-title">
+          <span class="pgs-compare-tag">&gt; before / after</span>
+        </p>
+        <div class="compare-grid">
+          <div class="compare-card compare-old">
+            <h3>Without ProdScope</h3>
+            <ul>
+              <li>Switch to Sentry for errors</li>
+              <li>Switch to Datadog for latency</li>
+              <li>Check cloud console for costs</li>
+              <li>Grep through logs for context</li>
+              <li>Ask teammates &ldquo;does this affect users?&rdquo;</li>
+              <li>$500+/mo for basic APM tooling</li>
+            </ul>
+          </div>
+          <div class="compare-card compare-new">
+            <h3>With ProdScope</h3>
+            <ul>
+              <li>Errors on the line that caused them</li>
+              <li>Latency on every function, inline</li>
+              <li>Session reach shows user impact</li>
+              <li>AI tells you what&rsquo;s wrong and why</li>
+              <li>Ask Claude Code with real production data</li>
+              <li>Free for all developers</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       <!-- Why now -->
       <div class="pgs-whynow">
         <p class="pgs-whynow-title">
@@ -615,7 +646,8 @@
     <div class="sep"><hr /></div>
 
     <!-- FEATURES -->
-    <section id="features" class="section">
+    <!-- commented might add later -->
+    <!-- <section id="features" class="section">
       <div class="section-header">
         <p class="section-title">&gt; features</p>
         <h2 class="section-heading">
@@ -697,7 +729,7 @@
           </p>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <div class="sep"><hr /></div>
 
@@ -783,6 +815,89 @@
         <p class="section-desc">
           Browser apps, Node.js backends, and Claude Code integration.
         </p>
+      </div>
+
+      <!-- GET API KEY (prerequisite for all SDKs) -->
+      <div class="apikey-block">
+        <div class="apikey-head">
+          <span class="apikey-tag">&gt; prerequisite</span>
+          <h3>Get your API key</h3>
+          <p class="apikey-desc">
+            Two curls &mdash; no dashboard required. Sign up, create a project,
+            copy the <code>api_key</code> into your SDK <code>init()</code>.
+          </p>
+        </div>
+
+        <div class="apikey-steps">
+          <div class="apikey-step">
+            <div class="apikey-step-head">
+              <span class="apikey-step-n">1</span>
+              <span class="apikey-step-title">Create an account</span>
+            </div>
+            <div class="code-block">
+              <div class="code-label">shell</div>
+              <pre><code><span class="p">$ </span>curl -X POST https://api.prodscope.dev/auth/signup \
+  -H <span class="str">"Content-Type: application/json"</span> \
+  -d <span class="str">'{"email":"you@example.com","password":"••••••","name":"You"}'</span></code></pre>
+            </div>
+            <div class="code-block code-block--out">
+              <div class="code-label">200 OK</div>
+              <pre><code>{
+  <span class="str">"user"</span>: {
+    <span class="str">"id"</span>: <span class="str">"12fb11fe-aa42-4199-9491-5562169f63c7"</span>,
+    <span class="str">"email"</span>: <span class="str">"you@example.com"</span>,
+    <span class="str">"name"</span>: <span class="str">"You"</span>
+  },
+  <span class="str">"token"</span>: <span class="str">"eyJhbGciOiJIUzI1NiIs…"</span>  <span class="comment">// 30-day JWT</span>
+}</code></pre>
+            </div>
+            <p class="apikey-note">
+              Save the <strong>token</strong> &mdash; you&rsquo;ll pass it as a
+              Bearer header in step&nbsp;2.
+            </p>
+          </div>
+
+          <div class="apikey-step">
+            <div class="apikey-step-head">
+              <span class="apikey-step-n">2</span>
+              <span class="apikey-step-title">Create a project</span>
+            </div>
+            <div class="code-block">
+              <div class="code-label">shell</div>
+              <pre><code><span class="p">$ </span>curl -X POST https://api.prodscope.dev/auth/projects \
+  -H <span class="str">"Content-Type: application/json"</span> \
+  -H <span class="str">"Authorization: Bearer $TOKEN"</span> \
+  -d <span class="str">'{"name":"my-app"}'</span></code></pre>
+            </div>
+            <div class="code-block code-block--out">
+              <div class="code-label">201 Created</div>
+              <pre><code>{
+  <span class="str">"id"</span>: <span class="str">"7a3c…"</span>,
+  <span class="str">"name"</span>: <span class="str">"my-app"</span>,
+  <span class="str">"api_key"</span>: <span class="str">"ps_live_xxxxxxxxxxxx"</span>,  <span class="comment">// ← use this</span>
+  <span class="str">"created_at"</span>: <span class="str">"2026-04-11T12:00:00Z"</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="apikey-step">
+            <div class="apikey-step-head">
+              <span class="apikey-step-n">3</span>
+              <span class="apikey-step-title">Drop it into the SDK</span>
+            </div>
+            <p class="sdk-step-desc">
+              Use the <code>api_key</code> and <code>id</code> from step&nbsp;2
+              wherever you call <code>init()</code> below.
+            </p>
+            <div class="code-block">
+              <div class="code-label">any runtime</div>
+              <pre><code><span class="fn">init</span>({
+  projectId: <span class="str">"7a3c…"</span>,
+  apiKey: <span class="str">"ps_live_xxxxxxxxxxxx"</span>,
+})</code></pre>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="sdk-tabs">
@@ -1158,83 +1273,133 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
 
     <div class="sep"><hr /></div>
 
-    <!-- WHAT YOU SEE -->
-    <section class="metrics-section">
-      <div class="section-header">
-        <p class="section-title">&gt; metrics</p>
-        <h2 class="section-heading">What appears on every function</h2>
+    <!-- REMEDY -->
+    <section id="remedy" class="section remedy-section">
+      <div class="section-header center">
+        <p class="section-title">&gt; introducing remedy</p>
+        <h2 class="section-heading">
+          Prodscope detects the bug.<br />Remedy fixes it.
+        </h2>
         <p class="section-desc">
-          Real metrics from real users. Updated in real-time. No dashboard
-          needed.
+          When errors cross a threshold, Remedy wakes up, reads the source,
+          runs an AI agent in a sandboxed clone of your repo, and opens a
+          draft PR — with a Slack notification and email. Zero human
+          triage required.
         </p>
-      </div>
-
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-val">245ms</div>
-          <div class="metric-sub">p50</div>
-          <div class="metric-label">median latency</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-val">1.2s</div>
-          <div class="metric-sub">p99</div>
-          <div class="metric-label">worst-case</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-val">84%</div>
-          <div class="metric-label">session reach</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-val">2.3x</div>
-          <div class="metric-label">calls/session</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-val">1.3%</div>
-          <div class="metric-label">error rate</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-val">412</div>
-          <div class="metric-label">total calls (1h)</div>
+        <div class="remedy-cs-badge">
+          <span class="remedy-cs-dot"></span>
+          coming soon
         </div>
       </div>
-    </section>
 
-    <div class="sep"><hr /></div>
+      <div class="remedy-flow">
+        <!-- Step 1 -->
+        <div class="remedy-step">
+          <div class="remedy-step-icon remedy-step-icon--red">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div class="remedy-step-body">
+            <div class="remedy-step-num">01</div>
+            <h3>Error threshold crossed</h3>
+            <p>Remedy watches ClickHouse for error signatures that spike past your threshold — <code>5+ occurrences / hour</code> by default. It deduplicates on a 24h cooldown so the same error never spawns two PRs.</p>
+          </div>
+        </div>
+        <div class="remedy-connector"></div>
 
-    <!-- WHY PRODSCOPE -->
-    <section class="section">
-      <div class="section-header">
-        <p class="section-title">&gt; why prodscope</p>
-        <h2 class="section-heading">Built for developers, not ops teams</h2>
-        <p class="section-desc">
-          Traditional observability tools were built for SRE teams staring at
-          dashboards. ProdScope is built for developers staring at code.
-        </p>
+        <!-- Step 2 -->
+        <div class="remedy-step">
+          <div class="remedy-step-icon remedy-step-icon--amber">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="remedy-step-body">
+            <div class="remedy-step-num">02</div>
+            <h3>Agent spins up</h3>
+            <p>Claude Agent SDK launches in a sandboxed worktree of your repo. It reads the offending <code>file:line</code>, the full stack traces, function stats, and the existing AI insight — then diagnoses the root cause.</p>
+          </div>
+        </div>
+        <div class="remedy-connector"></div>
+
+        <!-- Step 3 -->
+        <div class="remedy-step">
+          <div class="remedy-step-icon remedy-step-icon--blue">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div class="remedy-step-body">
+            <div class="remedy-step-num">03</div>
+            <h3>Minimal fix applied</h3>
+            <p>The agent edits only what's broken — no refactors, no scope creep. If it can't determine a safe fix from the evidence alone, it makes no changes and explains why. Surgical or nothing.</p>
+          </div>
+        </div>
+        <div class="remedy-connector"></div>
+
+        <!-- Step 4 -->
+        <div class="remedy-step">
+          <div class="remedy-step-icon remedy-step-icon--green">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </div>
+          <div class="remedy-step-body">
+            <div class="remedy-step-num">04</div>
+            <h3>Draft PR opened</h3>
+            <p>Remedy pushes a branch, opens a <strong>draft</strong> PR with the full diagnosis, stack traces, and agent reasoning as the body. Every auto-fix stays a draft — a human merges, never Remedy.</p>
+          </div>
+        </div>
+        <div class="remedy-connector"></div>
+
+        <!-- Step 5 -->
+        <div class="remedy-step">
+          <div class="remedy-step-icon remedy-step-icon--purple">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </div>
+          <div class="remedy-step-body">
+            <div class="remedy-step-num">05</div>
+            <h3>Slack + email notification</h3>
+            <p>Your team gets a Slack Block Kit message with the PR link, error count, affected sessions, and the agent's one-sentence diagnosis. Optional email notification per project. No pager noise — just context.</p>
+          </div>
+        </div>
       </div>
 
-      <div class="compare-grid">
-        <div class="compare-card compare-old">
-          <h3>Without ProdScope</h3>
-          <ul>
-            <li>Switch to Sentry for errors</li>
-            <li>Switch to Datadog for latency</li>
-            <li>Check cloud console for costs</li>
-            <li>Grep through logs for context</li>
-            <li>Ask teammates "does this affect users?"</li>
-            <li>$500+/mo for basic APM tooling</li>
-          </ul>
+      <div class="remedy-preview">
+        <div class="remedy-preview-bar">
+          <div class="remedy-preview-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="remedy-preview-title">remedy · draft PR</span>
+          <span class="remedy-preview-badge">
+            <span class="remedy-preview-dot"></span> draft
+          </span>
         </div>
-        <div class="compare-card compare-new">
-          <h3>With ProdScope</h3>
-          <ul>
-            <li>Errors on the line that caused them</li>
-            <li>Latency on every function, inline</li>
-            <li>Session reach shows user impact</li>
-            <li>AI tells you what's wrong and why</li>
-            <li>Ask Claude Code with real production data</li>
-            <li>Free for all developers</li>
-          </ul>
+        <div class="remedy-preview-body">
+          <div class="remedy-pr-header">
+            <span class="remedy-pr-title">🩹 remedy: fix TypeError in <code>checkout.ts:42</code></span>
+            <span class="remedy-pr-tag">draft</span>
+          </div>
+          <div class="remedy-pr-meta">
+            opened by <strong>remedy-bot</strong> &middot; 1 commit &middot; branch <code>remedy/checkout-ts-a3f2</code>
+          </div>
+          <div class="remedy-pr-section">
+            <div class="remedy-pr-label remedy-pr-label--red">Diagnosis</div>
+            <div class="remedy-pr-text"><code>user.address</code> is <code>undefined</code> when guest checkout skips the address step. The null-guard on line 38 only checks <code>user</code>, not <code>user.address</code>.</div>
+          </div>
+          <div class="remedy-pr-section">
+            <div class="remedy-pr-label remedy-pr-label--green">Fix</div>
+            <div class="remedy-pr-text">Added optional chaining: <code>user?.address?.city</code>. Added a test in <code>checkout.test.ts</code> covering the guest path.</div>
+          </div>
+          <div class="remedy-pr-section">
+            <div class="remedy-pr-label remedy-pr-label--blue">Impact</div>
+            <div class="remedy-pr-text"><strong>47 errors</strong> in the last hour across <strong>23 sessions</strong>. Guest checkout broken for ~12% of users hitting the payments page.</div>
+          </div>
+          <div class="remedy-pr-stats">
+            <span>📊 47 occurrences</span>
+            <span>👤 23 sessions</span>
+            <span>📁 2 files changed</span>
+            <span>⏱ fixed in 48s</span>
+          </div>
         </div>
+      </div>
+
+      <div class="remedy-waitlist">
+        <p>Remedy is in private development. Join the waitlist to be notified when it ships.</p>
+        <a href="mailto:hello@prodscope.dev?subject=Remedy waitlist" class="btn btn-primary">join the waitlist</a>
       </div>
     </section>
 
@@ -1256,12 +1421,8 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         </p>
       </div>
       <div class="cta-actions">
-        <a href="https://app.prodscope.dev" class="btn btn-primary btn-lg"
-          >get started — free</a
-        >
-        <a href="https://docs.prodscope.dev" class="btn btn-lg"
-          >read the docs</a
-        >
+        <a href="#how" class="btn btn-primary btn-lg">get started — free</a>
+        <a href="#sdk" class="btn btn-lg">read the docs</a>
       </div>
       <div class="cta-includes">
         <span>Unlimited projects</span>
@@ -1285,13 +1446,14 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
         <div class="footer-links">
           <div>
             <h4>product</h4>
-            <a href="#features">features</a>
-            <a href="https://app.prodscope.dev">get started</a>
-            <a href="https://docs.prodscope.dev">docs</a>
+            <a href="#why">why</a>
+            <a href="#how">get started</a>
+            <a href="#sdk">docs</a>
+            <a href="#remedy">remedy <span class="footer-soon">soon</span></a>
           </div>
           <div>
             <h4>resources</h4>
-            <a href="https://docs.prodscope.dev/changelog">changelog</a>
+            <a href="#ai">ai tools</a>
             <a
               href="https://marketplace.visualstudio.com/items?itemName=prodscope.prodscope-vscode"
               >vs code</a

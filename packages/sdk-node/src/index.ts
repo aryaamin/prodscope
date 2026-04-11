@@ -52,6 +52,15 @@ export function init(cfg: ProdScopeConfig): void {
           },
         ],
       });
+      // Node's default behavior after an uncaught exception is to exit, and the
+      // 2s flush timer would never fire. Flush synchronously before exiting.
+      void (async () => {
+        try {
+          await transport?.flush();
+        } finally {
+          process.exit(1);
+        }
+      })();
     });
 
     process.on("unhandledRejection", (reason) => {

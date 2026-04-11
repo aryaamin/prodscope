@@ -7,12 +7,18 @@ interface Client {
   projectId: string;
 }
 
+interface HeartbeatWebSocket extends WebSocket {
+  isAlive?: boolean;
+}
+
 const clients: Client[] = [];
+const HEARTBEAT_INTERVAL_MS = 30_000;
 
 export function setupWebSocket(server: Server): WebSocketServer {
   const wss = new WebSocketServer({ server });
 
-  wss.on("connection", async (ws, req) => {
+  wss.on("connection", async (rawWs, req) => {
+    const ws = rawWs as HeartbeatWebSocket;
     const url = new URL(req.url ?? "/", `http://${req.headers.host}`);
     const projectId = url.searchParams.get("projectId") ?? "";
     const apiKey = url.searchParams.get("apiKey") ?? "";
@@ -38,6 +44,11 @@ export function setupWebSocket(server: Server): WebSocketServer {
       return;
     }
 
+    ws.isAlive = true;
+    ws.on("pong", () => {
+      ws.isAlive = true;
+    });
+
     const client: Client = { ws, projectId };
     clients.push(client);
 
@@ -48,6 +59,22 @@ export function setupWebSocket(server: Server): WebSocketServer {
 
     ws.send(JSON.stringify({ type: "connected", projectId }));
   });
+
+  // Heartbeat: half-open TCP connections never fire "close", so ping every
+  // client on an interval and terminate any that failed to pong since the
+  // previous tick. terminate() forces "close" to fire, which cleans up clients[].
+  const heartbeat = setInterval(() => {
+    for (const client of wss.clients as Set<HeartbeatWebSocket>) {
+      if (client.isAlive === false) {
+        client.terminate();
+        continue;
+      }
+      client.isAlive = false;
+      client.ping();
+    }
+  }, HEARTBEAT_INTERVAL_MS);
+
+  wss.on("close", () => clearInterval(heartbeat));
 
   return wss;
 }
