@@ -8,7 +8,7 @@ const router: ReturnType<typeof Router> = Router();
  * Returns daily time series for a function — call count, avg latency, error rate, session reach.
  */
 router.get("/api/v1/trends/function", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { file, function: fn } = req.query;
   const days = Math.min(Number.parseInt(req.query.days as string, 10) || 30, 365);
   const ch = getClickHouse();
@@ -59,7 +59,7 @@ router.get("/api/v1/trends/function", async (req: Request, res: Response) => {
  * Returns daily error counts grouped by error type, showing trends over time.
  */
 router.get("/api/v1/trends/errors", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { file } = req.query;
   const days = Math.min(Number.parseInt(req.query.days as string, 10) || 30, 365);
   const ch = getClickHouse();
@@ -103,7 +103,7 @@ router.get("/api/v1/trends/errors", async (req: Request, res: Response) => {
  * Returns daily DB query performance trends.
  */
 router.get("/api/v1/trends/queries", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { file } = req.query;
   const days = Math.min(Number.parseInt(req.query.days as string, 10) || 30, 365);
   const ch = getClickHouse();
@@ -148,7 +148,7 @@ router.get("/api/v1/trends/queries", async (req: Request, res: Response) => {
  * Returns hourly heatmap data — which hours of the day have the most traffic, errors, latency.
  */
 router.get("/api/v1/patterns/time-of-day", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { file, function: fn } = req.query;
   const ch = getClickHouse();
 
@@ -192,7 +192,7 @@ router.get("/api/v1/patterns/time-of-day", async (req: Request, res: Response) =
  * Compares weekday (Mon-Fri) vs weekend (Sat-Sun) behavior.
  */
 router.get("/api/v1/patterns/weekday-weekend", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { file, function: fn } = req.query;
   const ch = getClickHouse();
 
@@ -238,7 +238,7 @@ router.get("/api/v1/patterns/weekday-weekend", async (req: Request, res: Respons
  * Compare two arbitrary date ranges side by side.
  */
 router.get("/api/v1/patterns/compare-periods", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { file, function: fn, period1_start, period1_end, period2_start, period2_end } = req.query;
   const ch = getClickHouse();
 

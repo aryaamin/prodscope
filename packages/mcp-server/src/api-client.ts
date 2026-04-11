@@ -63,7 +63,7 @@ export class ApiClient {
   }
 
   async getTrace(traceId: string) {
-    return this.get(`/api/v1/trace/${traceId}`);
+    return this.get(`/api/v1/trace/${encodeURIComponent(traceId)}`);
   }
 
   async getHotPaths(params: { window?: string }) {

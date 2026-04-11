@@ -90,6 +90,7 @@
   },
   "icon": "icon.png",
   "scripts": {
+    "lint": "tsc --noEmit",
     "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --platform=node --format=cjs --minify",
     "dev": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --platform=node --format=cjs --watch",
     "package": "npm run build && vsce package",

@@ -29,7 +29,7 @@ app.use(express.json({ limit: "10mb" }));
 // Rate limiters
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  limit: 100, // 30 attempts per window
+  limit: 100, // attempts per 15-minute window
   standardHeaders: "draft-7",
   legacyHeaders: false,
   message: { error: "Too many requests, please try again later" },
@@ -38,7 +38,7 @@ const authLimiter = rateLimit({
 const ingestLimiter = rateLimit({
   windowMs: 60 * 1000,
   limit: 1000, // 1000 requests per minute per project
-  keyGenerator: (req) => (req as any).projectId ?? req.ip ?? "unknown",
+  keyGenerator: (req) => req.projectId ?? req.ip ?? "unknown",
   standardHeaders: "draft-7",
   legacyHeaders: false,
   message: { error: "Ingest rate limit exceeded" },

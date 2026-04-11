@@ -93,7 +93,7 @@ const IngestBatchSchema = z.object({
 });
 
 router.post("/v1/ingest", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const parsed = IngestBatchSchema.safeParse(req.body);
 
   if (!parsed.success) {

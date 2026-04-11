@@ -25,9 +25,23 @@ export class Transport {
       this.queue.logs = (this.queue.logs ?? []).concat(batch.logs);
     }
 
+    this.ensureFlushScheduled();
+  }
+
+  private ensureFlushScheduled(): void {
     if (!this.flushTimer) {
-      this.flushTimer = setTimeout(() => this.flush(), 2000);
+      this.flushTimer = setTimeout(() => void this.flush(), 2000);
     }
+  }
+
+  private mergeBatchIntoQueue(batch: IngestBatch): void {
+    if (batch.spans?.length)
+      this.queue.spans = batch.spans.concat(this.queue.spans ?? []);
+    if (batch.errors?.length)
+      this.queue.errors = batch.errors.concat(this.queue.errors ?? []);
+    if (batch.dbQueries?.length)
+      this.queue.dbQueries = batch.dbQueries.concat(this.queue.dbQueries ?? []);
+    if (batch.logs?.length) this.queue.logs = batch.logs.concat(this.queue.logs ?? []);
   }
 
   async flush(): Promise<void> {
@@ -54,14 +68,19 @@ export class Transport {
 
       let res = await fetch(url, { method: "POST", headers, body, keepalive: true });
 
-      // Retry once after Retry-After delay on 429
       if (res.status === 429) {
         const retryAfter = Number.parseInt(res.headers.get("Retry-After") ?? "5", 10);
         await new Promise((r) => setTimeout(r, retryAfter * 1000));
-        await fetch(url, { method: "POST", headers, body, keepalive: true });
+        res = await fetch(url, { method: "POST", headers, body, keepalive: true });
+      }
+
+      if (!res.ok) {
+        this.mergeBatchIntoQueue(batch);
+        this.ensureFlushScheduled();
       }
     } catch {
-      // Silently drop on failure — SDK should never break the host app
+      this.mergeBatchIntoQueue(batch);
+      this.ensureFlushScheduled();
     }
   }
 
@@ -99,8 +118,10 @@ export class Transport {
       });
     };
 
-    window.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "hidden") onUnload();
+    window.addEventListener("pagehide", (e: PageTransitionEvent) => {
+      if (e.persisted) return;
+      onUnload();
     });
+    window.addEventListener("beforeunload", onUnload);
   }
 }

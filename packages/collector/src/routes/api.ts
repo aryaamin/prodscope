@@ -9,7 +9,7 @@ const router: ReturnType<typeof Router> = Router();
 
 /** GET /api/v1/function-stats?function=X&file=Y&window=1h|24h|7d&limit=100&offset=0 */
 router.get("/api/v1/function-stats", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { function: fn, file, window: w } = req.query;
   const limit = Math.min(Number.parseInt(req.query.limit as string, 10) || 100, 500);
   const offset = Number.parseInt(req.query.offset as string, 10) || 0;
@@ -48,7 +48,7 @@ router.get("/api/v1/function-stats", async (req: Request, res: Response) => {
 
 /** GET /api/v1/errors?file=X&line=Y&limit=50&offset=0 */
 router.get("/api/v1/errors", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { file, line } = req.query;
   const limit = Math.min(Number.parseInt(req.query.limit as string, 10) || 50, 500);
   const offset = Number.parseInt(req.query.offset as string, 10) || 0;
@@ -82,7 +82,7 @@ router.get("/api/v1/errors", async (req: Request, res: Response) => {
 
 /** GET /api/v1/logs?file=X&line=Y&level=warn&limit=50&offset=0 */
 router.get("/api/v1/logs", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { file, line, level } = req.query;
   const limit = Math.min(Number.parseInt(req.query.limit as string, 10) || 50, 500);
   const offset = Number.parseInt(req.query.offset as string, 10) || 0;
@@ -120,7 +120,7 @@ router.get("/api/v1/logs", async (req: Request, res: Response) => {
 
 /** GET /api/v1/slow-queries?threshold=100&file=X&limit=50&offset=0 */
 router.get("/api/v1/slow-queries", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const threshold = Number.parseInt(req.query.threshold as string, 10) || 100;
   const limit = Math.min(Number.parseInt(req.query.limit as string, 10) || 50, 500);
   const offset = Number.parseInt(req.query.offset as string, 10) || 0;
@@ -152,7 +152,7 @@ router.get("/api/v1/slow-queries", async (req: Request, res: Response) => {
 
 /** GET /api/v1/ai-insight?file=X&function=Y */
 router.get("/api/v1/ai-insight", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { file, function: fn, refresh } = req.query;
 
   if (!file) {
@@ -203,7 +203,7 @@ router.get("/api/v1/ai-insight", async (req: Request, res: Response) => {
 
 /** GET /api/v1/live-sessions?route=X */
 router.get("/api/v1/live-sessions", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { route } = req.query;
   const ch = getClickHouse();
 
@@ -228,7 +228,7 @@ router.get("/api/v1/live-sessions", async (req: Request, res: Response) => {
 
 /** GET /api/v1/trace/:traceId */
 router.get("/api/v1/trace/:traceId", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { traceId } = req.params;
   const ch = getClickHouse();
 
@@ -274,7 +274,7 @@ router.get("/api/v1/trace/:traceId", async (req: Request, res: Response) => {
 
 /** GET /api/v1/hot-paths?window=1h|24h|7d */
 router.get("/api/v1/hot-paths", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const window = (req.query.window as string) ?? "1h";
   const ch = getClickHouse();
 
@@ -297,7 +297,7 @@ router.get("/api/v1/hot-paths", async (req: Request, res: Response) => {
 
 /** GET /api/v1/compare-deploys?sha1=X&sha2=Y */
 router.get("/api/v1/compare-deploys", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { sha1, sha2 } = req.query;
 
   if (!sha1 || !sha2) {
@@ -349,7 +349,7 @@ const VALID_ANALYSIS_TYPES = new Set(["anomalies", "root_cause", "patterns", "is
  * POST /api/v1/analysis/:type — trigger a fresh analysis
  */
 router.get("/api/v1/analysis/:type", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const type = req.params.type as string;
 
   if (!VALID_ANALYSIS_TYPES.has(type)) {
@@ -379,7 +379,7 @@ router.get("/api/v1/analysis/:type", async (req: Request, res: Response) => {
 });
 
 router.post("/api/v1/analysis/:type", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const type = req.params.type as string;
   const wait = req.query.wait === "true";
 
@@ -423,7 +423,7 @@ const VALID_CODE_INTEL_TYPES = new Set([
  *   trace_symptom     — "Users report X, which code is responsible?" (needs symptom)
  */
 router.post("/api/v1/code-intel/:type", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const type = req.params.type as string;
 
   if (!VALID_CODE_INTEL_TYPES.has(type)) {

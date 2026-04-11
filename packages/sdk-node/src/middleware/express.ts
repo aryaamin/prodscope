@@ -1,3 +1,4 @@
+import "../express-augment.js";
 import type { Request, Response, NextFunction } from "express";
 import { getTransport, getConfig } from "../index.js";
 import { generateId, generateSpanId, now } from "../utils.js";
@@ -26,8 +27,7 @@ export function prodscopeMiddleware() {
     const startTime = now();
     const start = process.hrtime.bigint();
 
-    // Make trace ID available to downstream code
-    (req as any).prodscopeTraceId = traceId;
+    req.prodscopeTraceId = traceId;
 
     res.on("finish", () => {
       const durationMs =

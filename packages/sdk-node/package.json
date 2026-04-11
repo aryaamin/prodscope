@@ -43,9 +43,10 @@
     }
   },
   "scripts": {
+    "lint": "tsc --noEmit",
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests",
     "clean": "rm -rf dist"
   },
   "peerDependencies": {

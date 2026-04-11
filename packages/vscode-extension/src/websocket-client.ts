@@ -18,7 +18,22 @@ export class WebSocketClient {
   }
 
   connect(): void {
-    const url = `${this.config.wsUrl}?projectId=${this.config.projectId}&apiKey=${this.config.apiKey}`;
+    if (this.ws) {
+      this.ws.removeAllListeners();
+      try {
+        this.ws.close();
+      } catch {
+        /* ignore */
+      }
+      this.ws = null;
+    }
+
+    const base = this.config.wsUrl.replace(/\/$/, "");
+    const q = new URLSearchParams({
+      projectId: this.config.projectId,
+      apiKey: this.config.apiKey,
+    });
+    const url = `${base}?${q.toString()}`;
 
     this.isIntentionallyClosed = false;
     this.ws = new WebSocket(url);
@@ -67,8 +82,15 @@ export class WebSocketClient {
       this.reconnectTimer = null;
     }
     this.isIntentionallyClosed = true;
-    this.ws?.close();
-    this.ws = null;
+    if (this.ws) {
+      this.ws.removeAllListeners();
+      try {
+        this.ws.close();
+      } catch {
+        /* ignore */
+      }
+      this.ws = null;
+    }
     this.statusBar.color = "#71717a";
     this.statusBar.tooltip = "ProdScope: Disconnected";
   }

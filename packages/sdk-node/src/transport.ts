@@ -25,9 +25,23 @@ export class Transport {
       this.queue.logs = (this.queue.logs ?? []).concat(batch.logs);
     }
 
+    this.ensureFlushScheduled();
+  }
+
+  private ensureFlushScheduled(): void {
     if (!this.flushTimer) {
-      this.flushTimer = setTimeout(() => this.flush(), 2000);
+      this.flushTimer = setTimeout(() => void this.flush(), 2000);
     }
+  }
+
+  private mergeBatchIntoQueue(batch: IngestBatch): void {
+    if (batch.spans?.length)
+      this.queue.spans = batch.spans.concat(this.queue.spans ?? []);
+    if (batch.errors?.length)
+      this.queue.errors = batch.errors.concat(this.queue.errors ?? []);
+    if (batch.dbQueries?.length)
+      this.queue.dbQueries = batch.dbQueries.concat(this.queue.dbQueries ?? []);
+    if (batch.logs?.length) this.queue.logs = batch.logs.concat(this.queue.logs ?? []);
   }
 
   async flush(): Promise<void> {
@@ -47,17 +61,29 @@ export class Transport {
 
     if (totalItems === 0) return;
 
+    const url = `${this.ingestUrl}/v1/ingest`;
+    const headers = {
+      "Content-Type": "application/json",
+      "x-api-key": this.apiKey,
+    };
+    const body = JSON.stringify(batch);
+
     try {
-      await fetch(`${this.ingestUrl}/v1/ingest`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": this.apiKey,
-        },
-        body: JSON.stringify(batch),
-      });
+      let res = await fetch(url, { method: "POST", headers, body });
+
+      if (res.status === 429) {
+        const retryAfter = Number.parseInt(res.headers.get("Retry-After") ?? "5", 10);
+        await new Promise((r) => setTimeout(r, retryAfter * 1000));
+        res = await fetch(url, { method: "POST", headers, body });
+      }
+
+      if (!res.ok) {
+        this.mergeBatchIntoQueue(batch);
+        this.ensureFlushScheduled();
+      }
     } catch {
-      // Silently drop — SDK should never crash the host app
+      this.mergeBatchIntoQueue(batch);
+      this.ensureFlushScheduled();
     }
   }
 

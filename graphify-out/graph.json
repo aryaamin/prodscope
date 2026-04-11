@@ -1,51 +1,7 @@
 {
   "directed": false,
   "multigraph": false,
-  "graph": {
-    "hyperedges": [
-      {
-        "id": "sdk_family_ingest",
-        "label": "SDK family ingests via /v1/ingest",
-        "nodes": [
-          "readme_pkg_sdk_browser",
-          "readme_pkg_sdk_node",
-          "readme_pkg_sdk_edge",
-          "readme_ingest_endpoint"
-        ],
-        "relation": "participate_in",
-        "confidence": "EXTRACTED",
-        "confidence_score": 1.0,
-        "source_file": "README.md"
-      },
-      {
-        "id": "collector_storage_stack",
-        "label": "Collector storage stack",
-        "nodes": [
-          "readme_pkg_collector",
-          "readme_clickhouse",
-          "readme_postgresql"
-        ],
-        "relation": "form",
-        "confidence": "EXTRACTED",
-        "confidence_score": 1.0,
-        "source_file": "README.md"
-      },
-      {
-        "id": "lighthouse_brand_assets",
-        "label": "Lighthouse brand asset family",
-        "nodes": [
-          "icon_vscode_svg",
-          "icon_activity_svg",
-          "website_logo",
-          "website_favicon"
-        ],
-        "relation": "implement",
-        "confidence": "INFERRED",
-        "confidence_score": 0.9,
-        "source_file": "packages/website/public/logo.svg"
-      }
-    ]
-  },
+  "graph": {},
   "nodes": [
     {
       "label": "prodscope.config.example.ts",
@@ -53,7 +9,7 @@
       "source_file": "prodscope.config.example.ts",
       "source_location": "L1",
       "id": "prodscope_config_example",
-      "community": 30
+      "community": 38
     },
     {
       "label": "utils.ts",
@@ -61,7 +17,7 @@
       "source_file": "packages/sdk-node/src/utils.ts",
       "source_location": "L1",
       "id": "utils",
-      "community": 12
+      "community": 13
     },
     {
       "label": "generateId()",
@@ -69,7 +25,7 @@
       "source_file": "packages/sdk-node/src/utils.ts",
       "source_location": "L3",
       "id": "utils_generateid",
-      "community": 12
+      "community": 13
     },
     {
       "label": "generateSpanId()",
@@ -77,7 +33,7 @@
       "source_file": "packages/sdk-node/src/utils.ts",
       "source_location": "L7",
       "id": "utils_generatespanid",
-      "community": 12
+      "community": 13
     },
     {
       "label": "getSessionId()",
@@ -85,7 +41,7 @@
       "source_file": "packages/sdk-browser/src/utils.ts",
       "source_location": "L13",
       "id": "utils_getsessionid",
-      "community": 12
+      "community": 13
     },
     {
       "label": "now()",
@@ -93,7 +49,7 @@
       "source_file": "packages/sdk-node/src/utils.ts",
       "source_location": "L11",
       "id": "utils_now",
-      "community": 12
+      "community": 13
     },
     {
       "label": "transport.ts",
@@ -101,7 +57,7 @@
       "source_file": "packages/sdk-node/src/transport.ts",
       "source_location": "L1",
       "id": "transport",
-      "community": 8
+      "community": 6
     },
     {
       "label": "Transport",
@@ -109,7 +65,7 @@
       "source_file": "packages/sdk-node/src/transport.ts",
       "source_location": "L3",
       "id": "transport_transport",
-      "community": 8
+      "community": 6
     },
     {
       "label": ".constructor()",
@@ -117,7 +73,7 @@
       "source_file": "packages/sdk-node/src/transport.ts",
       "source_location": "L9",
       "id": "transport_transport_constructor",
-      "community": 8
+      "community": 6
     },
     {
       "label": ".enqueue()",
@@ -125,23 +81,39 @@
       "source_file": "packages/sdk-node/src/transport.ts",
       "source_location": "L14",
       "id": "transport_transport_enqueue",
-      "community": 8
+      "community": 6
+    },
+    {
+      "label": ".ensureFlushScheduled()",
+      "file_type": "code",
+      "source_file": "packages/sdk-node/src/transport.ts",
+      "source_location": "L31",
+      "id": "transport_transport_ensureflushscheduled",
+      "community": 6
+    },
+    {
+      "label": ".mergeBatchIntoQueue()",
+      "file_type": "code",
+      "source_file": "packages/sdk-node/src/transport.ts",
+      "source_location": "L37",
+      "id": "transport_transport_mergebatchintoqueue",
+      "community": 6
     },
     {
       "label": ".flush()",
       "file_type": "code",
       "source_file": "packages/sdk-node/src/transport.ts",
-      "source_location": "L30",
+      "source_location": "L47",
       "id": "transport_transport_flush",
-      "community": 8
+      "community": 6
     },
     {
       "label": ".setupUnloadFlush()",
       "file_type": "code",
       "source_file": "packages/sdk-browser/src/transport.ts",
-      "source_location": "L65",
+      "source_location": "L88",
       "id": "transport_transport_setupunloadflush",
-      "community": 8
+      "community": 6
     },
     {
       "label": "index.ts",
@@ -149,7 +121,7 @@
       "source_file": "packages/collector/src/index.ts",
       "source_location": "L1",
       "id": "index",
-      "community": 5
+      "community": 2
     },
     {
       "label": "init()",
@@ -157,31 +129,39 @@
       "source_file": "packages/sdk-edge/src/index.ts",
       "source_location": "L65",
       "id": "index_init",
-      "community": 5
+      "community": 2
     },
     {
       "label": "track()",
       "file_type": "code",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L105",
+      "source_location": "L112",
       "id": "index_track",
-      "community": 5
+      "community": 2
+    },
+    {
+      "label": "log()",
+      "file_type": "code",
+      "source_file": "packages/sdk-node/src/index.ts",
+      "source_location": "L195",
+      "id": "index_log",
+      "community": 2
     },
     {
       "label": "event()",
       "file_type": "code",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L194",
+      "source_location": "L201",
       "id": "index_event",
-      "community": 5
+      "community": 2
     },
     {
       "label": "destroy()",
       "file_type": "code",
       "source_file": "packages/sdk-node/src/index.ts",
-      "source_location": "L186",
+      "source_location": "L271",
       "id": "index_destroy",
-      "community": 5
+      "community": 2
     },
     {
       "label": "vite-plugin.ts",
@@ -245,7 +225,7 @@
       "source_file": "packages/sdk-node/src/types.ts",
       "source_location": "L1",
       "id": "types",
-      "community": 31
+      "community": 39
     },
     {
       "label": "callsite.ts",
@@ -253,7 +233,7 @@
       "source_file": "packages/sdk-node/src/callsite.ts",
       "source_location": "L1",
       "id": "callsite",
-      "community": 16
+      "community": 19
     },
     {
       "label": "captureCallSite()",
@@ -261,7 +241,7 @@
       "source_file": "packages/sdk-node/src/callsite.ts",
       "source_location": "L28",
       "id": "callsite_capturecallsite",
-      "community": 16
+      "community": 19
     },
     {
       "label": "parseFrame()",
@@ -269,7 +249,7 @@
       "source_file": "packages/sdk-node/src/callsite.ts",
       "source_location": "L60",
       "id": "callsite_parseframe",
-      "community": 16
+      "community": 19
     },
     {
       "label": "cleanBrowserPath()",
@@ -277,7 +257,7 @@
       "source_file": "packages/sdk-browser/src/callsite.ts",
       "source_location": "L68",
       "id": "callsite_cleanbrowserpath",
-      "community": 16
+      "community": 19
     },
     {
       "label": "decorator.ts",
@@ -285,7 +265,7 @@
       "source_file": "packages/sdk-node/src/decorator.ts",
       "source_location": "L1",
       "id": "decorator",
-      "community": 19
+      "community": 22
     },
     {
       "label": "tracked()",
@@ -293,7 +273,7 @@
       "source_file": "packages/sdk-node/src/decorator.ts",
       "source_location": "L22",
       "id": "decorator_tracked",
-      "community": 19
+      "community": 22
     },
     {
       "label": "traced()",
@@ -301,7 +281,7 @@
       "source_file": "packages/sdk-node/src/decorator.ts",
       "source_location": "L67",
       "id": "decorator_traced",
-      "community": 19
+      "community": 22
     },
     {
       "label": "errors.ts",
@@ -309,7 +289,7 @@
       "source_file": "packages/sdk-browser/src/capture/errors.ts",
       "source_location": "L1",
       "id": "errors",
-      "community": 20
+      "community": 23
     },
     {
       "label": "toRelativePath()",
@@ -317,7 +297,7 @@
       "source_file": "packages/sdk-browser/src/capture/errors.ts",
       "source_location": "L5",
       "id": "errors_torelativepath",
-      "community": 20
+      "community": 23
     },
     {
       "label": "captureErrors()",
@@ -325,7 +305,7 @@
       "source_file": "packages/sdk-browser/src/capture/errors.ts",
       "source_location": "L16",
       "id": "errors_captureerrors",
-      "community": 20
+      "community": 23
     },
     {
       "label": "fetches.ts",
@@ -333,7 +313,7 @@
       "source_file": "packages/sdk-browser/src/capture/fetches.ts",
       "source_location": "L1",
       "id": "fetches",
-      "community": 23
+      "community": 29
     },
     {
       "label": "captureFetches()",
@@ -341,7 +321,7 @@
       "source_file": "packages/sdk-browser/src/capture/fetches.ts",
       "source_location": "L5",
       "id": "fetches_capturefetches",
-      "community": 23
+      "community": 29
     },
     {
       "label": "clicks.ts",
@@ -349,7 +329,7 @@
       "source_file": "packages/sdk-browser/src/capture/clicks.ts",
       "source_location": "L1",
       "id": "clicks",
-      "community": 24
+      "community": 30
     },
     {
       "label": "captureClicks()",
@@ -357,7 +337,7 @@
       "source_file": "packages/sdk-browser/src/capture/clicks.ts",
       "source_location": "L4",
       "id": "clicks_captureclicks",
-      "community": 24
+      "community": 30
     },
     {
       "label": "functions.ts",
@@ -365,7 +345,7 @@
       "source_file": "packages/sdk-browser/src/capture/functions.ts",
       "source_location": "L1",
       "id": "functions",
-      "community": 25
+      "community": 31
     },
     {
       "label": "trackFunction()",
@@ -373,7 +353,359 @@
       "source_file": "packages/sdk-browser/src/capture/functions.ts",
       "source_location": "L10",
       "id": "functions_trackfunction",
+      "community": 31
+    },
+    {
+      "label": "resolver.ts",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L1",
+      "id": "resolver",
+      "community": 8
+    },
+    {
+      "label": "getProjectRepo()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L11",
+      "id": "resolver_getprojectrepo",
+      "community": 8
+    },
+    {
+      "label": "authedUrl()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L40",
+      "id": "resolver_authedurl",
+      "community": 8
+    },
+    {
+      "label": "exists()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L48",
+      "id": "resolver_exists",
+      "community": 8
+    },
+    {
+      "label": "run()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L57",
+      "id": "resolver_run",
+      "community": 8
+    },
+    {
+      "label": "prepareWorktree()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L69",
+      "id": "resolver_prepareworktree",
+      "community": 8
+    },
+    {
+      "label": "commitAndPush()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L110",
+      "id": "resolver_commitandpush",
+      "community": 8
+    },
+    {
+      "label": "cleanupWorktree()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L125",
+      "id": "resolver_cleanupworktree",
+      "community": 8
+    },
+    {
+      "label": "dedup.ts",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/dedup.ts",
+      "source_location": "L1",
+      "id": "dedup",
+      "community": 14
+    },
+    {
+      "label": "hashSignature()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/dedup.ts",
+      "source_location": "L6",
+      "id": "dedup_hashsignature",
+      "community": 14
+    },
+    {
+      "label": "isInCooldown()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/dedup.ts",
+      "source_location": "L18",
+      "id": "dedup_isincooldown",
+      "community": 14
+    },
+    {
+      "label": "recordAttemptStart()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/dedup.ts",
+      "source_location": "L36",
+      "id": "dedup_recordattemptstart",
+      "community": 14
+    },
+    {
+      "label": "finalizeAttempt()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/dedup.ts",
+      "source_location": "L51",
+      "id": "dedup_finalizeattempt",
+      "community": 14
+    },
+    {
+      "label": "pr.ts",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L1",
+      "id": "pr",
+      "community": 12
+    },
+    {
+      "label": "getOctokit()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L7",
+      "id": "pr_getoctokit",
+      "community": 12
+    },
+    {
+      "label": "branchNameFor()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L17",
+      "id": "pr_branchnamefor",
+      "community": 12
+    },
+    {
+      "label": "commitMessageFor()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L25",
+      "id": "pr_commitmessagefor",
+      "community": 12
+    },
+    {
+      "label": "prBodyFor()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L34",
+      "id": "pr_prbodyfor",
+      "community": 12
+    },
+    {
+      "label": "openPullRequest()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L58",
+      "id": "pr_openpullrequest",
+      "community": 12
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "packages/mcp-server/src/index.ts",
+      "source_location": "L483",
+      "id": "index_main",
+      "community": 2
+    },
+    {
+      "label": "sleep()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/index.ts",
+      "source_location": "L60",
+      "id": "index_sleep",
+      "community": 2
+    },
+    {
+      "label": "context.ts",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/context.ts",
+      "source_location": "L1",
+      "id": "context",
+      "community": 24
+    },
+    {
+      "label": "gatherTelemetryContext()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/context.ts",
+      "source_location": "L42",
+      "id": "context_gathertelemetrycontext",
+      "community": 24
+    },
+    {
+      "label": "formatContextForPrompt()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/context.ts",
+      "source_location": "L141",
+      "id": "context_formatcontextforprompt",
+      "community": 24
+    },
+    {
+      "label": "runner.ts",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/runner.ts",
+      "source_location": "L1",
+      "id": "runner",
       "community": 25
+    },
+    {
+      "label": "buildPrompt()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/runner.ts",
+      "source_location": "L7",
+      "id": "runner_buildprompt",
+      "community": 25
+    },
+    {
+      "label": "runAgent()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/runner.ts",
+      "source_location": "L43",
+      "id": "runner_runagent",
+      "community": 25
+    },
+    {
+      "label": "notifier.ts",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L1",
+      "id": "notifier",
+      "community": 15
+    },
+    {
+      "label": "getMailer()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L7",
+      "id": "notifier_getmailer",
+      "community": 15
+    },
+    {
+      "label": "postSlack()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L23",
+      "id": "notifier_postslack",
+      "community": 15
+    },
+    {
+      "label": "notifySuccess()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L38",
+      "id": "notifier_notifysuccess",
+      "community": 15
+    },
+    {
+      "label": "notifyFailure()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L102",
+      "id": "notifier_notifyfailure",
+      "community": 15
+    },
+    {
+      "label": "watcher.ts",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/watcher.ts",
+      "source_location": "L1",
+      "id": "watcher",
+      "community": 32
+    },
+    {
+      "label": "findCandidateSignatures()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/watcher.ts",
+      "source_location": "L18",
+      "id": "watcher_findcandidatesignatures",
+      "community": 32
+    },
+    {
+      "label": "env.ts",
+      "file_type": "code",
+      "source_file": "packages/collector/src/env.ts",
+      "source_location": "L1",
+      "id": "env",
+      "community": 33
+    },
+    {
+      "label": "int()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/env.ts",
+      "source_location": "L5",
+      "id": "env_int",
+      "community": 33
+    },
+    {
+      "label": "orchestrator.ts",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/orchestrator.ts",
+      "source_location": "L1",
+      "id": "orchestrator",
+      "community": 26
+    },
+    {
+      "label": "runOneCycle()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/orchestrator.ts",
+      "source_location": "L28",
+      "id": "orchestrator_runonecycle",
+      "community": 26
+    },
+    {
+      "label": "processSignature()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/orchestrator.ts",
+      "source_location": "L47",
+      "id": "orchestrator_processsignature",
+      "community": 26
+    },
+    {
+      "label": "postgres.ts",
+      "file_type": "code",
+      "source_file": "packages/collector/src/db/postgres.ts",
+      "source_location": "L1",
+      "id": "postgres",
+      "community": 10
+    },
+    {
+      "label": "getPostgres()",
+      "file_type": "code",
+      "source_file": "packages/collector/src/db/postgres.ts",
+      "source_location": "L8",
+      "id": "postgres_getpostgres",
+      "community": 10
+    },
+    {
+      "label": "bootstrapRemedySchema()",
+      "file_type": "code",
+      "source_file": "packages/remedy/src/db/postgres.ts",
+      "source_location": "L15",
+      "id": "postgres_bootstrapremedyschema",
+      "community": 10
+    },
+    {
+      "label": "clickhouse.ts",
+      "file_type": "code",
+      "source_file": "packages/collector/src/db/clickhouse.ts",
+      "source_location": "L1",
+      "id": "clickhouse",
+      "community": 27
+    },
+    {
+      "label": "getClickHouse()",
+      "file_type": "code",
+      "source_file": "packages/collector/src/db/clickhouse.ts",
+      "source_location": "L6",
+      "id": "clickhouse_getclickhouse",
+      "community": 27
     },
     {
       "label": "config.ts",
@@ -381,7 +713,7 @@
       "source_file": "packages/mcp-server/src/config.ts",
       "source_location": "L1",
       "id": "config",
-      "community": 6
+      "community": 5
     },
     {
       "label": "loadConfig()",
@@ -389,7 +721,7 @@
       "source_file": "packages/mcp-server/src/config.ts",
       "source_location": "L10",
       "id": "config_loadconfig",
-      "community": 6
+      "community": 5
     },
     {
       "label": "extractValue()",
@@ -397,7 +729,15 @@
       "source_file": "packages/mcp-server/src/config.ts",
       "source_location": "L42",
       "id": "config_extractvalue",
-      "community": 6
+      "community": 5
+    },
+    {
+      "label": "deriveWsUrl()",
+      "file_type": "code",
+      "source_file": "packages/vscode-extension/src/config.ts",
+      "source_location": "L50",
+      "id": "config_derivewsurl",
+      "community": 5
     },
     {
       "label": "codelens-provider.ts",
@@ -405,7 +745,7 @@
       "source_file": "packages/vscode-extension/src/codelens-provider.ts",
       "source_location": "L1",
       "id": "codelens_provider",
-      "community": 13
+      "community": 16
     },
     {
       "label": "ProdScopeCodeLensProvider",
@@ -413,7 +753,7 @@
       "source_file": "packages/vscode-extension/src/codelens-provider.ts",
       "source_location": "L19",
       "id": "codelens_provider_prodscopecodelensprovider",
-      "community": 13
+      "community": 16
     },
     {
       "label": ".updateStats()",
@@ -421,7 +761,7 @@
       "source_file": "packages/vscode-extension/src/codelens-provider.ts",
       "source_location": "L25",
       "id": "codelens_provider_prodscopecodelensprovider_updatestats",
-      "community": 13
+      "community": 16
     },
     {
       "label": ".provideCodeLenses()",
@@ -429,7 +769,7 @@
       "source_file": "packages/vscode-extension/src/codelens-provider.ts",
       "source_location": "L30",
       "id": "codelens_provider_prodscopecodelensprovider_providecodelenses",
-      "community": 13
+      "community": 16
     },
     {
       "label": "fmtNum()",
@@ -437,7 +777,7 @@
       "source_file": "packages/vscode-extension/src/codelens-provider.ts",
       "source_location": "L82",
       "id": "codelens_provider_fmtnum",
-      "community": 13
+      "community": 16
     },
     {
       "label": "decorations.ts",
@@ -451,7 +791,7 @@
       "label": "applyDecorations()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/decorations.ts",
-      "source_location": "L23",
+      "source_location": "L35",
       "id": "decorations_applydecorations",
       "community": 3
     },
@@ -459,7 +799,7 @@
       "label": "clearDecorations()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/decorations.ts",
-      "source_location": "L78",
+      "source_location": "L108",
       "id": "decorations_cleardecorations",
       "community": 3
     },
@@ -499,7 +839,7 @@
       "label": "snapLineToFunction()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L324",
+      "source_location": "L387",
       "id": "extension_snaplinetofunction",
       "community": 3
     },
@@ -507,7 +847,7 @@
       "label": "simplifyUA()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L368",
+      "source_location": "L431",
       "id": "extension_simplifyua",
       "community": 3
     },
@@ -515,7 +855,7 @@
       "label": "runCodeIntelCommand()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L408",
+      "source_location": "L471",
       "id": "extension_runcodeintelcommand",
       "community": 3
     },
@@ -523,7 +863,7 @@
       "label": "codeIntelShell()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L475",
+      "source_location": "L538",
       "id": "extension_codeintelshell",
       "community": 3
     },
@@ -531,7 +871,7 @@
       "label": "renderIntelMarkdown()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L673",
+      "source_location": "L736",
       "id": "extension_renderintelmarkdown",
       "community": 3
     },
@@ -539,7 +879,7 @@
       "label": "resolveIntelTag()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L719",
+      "source_location": "L782",
       "id": "extension_resolveinteltag",
       "community": 3
     },
@@ -547,7 +887,7 @@
       "label": "renderIntelBody()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L742",
+      "source_location": "L805",
       "id": "extension_renderintelbody",
       "community": 3
     },
@@ -555,7 +895,7 @@
       "label": "applyInlineIntel()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L788",
+      "source_location": "L851",
       "id": "extension_applyinlineintel",
       "community": 3
     },
@@ -563,7 +903,7 @@
       "label": "escapeHtmlIntel()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L795",
+      "source_location": "L858",
       "id": "extension_escapehtmlintel",
       "community": 3
     },
@@ -571,7 +911,7 @@
       "label": "deactivate()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L803",
+      "source_location": "L866",
       "id": "extension_deactivate",
       "community": 3
     },
@@ -581,7 +921,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L1",
       "id": "insight_panel",
-      "community": 1
+      "community": 0
     },
     {
       "label": "InsightPanelProvider",
@@ -589,7 +929,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L14",
       "id": "insight_panel_insightpanelprovider",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".constructor()",
@@ -597,7 +937,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L24",
       "id": "insight_panel_insightpanelprovider_constructor",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".resolveWebviewView()",
@@ -605,7 +945,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L29",
       "id": "insight_panel_insightpanelprovider_resolvewebviewview",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".updateForFile()",
@@ -613,7 +953,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L54",
       "id": "insight_panel_insightpanelprovider_updateforfile",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".updateStats()",
@@ -621,7 +961,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L67",
       "id": "insight_panel_insightpanelprovider_updatestats",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".loadStats()",
@@ -629,7 +969,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L74",
       "id": "insight_panel_insightpanelprovider_loadstats",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".loadCachedInsight()",
@@ -637,7 +977,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L130",
       "id": "insight_panel_insightpanelprovider_loadcachedinsight",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".refresh()",
@@ -645,7 +985,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L149",
       "id": "insight_panel_insightpanelprovider_refresh",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".render()",
@@ -653,7 +993,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L181",
       "id": "insight_panel_insightpanelprovider_render",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".renderHero()",
@@ -661,7 +1001,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L470",
       "id": "insight_panel_insightpanelprovider_renderhero",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".renderContent()",
@@ -669,7 +1009,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L482",
       "id": "insight_panel_insightpanelprovider_rendercontent",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".renderStatsSection()",
@@ -677,7 +1017,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L501",
       "id": "insight_panel_insightpanelprovider_renderstatssection",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".renderToolsSection()",
@@ -685,7 +1025,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L533",
       "id": "insight_panel_insightpanelprovider_rendertoolssection",
-      "community": 1
+      "community": 0
     },
     {
       "label": ".renderInsightSection()",
@@ -693,7 +1033,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L555",
       "id": "insight_panel_insightpanelprovider_renderinsightsection",
-      "community": 1
+      "community": 0
     },
     {
       "label": "escapeHtml()",
@@ -701,7 +1041,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L588",
       "id": "insight_panel_escapehtml",
-      "community": 1
+      "community": 0
     },
     {
       "label": "fmtNum()",
@@ -709,7 +1049,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L596",
       "id": "insight_panel_fmtnum",
-      "community": 1
+      "community": 0
     },
     {
       "label": "renderInsightSections()",
@@ -717,7 +1057,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L602",
       "id": "insight_panel_renderinsightsections",
-      "community": 1
+      "community": 0
     },
     {
       "label": "resolveTag()",
@@ -725,7 +1065,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L627",
       "id": "insight_panel_resolvetag",
-      "community": 1
+      "community": 0
     },
     {
       "label": "renderBodyContent()",
@@ -733,7 +1073,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L644",
       "id": "insight_panel_renderbodycontent",
-      "community": 1
+      "community": 0
     },
     {
       "label": "renderMarkdownPlain()",
@@ -741,7 +1081,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L688",
       "id": "insight_panel_rendermarkdownplain",
-      "community": 1
+      "community": 0
     },
     {
       "label": "applyInline()",
@@ -749,7 +1089,7 @@
       "source_file": "packages/vscode-extension/src/insight-panel.ts",
       "source_location": "L738",
       "id": "insight_panel_applyinline",
-      "community": 1
+      "community": 0
     },
     {
       "label": "websocket-client.ts",
@@ -757,7 +1097,7 @@
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
       "source_location": "L1",
       "id": "websocket_client",
-      "community": 6
+      "community": 5
     },
     {
       "label": "WebSocketClient",
@@ -765,55 +1105,55 @@
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
       "source_location": "L7",
       "id": "websocket_client_websocketclient",
-      "community": 6
+      "community": 5
     },
     {
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "websocket_client_websocketclient_constructor",
-      "community": 6
+      "community": 5
     },
     {
       "label": ".connect()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
-      "source_location": "L19",
+      "source_location": "L20",
       "id": "websocket_client_websocketclient_connect",
-      "community": 6
+      "community": 5
     },
     {
       "label": ".onEvent()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
-      "source_location": "L54",
+      "source_location": "L75",
       "id": "websocket_client_websocketclient_onevent",
-      "community": 6
+      "community": 5
     },
     {
       "label": ".disconnect()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
-      "source_location": "L58",
+      "source_location": "L79",
       "id": "websocket_client_websocketclient_disconnect",
-      "community": 6
+      "community": 5
     },
     {
       "label": ".scheduleReconnect()",
       "file_type": "code",
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
-      "source_location": "L69",
+      "source_location": "L98",
       "id": "websocket_client_websocketclient_schedulereconnect",
-      "community": 6
+      "community": 5
     },
     {
-      "label": "main()",
+      "label": "safeTool()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/index.ts",
-      "source_location": "L439",
-      "id": "index_main",
-      "community": 5
+      "source_location": "L19",
+      "id": "index_safetool",
+      "community": 2
     },
     {
       "label": "api-client.ts",
@@ -821,7 +1161,7 @@
       "source_file": "packages/mcp-server/src/api-client.ts",
       "source_location": "L1",
       "id": "api_client",
-      "community": 2
+      "community": 1
     },
     {
       "label": "ApiClient",
@@ -829,7 +1169,7 @@
       "source_file": "packages/mcp-server/src/api-client.ts",
       "source_location": "L3",
       "id": "api_client_apiclient",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".constructor()",
@@ -837,7 +1177,7 @@
       "source_file": "packages/mcp-server/src/api-client.ts",
       "source_location": "L6",
       "id": "api_client_apiclient_constructor",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".get()",
@@ -845,7 +1185,7 @@
       "source_file": "packages/mcp-server/src/api-client.ts",
       "source_location": "L10",
       "id": "api_client_apiclient_get",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getFunctionStats()",
@@ -853,7 +1193,7 @@
       "source_file": "packages/mcp-server/src/api-client.ts",
       "source_location": "L28",
       "id": "api_client_apiclient_getfunctionstats",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getErrorsAtLine()",
@@ -861,135 +1201,143 @@
       "source_file": "packages/mcp-server/src/api-client.ts",
       "source_location": "L36",
       "id": "api_client_apiclient_geterrorsatline",
-      "community": 2
+      "community": 1
+    },
+    {
+      "label": ".getLogsAtLine()",
+      "file_type": "code",
+      "source_file": "packages/mcp-server/src/api-client.ts",
+      "source_location": "L40",
+      "id": "api_client_apiclient_getlogsatline",
+      "community": 1
     },
     {
       "label": ".getSlowQueries()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L40",
+      "source_location": "L49",
       "id": "api_client_apiclient_getslowqueries",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getAiInsight()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L44",
+      "source_location": "L53",
       "id": "api_client_apiclient_getaiinsight",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getLiveSessions()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L52",
+      "source_location": "L61",
       "id": "api_client_apiclient_getlivesessions",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getTrace()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L56",
+      "source_location": "L65",
       "id": "api_client_apiclient_gettrace",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getHotPaths()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L60",
+      "source_location": "L69",
       "id": "api_client_apiclient_gethotpaths",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".compareDeploys()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L64",
+      "source_location": "L73",
       "id": "api_client_apiclient_comparedeploys",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getFunctionTrend()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L70",
+      "source_location": "L79",
       "id": "api_client_apiclient_getfunctiontrend",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getErrorTrends()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L74",
+      "source_location": "L83",
       "id": "api_client_apiclient_geterrortrends",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getQueryTrends()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L78",
+      "source_location": "L87",
       "id": "api_client_apiclient_getquerytrends",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getTimeOfDayPattern()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L82",
+      "source_location": "L91",
       "id": "api_client_apiclient_gettimeofdaypattern",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getWeekdayWeekendPattern()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L86",
+      "source_location": "L95",
       "id": "api_client_apiclient_getweekdayweekendpattern",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".comparePeriods()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L90",
+      "source_location": "L99",
       "id": "api_client_apiclient_compareperiods",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".getAnalysis()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L103",
+      "source_location": "L112",
       "id": "api_client_apiclient_getanalysis",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".triggerAnalysis()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L107",
+      "source_location": "L116",
       "id": "api_client_apiclient_triggeranalysis",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".runCodeIntel()",
       "file_type": "code",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L126",
+      "source_location": "L135",
       "id": "api_client_apiclient_runcodeintel",
-      "community": 2
+      "community": 1
     },
     {
       "label": ".setupGracefulShutdown()",
       "file_type": "code",
       "source_file": "packages/sdk-node/src/transport.ts",
-      "source_location": "L60",
+      "source_location": "L90",
       "id": "transport_transport_setupgracefulshutdown",
-      "community": 8
+      "community": 6
     },
     {
       "label": "getTransport()",
@@ -997,7 +1345,7 @@
       "source_file": "packages/sdk-node/src/index.ts",
       "source_location": "L12",
       "id": "index_gettransport",
-      "community": 5
+      "community": 2
     },
     {
       "label": "getConfig()",
@@ -1005,7 +1353,23 @@
       "source_file": "packages/sdk-node/src/index.ts",
       "source_location": "L16",
       "id": "index_getconfig",
-      "community": 5
+      "community": 2
+    },
+    {
+      "label": "defaultMinLevel()",
+      "file_type": "code",
+      "source_file": "packages/sdk-node/src/index.ts",
+      "source_location": "L182",
+      "id": "index_defaultminlevel",
+      "community": 2
+    },
+    {
+      "label": "express-augment.ts",
+      "file_type": "code",
+      "source_file": "packages/sdk-node/src/express-augment.ts",
+      "source_location": "L1",
+      "id": "express_augment",
+      "community": 40
     },
     {
       "label": "prisma.ts",
@@ -1013,7 +1377,7 @@
       "source_file": "packages/sdk-node/src/middleware/prisma.ts",
       "source_location": "L1",
       "id": "prisma",
-      "community": 26
+      "community": 34
     },
     {
       "label": "prodscopePrisma()",
@@ -1021,7 +1385,7 @@
       "source_file": "packages/sdk-node/src/middleware/prisma.ts",
       "source_location": "L16",
       "id": "prisma_prodscopeprisma",
-      "community": 26
+      "community": 34
     },
     {
       "label": "express.ts",
@@ -1035,7 +1399,7 @@
       "label": "prodscopeMiddleware()",
       "file_type": "code",
       "source_file": "packages/sdk-node/src/middleware/express.ts",
-      "source_location": "L16",
+      "source_location": "L17",
       "id": "express_prodscopemiddleware",
       "community": 4
     },
@@ -1045,7 +1409,7 @@
       "source_file": "packages/sdk-node/src/middleware/pg.ts",
       "source_location": "L1",
       "id": "pg",
-      "community": 11
+      "community": 10
     },
     {
       "label": "patchPg()",
@@ -1053,7 +1417,7 @@
       "source_file": "packages/sdk-node/src/middleware/pg.ts",
       "source_location": "L17",
       "id": "pg_patchpg",
-      "community": 11
+      "community": 10
     },
     {
       "label": "parseSQL()",
@@ -1061,7 +1425,7 @@
       "source_file": "packages/sdk-node/src/middleware/pg.ts",
       "source_location": "L100",
       "id": "pg_parsesql",
-      "community": 11
+      "community": 10
     },
     {
       "label": "vite.config.ts",
@@ -1069,7 +1433,7 @@
       "source_file": "packages/dashboard/vite.config.ts",
       "source_location": "L1",
       "id": "vite_config",
-      "community": 32
+      "community": 41
     },
     {
       "label": "generateId()",
@@ -1077,7 +1441,7 @@
       "source_file": "packages/sdk-edge/src/index.ts",
       "source_location": "L50",
       "id": "index_generateid",
-      "community": 5
+      "community": 2
     },
     {
       "label": "generateSpanId()",
@@ -1085,7 +1449,7 @@
       "source_file": "packages/sdk-edge/src/index.ts",
       "source_location": "L56",
       "id": "index_generatespanid",
-      "community": 5
+      "community": 2
     },
     {
       "label": "enqueue()",
@@ -1093,23 +1457,31 @@
       "source_file": "packages/sdk-edge/src/index.ts",
       "source_location": "L69",
       "id": "index_enqueue",
-      "community": 5
+      "community": 2
+    },
+    {
+      "label": "mergeFailedBatchIntoBuffer()",
+      "file_type": "code",
+      "source_file": "packages/sdk-edge/src/index.ts",
+      "source_location": "L74",
+      "id": "index_mergefailedbatchintobuffer",
+      "community": 2
     },
     {
       "label": "flush()",
       "file_type": "code",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L75",
+      "source_location": "L80",
       "id": "index_flush",
-      "community": 5
+      "community": 2
     },
     {
       "label": "wrapHandler()",
       "file_type": "code",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L229",
+      "source_location": "L236",
       "id": "index_wraphandler",
-      "community": 5
+      "community": 2
     },
     {
       "label": "main.tsx",
@@ -1117,7 +1489,7 @@
       "source_file": "packages/dashboard/src/main.tsx",
       "source_location": "L1",
       "id": "main",
-      "community": 27
+      "community": 35
     },
     {
       "label": "ProtectedRoute()",
@@ -1125,7 +1497,7 @@
       "source_file": "packages/dashboard/src/main.tsx",
       "source_location": "L10",
       "id": "main_protectedroute",
-      "community": 27
+      "community": 35
     },
     {
       "label": "auth.ts",
@@ -1157,7 +1529,7 @@
       "source_file": "packages/dashboard/src/vite-env.d.ts",
       "source_location": "L1",
       "id": "vite_env_d",
-      "community": 33
+      "community": 42
     },
     {
       "label": "api.ts",
@@ -1189,7 +1561,7 @@
       "source_file": "packages/dashboard/src/pages/Signup.tsx",
       "source_location": "L1",
       "id": "signup",
-      "community": 28
+      "community": 36
     },
     {
       "label": "Signup()",
@@ -1197,7 +1569,7 @@
       "source_file": "packages/dashboard/src/pages/Signup.tsx",
       "source_location": "L6",
       "id": "signup_signup",
-      "community": 28
+      "community": 36
     },
     {
       "label": "Projects.tsx",
@@ -1205,7 +1577,7 @@
       "source_file": "packages/dashboard/src/pages/Projects.tsx",
       "source_location": "L1",
       "id": "projects",
-      "community": 14
+      "community": 17
     },
     {
       "label": "loadProjects()",
@@ -1213,7 +1585,7 @@
       "source_file": "packages/dashboard/src/pages/Projects.tsx",
       "source_location": "L25",
       "id": "projects_loadprojects",
-      "community": 14
+      "community": 17
     },
     {
       "label": "handleCreate()",
@@ -1221,7 +1593,7 @@
       "source_file": "packages/dashboard/src/pages/Projects.tsx",
       "source_location": "L34",
       "id": "projects_handlecreate",
-      "community": 14
+      "community": 17
     },
     {
       "label": "copyKey()",
@@ -1229,7 +1601,7 @@
       "source_file": "packages/dashboard/src/pages/Projects.tsx",
       "source_location": "L47",
       "id": "projects_copykey",
-      "community": 14
+      "community": 17
     },
     {
       "label": "logout()",
@@ -1237,7 +1609,7 @@
       "source_file": "packages/dashboard/src/pages/Projects.tsx",
       "source_location": "L53",
       "id": "projects_logout",
-      "community": 14
+      "community": 17
     },
     {
       "label": "Login.tsx",
@@ -1245,7 +1617,7 @@
       "source_file": "packages/dashboard/src/pages/Login.tsx",
       "source_location": "L1",
       "id": "login",
-      "community": 29
+      "community": 37
     },
     {
       "label": "Login()",
@@ -1253,7 +1625,7 @@
       "source_file": "packages/dashboard/src/pages/Login.tsx",
       "source_location": "L6",
       "id": "login_login",
-      "community": 29
+      "community": 37
     },
     {
       "label": "start()",
@@ -1261,31 +1633,15 @@
       "source_file": "packages/collector/src/index.ts",
       "source_location": "L74",
       "id": "index_start",
-      "community": 5
+      "community": 2
     },
     {
-      "label": "env.ts",
+      "label": "express-augment.d.ts",
       "file_type": "code",
-      "source_file": "packages/collector/src/env.ts",
+      "source_file": "packages/collector/src/express-augment.d.ts",
       "source_location": "L1",
-      "id": "env",
-      "community": 34
-    },
-    {
-      "label": "postgres.ts",
-      "file_type": "code",
-      "source_file": "packages/collector/src/db/postgres.ts",
-      "source_location": "L1",
-      "id": "postgres",
-      "community": 11
-    },
-    {
-      "label": "getPostgres()",
-      "file_type": "code",
-      "source_file": "packages/collector/src/db/postgres.ts",
-      "source_location": "L8",
-      "id": "postgres_getpostgres",
-      "community": 11
+      "id": "express_augment_d",
+      "community": 43
     },
     {
       "label": "bootstrapPostgres()",
@@ -1293,23 +1649,7 @@
       "source_file": "packages/collector/src/db/postgres.ts",
       "source_location": "L16",
       "id": "postgres_bootstrappostgres",
-      "community": 11
-    },
-    {
-      "label": "clickhouse.ts",
-      "file_type": "code",
-      "source_file": "packages/collector/src/db/clickhouse.ts",
-      "source_location": "L1",
-      "id": "clickhouse",
-      "community": 21
-    },
-    {
-      "label": "getClickHouse()",
-      "file_type": "code",
-      "source_file": "packages/collector/src/db/clickhouse.ts",
-      "source_location": "L6",
-      "id": "clickhouse_getclickhouse",
-      "community": 21
+      "community": 10
     },
     {
       "label": "initClickHouse()",
@@ -1317,7 +1657,7 @@
       "source_file": "packages/collector/src/db/clickhouse.ts",
       "source_location": "L16",
       "id": "clickhouse_initclickhouse",
-      "community": 21
+      "community": 27
     },
     {
       "label": "ingest.ts",
@@ -1379,7 +1719,7 @@
       "label": "getDeployStats()",
       "file_type": "code",
       "source_file": "packages/collector/src/routes/api.ts",
-      "source_location": "L272",
+      "source_location": "L310",
       "id": "api_getdeploystats",
       "community": 4
     },
@@ -1397,7 +1737,7 @@
       "source_file": "packages/collector/src/services/aggregator.ts",
       "source_location": "L1",
       "id": "aggregator",
-      "community": 15
+      "community": 18
     },
     {
       "label": "runAggregation()",
@@ -1405,7 +1745,7 @@
       "source_file": "packages/collector/src/services/aggregator.ts",
       "source_location": "L4",
       "id": "aggregator_runaggregation",
-      "community": 15
+      "community": 18
     },
     {
       "label": "runDailySnapshots()",
@@ -1413,7 +1753,7 @@
       "source_file": "packages/collector/src/services/aggregator.ts",
       "source_location": "L74",
       "id": "aggregator_rundailysnapshots",
-      "community": 15
+      "community": 18
     },
     {
       "label": "startAggregator()",
@@ -1421,7 +1761,7 @@
       "source_file": "packages/collector/src/services/aggregator.ts",
       "source_location": "L213",
       "id": "aggregator_startaggregator",
-      "community": 15
+      "community": 18
     },
     {
       "label": "stopAggregator()",
@@ -1429,7 +1769,7 @@
       "source_file": "packages/collector/src/services/aggregator.ts",
       "source_location": "L227",
       "id": "aggregator_stopaggregator",
-      "community": 15
+      "community": 18
     },
     {
       "label": "websocket.ts",
@@ -1437,23 +1777,23 @@
       "source_file": "packages/collector/src/services/websocket.ts",
       "source_location": "L1",
       "id": "websocket",
-      "community": 22
+      "community": 28
     },
     {
       "label": "setupWebSocket()",
       "file_type": "code",
       "source_file": "packages/collector/src/services/websocket.ts",
-      "source_location": "L12",
+      "source_location": "L17",
       "id": "websocket_setupwebsocket",
-      "community": 22
+      "community": 28
     },
     {
       "label": "broadcast()",
       "file_type": "code",
       "source_file": "packages/collector/src/services/websocket.ts",
-      "source_location": "L56",
+      "source_location": "L85",
       "id": "websocket_broadcast",
-      "community": 22
+      "community": 28
     },
     {
       "label": "ai-code-intel.ts",
@@ -1461,7 +1801,7 @@
       "source_file": "packages/collector/src/services/ai-code-intel.ts",
       "source_location": "L1",
       "id": "ai_code_intel",
-      "community": 10
+      "community": 11
     },
     {
       "label": "getAnthropic()",
@@ -1469,7 +1809,7 @@
       "source_file": "packages/collector/src/services/ai-code-intel.ts",
       "source_location": "L19",
       "id": "ai_code_intel_getanthropic",
-      "community": 10
+      "community": 11
     },
     {
       "label": "getFunctionDetail()",
@@ -1477,7 +1817,7 @@
       "source_file": "packages/collector/src/services/ai-code-intel.ts",
       "source_location": "L31",
       "id": "ai_code_intel_getfunctiondetail",
-      "community": 10
+      "community": 11
     },
     {
       "label": "getDeployComparison()",
@@ -1485,7 +1825,7 @@
       "source_file": "packages/collector/src/services/ai-code-intel.ts",
       "source_location": "L128",
       "id": "ai_code_intel_getdeploycomparison",
-      "community": 10
+      "community": 11
     },
     {
       "label": "getWorstFunctions()",
@@ -1493,7 +1833,7 @@
       "source_file": "packages/collector/src/services/ai-code-intel.ts",
       "source_location": "L158",
       "id": "ai_code_intel_getworstfunctions",
-      "community": 10
+      "community": 11
     },
     {
       "label": "traceSymptomToCode()",
@@ -1501,7 +1841,7 @@
       "source_file": "packages/collector/src/services/ai-code-intel.ts",
       "source_location": "L182",
       "id": "ai_code_intel_tracesymptomtocode",
-      "community": 10
+      "community": 11
     },
     {
       "label": "runCodeIntel()",
@@ -1509,7 +1849,7 @@
       "source_file": "packages/collector/src/services/ai-code-intel.ts",
       "source_location": "L271",
       "id": "ai_code_intel_runcodeintel",
-      "community": 10
+      "community": 11
     },
     {
       "label": "source-map-resolver.ts",
@@ -1517,7 +1857,7 @@
       "source_file": "packages/collector/src/services/source-map-resolver.ts",
       "source_location": "L1",
       "id": "source_map_resolver",
-      "community": 17
+      "community": 20
     },
     {
       "label": "getConsumer()",
@@ -1525,7 +1865,7 @@
       "source_file": "packages/collector/src/services/source-map-resolver.ts",
       "source_location": "L13",
       "id": "source_map_resolver_getconsumer",
-      "community": 17
+      "community": 20
     },
     {
       "label": "resolveStack()",
@@ -1533,7 +1873,7 @@
       "source_file": "packages/collector/src/services/source-map-resolver.ts",
       "source_location": "L39",
       "id": "source_map_resolver_resolvestack",
-      "community": 17
+      "community": 20
     },
     {
       "label": "resolveLocation()",
@@ -1541,7 +1881,7 @@
       "source_file": "packages/collector/src/services/source-map-resolver.ts",
       "source_location": "L69",
       "id": "source_map_resolver_resolvelocation",
-      "community": 17
+      "community": 20
     },
     {
       "label": "ai-insights.ts",
@@ -1549,7 +1889,7 @@
       "source_file": "packages/collector/src/services/ai-insights.ts",
       "source_location": "L1",
       "id": "ai_insights",
-      "community": 18
+      "community": 21
     },
     {
       "label": "getAnthropic()",
@@ -1557,7 +1897,7 @@
       "source_file": "packages/collector/src/services/ai-insights.ts",
       "source_location": "L8",
       "id": "ai_insights_getanthropic",
-      "community": 18
+      "community": 21
     },
     {
       "label": "gatherContext()",
@@ -1565,7 +1905,7 @@
       "source_file": "packages/collector/src/services/ai-insights.ts",
       "source_location": "L24",
       "id": "ai_insights_gathercontext",
-      "community": 18
+      "community": 21
     },
     {
       "label": "generateInsight()",
@@ -1573,7 +1913,7 @@
       "source_file": "packages/collector/src/services/ai-insights.ts",
       "source_location": "L88",
       "id": "ai_insights_generateinsight",
-      "community": 18
+      "community": 21
     },
     {
       "label": "ai-analysis.ts",
@@ -1646,318 +1986,6 @@
       "source_location": "L228",
       "id": "ai_analysis_runanalysis",
       "community": 7
-    },
-    {
-      "label": "ProdScope",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_prodscope",
-      "community": 0
-    },
-    {
-      "label": "Developer Observability Platform",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_developer_observability",
-      "community": 0
-    },
-    {
-      "label": "@prodscope/collector",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_pkg_collector",
-      "community": 0
-    },
-    {
-      "label": "@prodscope/sdk-browser",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_pkg_sdk_browser",
-      "community": 0
-    },
-    {
-      "label": "@prodscope/sdk-node",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_pkg_sdk_node",
-      "community": 0
-    },
-    {
-      "label": "@prodscope/sdk-edge",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_pkg_sdk_edge",
-      "community": 0
-    },
-    {
-      "label": "@prodscope/mcp-server",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_pkg_mcp_server",
-      "community": 0
-    },
-    {
-      "label": "prodscope-vscode",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_pkg_vscode_extension",
-      "community": 0
-    },
-    {
-      "label": "@prodscope/dashboard",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_pkg_dashboard",
-      "community": 0
-    },
-    {
-      "label": "@prodscope/website",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_pkg_website",
-      "community": 0
-    },
-    {
-      "label": "ClickHouse",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_clickhouse",
-      "community": 0
-    },
-    {
-      "label": "PostgreSQL",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_postgresql",
-      "community": 0
-    },
-    {
-      "label": "Express",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_express",
-      "community": 0
-    },
-    {
-      "label": "POST /v1/ingest",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_ingest_endpoint",
-      "community": 0
-    },
-    {
-      "label": "CodeLens & Inline Decorations",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_codelens",
-      "community": 0
-    },
-    {
-      "label": "Claude AI Tools (MCP)",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "readme_claude_ai_tools",
-      "community": 0
-    },
-    {
-      "label": "VS Code Extension Icon (PNG)",
-      "file_type": "image",
-      "source_file": "packages/vscode-extension/icon.png",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "icon_vscode_png",
-      "community": 0
-    },
-    {
-      "label": "VS Code Extension Icon (SVG) - Lighthouse Mark",
-      "file_type": "image",
-      "source_file": "packages/vscode-extension/icon.svg",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "icon_vscode_svg",
-      "community": 0
-    },
-    {
-      "label": "VS Code Activity Bar Icon - Lighthouse Outline",
-      "file_type": "image",
-      "source_file": "packages/vscode-extension/resources/activity-icon.svg",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "icon_activity_svg",
-      "community": 0
-    },
-    {
-      "label": "Website Favicon (Old) - Lighthouse Outline",
-      "file_type": "image",
-      "source_file": "packages/website/public/favicon-old.svg",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "website_favicon_old",
-      "community": 0
-    },
-    {
-      "label": "Website Favicon - Lighthouse Mark",
-      "file_type": "image",
-      "source_file": "packages/website/public/favicon.svg",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "website_favicon",
-      "community": 0
-    },
-    {
-      "label": "Website Logo Outline (Black)",
-      "file_type": "image",
-      "source_file": "packages/website/public/logo-outline.svg",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "website_logo_outline",
-      "community": 0
-    },
-    {
-      "label": "Website Logo Outline (White)",
-      "file_type": "image",
-      "source_file": "packages/website/public/logo-outline-white.svg",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "website_logo_outline_white",
-      "community": 0
-    },
-    {
-      "label": "Website Logo (Color Lighthouse)",
-      "file_type": "image",
-      "source_file": "packages/website/public/logo.svg",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "website_logo",
-      "community": 0
-    },
-    {
-      "label": "Claude Color Logo",
-      "file_type": "image",
-      "source_file": "packages/website/public/claude-color.svg",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "website_claude_color",
-      "community": 0
-    },
-    {
-      "label": "Lighthouse Brand Mark",
-      "file_type": "image",
-      "source_file": "packages/website/public/logo.svg",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "concept_lighthouse_brand",
-      "community": 0
     }
   ],
   "links": [
@@ -2061,7 +2089,31 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-node/src/transport.ts",
-      "source_location": "L30",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_src": "transport_transport",
+      "_tgt": "transport_transport_ensureflushscheduled",
+      "source": "transport_transport",
+      "target": "transport_transport_ensureflushscheduled",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/sdk-node/src/transport.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_src": "transport_transport",
+      "_tgt": "transport_transport_mergebatchintoqueue",
+      "source": "transport_transport",
+      "target": "transport_transport_mergebatchintoqueue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/sdk-node/src/transport.ts",
+      "source_location": "L47",
       "weight": 1.0,
       "_src": "transport_transport",
       "_tgt": "transport_transport_flush",
@@ -2073,7 +2125,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-browser/src/transport.ts",
-      "source_location": "L65",
+      "source_location": "L88",
       "weight": 1.0,
       "_src": "transport_transport",
       "_tgt": "transport_transport_setupunloadflush",
@@ -2085,12 +2137,48 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-node/src/transport.ts",
-      "source_location": "L60",
+      "source_location": "L90",
       "weight": 1.0,
       "_src": "transport_transport",
       "_tgt": "transport_transport_setupgracefulshutdown",
       "source": "transport_transport",
       "target": "transport_transport_setupgracefulshutdown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/sdk-node/src/transport.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_src": "transport_transport_enqueue",
+      "_tgt": "transport_transport_ensureflushscheduled",
+      "source": "transport_transport_enqueue",
+      "target": "transport_transport_ensureflushscheduled",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/sdk-node/src/transport.ts",
+      "source_location": "L82",
+      "weight": 1.0,
+      "_src": "transport_transport_flush",
+      "_tgt": "transport_transport_ensureflushscheduled",
+      "source": "transport_transport_ensureflushscheduled",
+      "target": "transport_transport_flush",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/sdk-node/src/transport.ts",
+      "source_location": "L81",
+      "weight": 1.0,
+      "_src": "transport_transport_flush",
+      "_tgt": "transport_transport_mergebatchintoqueue",
+      "source": "transport_transport_mergebatchintoqueue",
+      "target": "transport_transport_flush",
       "confidence_score": 1.0
     },
     {
@@ -2109,7 +2197,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L105",
+      "source_location": "L112",
       "weight": 1.0,
       "_src": "index",
       "_tgt": "index_track",
@@ -2120,8 +2208,20 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "packages/sdk-node/src/index.ts",
+      "source_location": "L195",
+      "weight": 1.0,
+      "_src": "index",
+      "_tgt": "index_log",
+      "source": "index",
+      "target": "index_log",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L194",
+      "source_location": "L201",
       "weight": 1.0,
       "_src": "index",
       "_tgt": "index_event",
@@ -2133,7 +2233,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-node/src/index.ts",
-      "source_location": "L186",
+      "source_location": "L271",
       "weight": 1.0,
       "_src": "index",
       "_tgt": "index_destroy",
@@ -2145,12 +2245,36 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/index.ts",
-      "source_location": "L439",
+      "source_location": "L483",
       "weight": 1.0,
       "_src": "index",
       "_tgt": "index_main",
       "source": "index",
       "target": "index_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/index.ts",
+      "source_location": "L60",
+      "weight": 1.0,
+      "_src": "index",
+      "_tgt": "index_sleep",
+      "source": "index",
+      "target": "index_sleep",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/mcp-server/src/index.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_src": "index",
+      "_tgt": "index_safetool",
+      "source": "index",
+      "target": "index_safetool",
       "confidence_score": 1.0
     },
     {
@@ -2175,6 +2299,18 @@
       "_tgt": "index_getconfig",
       "source": "index",
       "target": "index_getconfig",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/sdk-node/src/index.ts",
+      "source_location": "L182",
+      "weight": 1.0,
+      "_src": "index",
+      "_tgt": "index_defaultminlevel",
+      "source": "index",
+      "target": "index_defaultminlevel",
       "confidence_score": 1.0
     },
     {
@@ -2217,7 +2353,19 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L75",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_src": "index",
+      "_tgt": "index_mergefailedbatchintobuffer",
+      "source": "index",
+      "target": "index_mergefailedbatchintobuffer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/sdk-edge/src/index.ts",
+      "source_location": "L80",
       "weight": 1.0,
       "_src": "index",
       "_tgt": "index_flush",
@@ -2229,7 +2377,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L229",
+      "source_location": "L236",
       "weight": 1.0,
       "_src": "index",
       "_tgt": "index_wraphandler",
@@ -2265,7 +2413,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L116",
+      "source_location": "L123",
       "weight": 1.0,
       "_src": "index_track",
       "_tgt": "index_generateid",
@@ -2277,7 +2425,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L117",
+      "source_location": "L124",
       "weight": 1.0,
       "_src": "index_track",
       "_tgt": "index_generatespanid",
@@ -2289,7 +2437,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L125",
+      "source_location": "L132",
       "weight": 1.0,
       "_src": "index_track",
       "_tgt": "index_enqueue",
@@ -2300,8 +2448,20 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
+      "source_file": "packages/sdk-node/src/index.ts",
+      "source_location": "L205",
+      "weight": 1.0,
+      "_src": "index_log",
+      "_tgt": "index_defaultminlevel",
+      "source": "index_log",
+      "target": "index_defaultminlevel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L198",
+      "source_location": "L205",
       "weight": 1.0,
       "_src": "index_event",
       "_tgt": "index_enqueue",
@@ -2313,7 +2473,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L201",
+      "source_location": "L208",
       "weight": 1.0,
       "_src": "index_event",
       "_tgt": "index_generateid",
@@ -2325,7 +2485,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-edge/src/index.ts",
-      "source_location": "L202",
+      "source_location": "L209",
       "weight": 1.0,
       "_src": "index_event",
       "_tgt": "index_generatespanid",
@@ -2588,6 +2748,582 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_src": "resolver",
+      "_tgt": "resolver_getprojectrepo",
+      "source": "resolver",
+      "target": "resolver_getprojectrepo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_src": "resolver",
+      "_tgt": "resolver_authedurl",
+      "source": "resolver",
+      "target": "resolver_authedurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_src": "resolver",
+      "_tgt": "resolver_exists",
+      "source": "resolver",
+      "target": "resolver_exists",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_src": "resolver",
+      "_tgt": "resolver_run",
+      "source": "resolver",
+      "target": "resolver_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "_src": "resolver",
+      "_tgt": "resolver_prepareworktree",
+      "source": "resolver",
+      "target": "resolver_prepareworktree",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L110",
+      "weight": 1.0,
+      "_src": "resolver",
+      "_tgt": "resolver_commitandpush",
+      "source": "resolver",
+      "target": "resolver_commitandpush",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L125",
+      "weight": 1.0,
+      "_src": "resolver",
+      "_tgt": "resolver_cleanupworktree",
+      "source": "resolver",
+      "target": "resolver_cleanupworktree",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "_src": "resolver_prepareworktree",
+      "_tgt": "resolver_authedurl",
+      "source": "resolver_authedurl",
+      "target": "resolver_prepareworktree",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L78",
+      "weight": 1.0,
+      "_src": "resolver_prepareworktree",
+      "_tgt": "resolver_exists",
+      "source": "resolver_exists",
+      "target": "resolver_prepareworktree",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L84",
+      "weight": 1.0,
+      "_src": "resolver_prepareworktree",
+      "_tgt": "resolver_run",
+      "source": "resolver_run",
+      "target": "resolver_prepareworktree",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/resolver.ts",
+      "source_location": "L116",
+      "weight": 1.0,
+      "_src": "resolver_commitandpush",
+      "_tgt": "resolver_run",
+      "source": "resolver_run",
+      "target": "resolver_commitandpush",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/dedup.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_src": "dedup",
+      "_tgt": "dedup_hashsignature",
+      "source": "dedup",
+      "target": "dedup_hashsignature",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/dedup.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_src": "dedup",
+      "_tgt": "dedup_isincooldown",
+      "source": "dedup",
+      "target": "dedup_isincooldown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/dedup.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "_src": "dedup",
+      "_tgt": "dedup_recordattemptstart",
+      "source": "dedup",
+      "target": "dedup_recordattemptstart",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/dedup.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_src": "dedup",
+      "_tgt": "dedup_finalizeattempt",
+      "source": "dedup",
+      "target": "dedup_finalizeattempt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_src": "pr",
+      "_tgt": "pr_getoctokit",
+      "source": "pr",
+      "target": "pr_getoctokit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_src": "pr",
+      "_tgt": "pr_branchnamefor",
+      "source": "pr",
+      "target": "pr_branchnamefor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_src": "pr",
+      "_tgt": "pr_commitmessagefor",
+      "source": "pr",
+      "target": "pr_commitmessagefor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_src": "pr",
+      "_tgt": "pr_prbodyfor",
+      "source": "pr",
+      "target": "pr_prbodyfor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_src": "pr",
+      "_tgt": "pr_openpullrequest",
+      "source": "pr",
+      "target": "pr_openpullrequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_src": "pr_openpullrequest",
+      "_tgt": "pr_getoctokit",
+      "source": "pr_getoctokit",
+      "target": "pr_openpullrequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/pr.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_src": "pr_openpullrequest",
+      "_tgt": "pr_prbodyfor",
+      "source": "pr_prbodyfor",
+      "target": "pr_openpullrequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/context.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "_src": "context",
+      "_tgt": "context_gathertelemetrycontext",
+      "source": "context",
+      "target": "context_gathertelemetrycontext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/context.ts",
+      "source_location": "L141",
+      "weight": 1.0,
+      "_src": "context",
+      "_tgt": "context_formatcontextforprompt",
+      "source": "context",
+      "target": "context_formatcontextforprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/runner.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_src": "runner",
+      "_tgt": "runner_buildprompt",
+      "source": "runner",
+      "target": "runner_buildprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/runner.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "_src": "runner",
+      "_tgt": "runner_runagent",
+      "source": "runner",
+      "target": "runner_runagent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/runner.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_src": "runner_runagent",
+      "_tgt": "runner_buildprompt",
+      "source": "runner_buildprompt",
+      "target": "runner_runagent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_src": "notifier",
+      "_tgt": "notifier_getmailer",
+      "source": "notifier",
+      "target": "notifier_getmailer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_src": "notifier",
+      "_tgt": "notifier_postslack",
+      "source": "notifier",
+      "target": "notifier_postslack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_src": "notifier",
+      "_tgt": "notifier_notifysuccess",
+      "source": "notifier",
+      "target": "notifier_notifysuccess",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "_src": "notifier",
+      "_tgt": "notifier_notifyfailure",
+      "source": "notifier",
+      "target": "notifier_notifyfailure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L84",
+      "weight": 1.0,
+      "_src": "notifier_notifysuccess",
+      "_tgt": "notifier_getmailer",
+      "source": "notifier_getmailer",
+      "target": "notifier_notifysuccess",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L50",
+      "weight": 1.0,
+      "_src": "notifier_notifysuccess",
+      "_tgt": "notifier_postslack",
+      "source": "notifier_postslack",
+      "target": "notifier_notifysuccess",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/notifier.ts",
+      "source_location": "L111",
+      "weight": 1.0,
+      "_src": "notifier_notifyfailure",
+      "_tgt": "notifier_postslack",
+      "source": "notifier_postslack",
+      "target": "notifier_notifyfailure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/watcher.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_src": "watcher",
+      "_tgt": "watcher_findcandidatesignatures",
+      "source": "watcher",
+      "target": "watcher_findcandidatesignatures",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/env.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_src": "env",
+      "_tgt": "env_int",
+      "source": "env",
+      "target": "env_int",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/orchestrator.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_src": "orchestrator",
+      "_tgt": "orchestrator_runonecycle",
+      "source": "orchestrator",
+      "target": "orchestrator_runonecycle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/orchestrator.ts",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_src": "orchestrator",
+      "_tgt": "orchestrator_processsignature",
+      "source": "orchestrator",
+      "target": "orchestrator_processsignature",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/orchestrator.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_src": "orchestrator_runonecycle",
+      "_tgt": "orchestrator_processsignature",
+      "source": "orchestrator_runonecycle",
+      "target": "orchestrator_processsignature",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/collector/src/db/postgres.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_src": "postgres",
+      "_tgt": "pg",
+      "source": "postgres",
+      "target": "pg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/collector/src/db/postgres.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_src": "postgres",
+      "_tgt": "postgres_getpostgres",
+      "source": "postgres",
+      "target": "postgres_getpostgres",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/db/postgres.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_src": "postgres",
+      "_tgt": "postgres_bootstrapremedyschema",
+      "source": "postgres",
+      "target": "postgres_bootstrapremedyschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/collector/src/db/postgres.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_src": "postgres",
+      "_tgt": "postgres_bootstrappostgres",
+      "source": "postgres",
+      "target": "postgres_bootstrappostgres",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/remedy/src/db/postgres.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_src": "postgres_bootstrapremedyschema",
+      "_tgt": "postgres_getpostgres",
+      "source": "postgres_getpostgres",
+      "target": "postgres_bootstrapremedyschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/collector/src/db/postgres.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_src": "postgres_bootstrappostgres",
+      "_tgt": "postgres_getpostgres",
+      "source": "postgres_getpostgres",
+      "target": "postgres_bootstrappostgres",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/collector/src/db/clickhouse.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_src": "clickhouse",
+      "_tgt": "clickhouse_getclickhouse",
+      "source": "clickhouse",
+      "target": "clickhouse_getclickhouse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/collector/src/db/clickhouse.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_src": "clickhouse",
+      "_tgt": "clickhouse_initclickhouse",
+      "source": "clickhouse",
+      "target": "clickhouse_initclickhouse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/collector/src/db/clickhouse.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_src": "clickhouse_initclickhouse",
+      "_tgt": "clickhouse_getclickhouse",
+      "source": "clickhouse_getclickhouse",
+      "target": "clickhouse_initclickhouse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/config.ts",
       "source_location": "L10",
       "weight": 1.0,
@@ -2607,6 +3343,18 @@
       "_tgt": "config_extractvalue",
       "source": "config",
       "target": "config_extractvalue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/vscode-extension/src/config.ts",
+      "source_location": "L50",
+      "weight": 1.0,
+      "_src": "config",
+      "_tgt": "config_derivewsurl",
+      "source": "config",
+      "target": "config_derivewsurl",
       "confidence_score": 1.0
     },
     {
@@ -2655,6 +3403,18 @@
       "_tgt": "config_extractvalue",
       "source": "config_loadconfig",
       "target": "config_extractvalue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/vscode-extension/src/config.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_src": "config_loadconfig",
+      "_tgt": "config_derivewsurl",
+      "source": "config_loadconfig",
+      "target": "config_derivewsurl",
       "confidence_score": 1.0
     },
     {
@@ -2733,7 +3493,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/decorations.ts",
-      "source_location": "L23",
+      "source_location": "L35",
       "weight": 1.0,
       "_src": "decorations",
       "_tgt": "decorations_applydecorations",
@@ -2745,7 +3505,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/decorations.ts",
-      "source_location": "L78",
+      "source_location": "L108",
       "weight": 1.0,
       "_src": "decorations",
       "_tgt": "decorations_cleardecorations",
@@ -2829,7 +3589,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L324",
+      "source_location": "L387",
       "weight": 1.0,
       "_src": "extension",
       "_tgt": "extension_snaplinetofunction",
@@ -2841,7 +3601,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L368",
+      "source_location": "L431",
       "weight": 1.0,
       "_src": "extension",
       "_tgt": "extension_simplifyua",
@@ -2853,7 +3613,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L408",
+      "source_location": "L471",
       "weight": 1.0,
       "_src": "extension",
       "_tgt": "extension_runcodeintelcommand",
@@ -2865,7 +3625,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L475",
+      "source_location": "L538",
       "weight": 1.0,
       "_src": "extension",
       "_tgt": "extension_codeintelshell",
@@ -2877,7 +3637,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L673",
+      "source_location": "L736",
       "weight": 1.0,
       "_src": "extension",
       "_tgt": "extension_renderintelmarkdown",
@@ -2889,7 +3649,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L719",
+      "source_location": "L782",
       "weight": 1.0,
       "_src": "extension",
       "_tgt": "extension_resolveinteltag",
@@ -2901,7 +3661,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L742",
+      "source_location": "L805",
       "weight": 1.0,
       "_src": "extension",
       "_tgt": "extension_renderintelbody",
@@ -2913,7 +3673,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L788",
+      "source_location": "L851",
       "weight": 1.0,
       "_src": "extension",
       "_tgt": "extension_applyinlineintel",
@@ -2925,7 +3685,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L795",
+      "source_location": "L858",
       "weight": 1.0,
       "_src": "extension",
       "_tgt": "extension_escapehtmlintel",
@@ -2937,7 +3697,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L803",
+      "source_location": "L866",
       "weight": 1.0,
       "_src": "extension",
       "_tgt": "extension_deactivate",
@@ -2985,7 +3745,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L230",
+      "source_location": "L232",
       "weight": 1.0,
       "_src": "extension_refresheditor",
       "_tgt": "extension_snaplinetofunction",
@@ -2997,7 +3757,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L264",
+      "source_location": "L266",
       "weight": 1.0,
       "_src": "extension_refresheditor",
       "_tgt": "extension_simplifyua",
@@ -3009,7 +3769,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L444",
+      "source_location": "L507",
       "weight": 1.0,
       "_src": "extension_runcodeintelcommand",
       "_tgt": "extension_escapehtmlintel",
@@ -3021,7 +3781,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L464",
+      "source_location": "L527",
       "weight": 1.0,
       "_src": "extension_runcodeintelcommand",
       "_tgt": "extension_renderintelmarkdown",
@@ -3033,7 +3793,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L663",
+      "source_location": "L726",
       "weight": 1.0,
       "_src": "extension_codeintelshell",
       "_tgt": "extension_escapehtmlintel",
@@ -3045,7 +3805,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L679",
+      "source_location": "L742",
       "weight": 1.0,
       "_src": "extension_renderintelmarkdown",
       "_tgt": "extension_renderintelbody",
@@ -3057,7 +3817,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L709",
+      "source_location": "L772",
       "weight": 1.0,
       "_src": "extension_renderintelmarkdown",
       "_tgt": "extension_resolveinteltag",
@@ -3069,7 +3829,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L711",
+      "source_location": "L774",
       "weight": 1.0,
       "_src": "extension_renderintelmarkdown",
       "_tgt": "extension_escapehtmlintel",
@@ -3081,7 +3841,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L743",
+      "source_location": "L806",
       "weight": 1.0,
       "_src": "extension_renderintelbody",
       "_tgt": "extension_escapehtmlintel",
@@ -3093,7 +3853,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/extension.ts",
-      "source_location": "L772",
+      "source_location": "L835",
       "weight": 1.0,
       "_src": "extension_renderintelbody",
       "_tgt": "extension_applyinlineintel",
@@ -3633,7 +4393,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_src": "websocket_client_websocketclient",
       "_tgt": "websocket_client_websocketclient_constructor",
@@ -3645,7 +4405,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0,
       "_src": "websocket_client_websocketclient",
       "_tgt": "websocket_client_websocketclient_connect",
@@ -3657,7 +4417,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
-      "source_location": "L54",
+      "source_location": "L75",
       "weight": 1.0,
       "_src": "websocket_client_websocketclient",
       "_tgt": "websocket_client_websocketclient_onevent",
@@ -3669,7 +4429,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
-      "source_location": "L58",
+      "source_location": "L79",
       "weight": 1.0,
       "_src": "websocket_client_websocketclient",
       "_tgt": "websocket_client_websocketclient_disconnect",
@@ -3681,7 +4441,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/vscode-extension/src/websocket-client.ts",
-      "source_location": "L69",
+      "source_location": "L98",
       "weight": 1.0,
       "_src": "websocket_client_websocketclient",
       "_tgt": "websocket_client_websocketclient_schedulereconnect",
@@ -3756,6 +4516,18 @@
       "source_location": "L40",
       "weight": 1.0,
       "_src": "api_client_apiclient",
+      "_tgt": "api_client_apiclient_getlogsatline",
+      "source": "api_client_apiclient",
+      "target": "api_client_apiclient_getlogsatline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/mcp-server/src/api-client.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_getslowqueries",
       "source": "api_client_apiclient",
       "target": "api_client_apiclient_getslowqueries",
@@ -3765,7 +4537,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L44",
+      "source_location": "L53",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_getaiinsight",
@@ -3777,7 +4549,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L52",
+      "source_location": "L61",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_getlivesessions",
@@ -3789,7 +4561,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L56",
+      "source_location": "L65",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_gettrace",
@@ -3801,7 +4573,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L60",
+      "source_location": "L69",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_gethotpaths",
@@ -3813,7 +4585,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L64",
+      "source_location": "L73",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_comparedeploys",
@@ -3825,7 +4597,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L70",
+      "source_location": "L79",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_getfunctiontrend",
@@ -3837,7 +4609,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L74",
+      "source_location": "L83",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_geterrortrends",
@@ -3849,7 +4621,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L78",
+      "source_location": "L87",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_getquerytrends",
@@ -3861,7 +4633,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L82",
+      "source_location": "L91",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_gettimeofdaypattern",
@@ -3873,7 +4645,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L86",
+      "source_location": "L95",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_getweekdayweekendpattern",
@@ -3885,7 +4657,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L90",
+      "source_location": "L99",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_compareperiods",
@@ -3897,7 +4669,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L103",
+      "source_location": "L112",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_getanalysis",
@@ -3909,7 +4681,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L107",
+      "source_location": "L116",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_triggeranalysis",
@@ -3921,7 +4693,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L126",
+      "source_location": "L135",
       "weight": 1.0,
       "_src": "api_client_apiclient",
       "_tgt": "api_client_apiclient_runcodeintel",
@@ -3957,7 +4729,19 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L41",
+      "source_location": "L46",
+      "weight": 1.0,
+      "_src": "api_client_apiclient_getlogsatline",
+      "_tgt": "api_client_apiclient_get",
+      "source": "api_client_apiclient_get",
+      "target": "api_client_apiclient_getlogsatline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/mcp-server/src/api-client.ts",
+      "source_location": "L50",
       "weight": 1.0,
       "_src": "api_client_apiclient_getslowqueries",
       "_tgt": "api_client_apiclient_get",
@@ -3969,7 +4753,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L49",
+      "source_location": "L58",
       "weight": 1.0,
       "_src": "api_client_apiclient_getaiinsight",
       "_tgt": "api_client_apiclient_get",
@@ -3981,7 +4765,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L53",
+      "source_location": "L62",
       "weight": 1.0,
       "_src": "api_client_apiclient_getlivesessions",
       "_tgt": "api_client_apiclient_get",
@@ -3993,7 +4777,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L57",
+      "source_location": "L66",
       "weight": 1.0,
       "_src": "api_client_apiclient_gettrace",
       "_tgt": "api_client_apiclient_get",
@@ -4005,7 +4789,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L61",
+      "source_location": "L70",
       "weight": 1.0,
       "_src": "api_client_apiclient_gethotpaths",
       "_tgt": "api_client_apiclient_get",
@@ -4017,7 +4801,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L65",
+      "source_location": "L74",
       "weight": 1.0,
       "_src": "api_client_apiclient_comparedeploys",
       "_tgt": "api_client_apiclient_get",
@@ -4029,7 +4813,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L71",
+      "source_location": "L80",
       "weight": 1.0,
       "_src": "api_client_apiclient_getfunctiontrend",
       "_tgt": "api_client_apiclient_get",
@@ -4041,7 +4825,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L75",
+      "source_location": "L84",
       "weight": 1.0,
       "_src": "api_client_apiclient_geterrortrends",
       "_tgt": "api_client_apiclient_get",
@@ -4053,7 +4837,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L79",
+      "source_location": "L88",
       "weight": 1.0,
       "_src": "api_client_apiclient_getquerytrends",
       "_tgt": "api_client_apiclient_get",
@@ -4065,7 +4849,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L83",
+      "source_location": "L92",
       "weight": 1.0,
       "_src": "api_client_apiclient_gettimeofdaypattern",
       "_tgt": "api_client_apiclient_get",
@@ -4077,7 +4861,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L87",
+      "source_location": "L96",
       "weight": 1.0,
       "_src": "api_client_apiclient_getweekdayweekendpattern",
       "_tgt": "api_client_apiclient_get",
@@ -4089,7 +4873,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L98",
+      "source_location": "L107",
       "weight": 1.0,
       "_src": "api_client_apiclient_compareperiods",
       "_tgt": "api_client_apiclient_get",
@@ -4101,7 +4885,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp-server/src/api-client.ts",
-      "source_location": "L104",
+      "source_location": "L113",
       "weight": 1.0,
       "_src": "api_client_apiclient_getanalysis",
       "_tgt": "api_client_apiclient_get",
@@ -4125,7 +4909,7 @@
       "relation": "imports_from",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-node/src/middleware/express.ts",
-      "source_location": "L1",
+      "source_location": "L2",
       "weight": 1.0,
       "_src": "express",
       "_tgt": "express",
@@ -4137,7 +4921,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-node/src/middleware/express.ts",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "_src": "express",
       "_tgt": "express_prodscopemiddleware",
@@ -4230,18 +5014,6 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "imports_from",
-      "confidence": "EXTRACTED",
-      "source_file": "packages/collector/src/db/postgres.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "_src": "postgres",
-      "_tgt": "pg",
-      "source": "pg",
-      "target": "postgres",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "packages/sdk-node/src/middleware/pg.ts",
@@ -4251,6 +5023,18 @@
       "_tgt": "pg_parsesql",
       "source": "pg_patchpg",
       "target": "pg_parsesql",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/sdk-edge/src/index.ts",
+      "source_location": "L103",
+      "weight": 1.0,
+      "_src": "index_flush",
+      "_tgt": "index_mergefailedbatchintobuffer",
+      "source": "index_mergefailedbatchintobuffer",
+      "target": "index_flush",
       "confidence_score": 1.0
     },
     {
@@ -4353,7 +5137,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/collector/src/routes/api.ts",
-      "source_location": "L272",
+      "source_location": "L310",
       "weight": 1.0,
       "_src": "api",
       "_tgt": "api_getdeploystats",
@@ -4443,78 +5227,6 @@
       "_tgt": "login_login",
       "source": "login",
       "target": "login_login",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "packages/collector/src/db/postgres.ts",
-      "source_location": "L8",
-      "weight": 1.0,
-      "_src": "postgres",
-      "_tgt": "postgres_getpostgres",
-      "source": "postgres",
-      "target": "postgres_getpostgres",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "packages/collector/src/db/postgres.ts",
-      "source_location": "L16",
-      "weight": 1.0,
-      "_src": "postgres",
-      "_tgt": "postgres_bootstrappostgres",
-      "source": "postgres",
-      "target": "postgres_bootstrappostgres",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "source_file": "packages/collector/src/db/postgres.ts",
-      "source_location": "L17",
-      "weight": 1.0,
-      "_src": "postgres_bootstrappostgres",
-      "_tgt": "postgres_getpostgres",
-      "source": "postgres_getpostgres",
-      "target": "postgres_bootstrappostgres",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "packages/collector/src/db/clickhouse.ts",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_src": "clickhouse",
-      "_tgt": "clickhouse_getclickhouse",
-      "source": "clickhouse",
-      "target": "clickhouse_getclickhouse",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "packages/collector/src/db/clickhouse.ts",
-      "source_location": "L16",
-      "weight": 1.0,
-      "_src": "clickhouse",
-      "_tgt": "clickhouse_initclickhouse",
-      "source": "clickhouse",
-      "target": "clickhouse_initclickhouse",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "source_file": "packages/collector/src/db/clickhouse.ts",
-      "source_location": "L24",
-      "weight": 1.0,
-      "_src": "clickhouse_initclickhouse",
-      "_tgt": "clickhouse_getclickhouse",
-      "source": "clickhouse_getclickhouse",
-      "target": "clickhouse_initclickhouse",
       "confidence_score": 1.0
     },
     {
@@ -4617,7 +5329,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/collector/src/services/websocket.ts",
-      "source_location": "L12",
+      "source_location": "L17",
       "weight": 1.0,
       "_src": "websocket",
       "_tgt": "websocket_setupwebsocket",
@@ -4629,7 +5341,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/collector/src/services/websocket.ts",
-      "source_location": "L56",
+      "source_location": "L85",
       "weight": 1.0,
       "_src": "websocket",
       "_tgt": "websocket_broadcast",
@@ -5068,457 +5780,7 @@
       "source": "ai_analysis_getdeployimpact",
       "target": "ai_analysis_runanalysis",
       "confidence_score": 1.0
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_prodscope",
-      "_tgt": "readme_developer_observability",
-      "source": "readme_prodscope",
-      "target": "readme_developer_observability"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_prodscope",
-      "_tgt": "readme_pkg_collector",
-      "source": "readme_prodscope",
-      "target": "readme_pkg_collector"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_prodscope",
-      "_tgt": "readme_pkg_sdk_browser",
-      "source": "readme_prodscope",
-      "target": "readme_pkg_sdk_browser"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_prodscope",
-      "_tgt": "readme_pkg_sdk_node",
-      "source": "readme_prodscope",
-      "target": "readme_pkg_sdk_node"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_prodscope",
-      "_tgt": "readme_pkg_sdk_edge",
-      "source": "readme_prodscope",
-      "target": "readme_pkg_sdk_edge"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_prodscope",
-      "_tgt": "readme_pkg_mcp_server",
-      "source": "readme_prodscope",
-      "target": "readme_pkg_mcp_server"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_prodscope",
-      "_tgt": "readme_pkg_vscode_extension",
-      "source": "readme_prodscope",
-      "target": "readme_pkg_vscode_extension"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_prodscope",
-      "_tgt": "readme_pkg_dashboard",
-      "source": "readme_prodscope",
-      "target": "readme_pkg_dashboard"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_prodscope",
-      "_tgt": "readme_pkg_website",
-      "source": "readme_prodscope",
-      "target": "readme_pkg_website"
-    },
-    {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_collector",
-      "_tgt": "readme_express",
-      "source": "readme_pkg_collector",
-      "target": "readme_express"
-    },
-    {
-      "relation": "shares_data_with",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_collector",
-      "_tgt": "readme_clickhouse",
-      "source": "readme_pkg_collector",
-      "target": "readme_clickhouse"
-    },
-    {
-      "relation": "shares_data_with",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_collector",
-      "_tgt": "readme_postgresql",
-      "source": "readme_pkg_collector",
-      "target": "readme_postgresql"
-    },
-    {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_collector",
-      "_tgt": "readme_ingest_endpoint",
-      "source": "readme_pkg_collector",
-      "target": "readme_ingest_endpoint"
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_sdk_browser",
-      "_tgt": "readme_ingest_endpoint",
-      "source": "readme_pkg_sdk_browser",
-      "target": "readme_ingest_endpoint"
-    },
-    {
-      "relation": "semantically_similar_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_sdk_browser",
-      "_tgt": "readme_pkg_sdk_node",
-      "source": "readme_pkg_sdk_browser",
-      "target": "readme_pkg_sdk_node"
-    },
-    {
-      "relation": "semantically_similar_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_sdk_browser",
-      "_tgt": "readme_pkg_sdk_edge",
-      "source": "readme_pkg_sdk_browser",
-      "target": "readme_pkg_sdk_edge"
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_sdk_node",
-      "_tgt": "readme_ingest_endpoint",
-      "source": "readme_pkg_sdk_node",
-      "target": "readme_ingest_endpoint"
-    },
-    {
-      "relation": "semantically_similar_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_sdk_node",
-      "_tgt": "readme_pkg_sdk_edge",
-      "source": "readme_pkg_sdk_node",
-      "target": "readme_pkg_sdk_edge"
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_sdk_edge",
-      "_tgt": "readme_ingest_endpoint",
-      "source": "readme_pkg_sdk_edge",
-      "target": "readme_ingest_endpoint"
-    },
-    {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_mcp_server",
-      "_tgt": "readme_claude_ai_tools",
-      "source": "readme_pkg_mcp_server",
-      "target": "readme_claude_ai_tools"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "packages/website/public/claude-color.svg",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "website_claude_color",
-      "_tgt": "readme_pkg_mcp_server",
-      "source": "readme_pkg_mcp_server",
-      "target": "website_claude_color"
-    },
-    {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_vscode_extension",
-      "_tgt": "readme_codelens",
-      "source": "readme_pkg_vscode_extension",
-      "target": "readme_codelens"
-    },
-    {
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_vscode_extension",
-      "_tgt": "icon_vscode_svg",
-      "source": "readme_pkg_vscode_extension",
-      "target": "icon_vscode_svg"
-    },
-    {
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_pkg_website",
-      "_tgt": "website_logo",
-      "source": "readme_pkg_website",
-      "target": "website_logo"
-    },
-    {
-      "relation": "semantically_similar_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.9,
-      "source_file": "packages/vscode-extension/icon.svg",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "icon_vscode_svg",
-      "_tgt": "icon_vscode_png",
-      "source": "icon_vscode_png",
-      "target": "icon_vscode_svg"
-    },
-    {
-      "relation": "implements",
-      "confidence": "INFERRED",
-      "confidence_score": 0.9,
-      "source_file": "packages/vscode-extension/icon.svg",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "icon_vscode_svg",
-      "_tgt": "concept_lighthouse_brand",
-      "source": "icon_vscode_svg",
-      "target": "concept_lighthouse_brand"
-    },
-    {
-      "relation": "implements",
-      "confidence": "INFERRED",
-      "confidence_score": 0.9,
-      "source_file": "packages/vscode-extension/resources/activity-icon.svg",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "icon_activity_svg",
-      "_tgt": "concept_lighthouse_brand",
-      "source": "icon_activity_svg",
-      "target": "concept_lighthouse_brand"
-    },
-    {
-      "relation": "implements",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "packages/website/public/favicon-old.svg",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "website_favicon_old",
-      "_tgt": "concept_lighthouse_brand",
-      "source": "website_favicon_old",
-      "target": "concept_lighthouse_brand"
-    },
-    {
-      "relation": "semantically_similar_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "packages/website/public/favicon-old.svg",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "website_favicon_old",
-      "_tgt": "website_favicon",
-      "source": "website_favicon_old",
-      "target": "website_favicon"
-    },
-    {
-      "relation": "implements",
-      "confidence": "INFERRED",
-      "confidence_score": 0.9,
-      "source_file": "packages/website/public/favicon.svg",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "website_favicon",
-      "_tgt": "concept_lighthouse_brand",
-      "source": "website_favicon",
-      "target": "concept_lighthouse_brand"
-    },
-    {
-      "relation": "implements",
-      "confidence": "INFERRED",
-      "confidence_score": 0.9,
-      "source_file": "packages/website/public/logo-outline.svg",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "website_logo_outline",
-      "_tgt": "concept_lighthouse_brand",
-      "source": "website_logo_outline",
-      "target": "concept_lighthouse_brand"
-    },
-    {
-      "relation": "semantically_similar_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "packages/website/public/logo-outline.svg",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "website_logo_outline",
-      "_tgt": "website_logo_outline_white",
-      "source": "website_logo_outline",
-      "target": "website_logo_outline_white"
-    },
-    {
-      "relation": "implements",
-      "confidence": "INFERRED",
-      "confidence_score": 0.9,
-      "source_file": "packages/website/public/logo-outline-white.svg",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "website_logo_outline_white",
-      "_tgt": "concept_lighthouse_brand",
-      "source": "website_logo_outline_white",
-      "target": "concept_lighthouse_brand"
-    },
-    {
-      "relation": "implements",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "packages/website/public/logo.svg",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "website_logo",
-      "_tgt": "concept_lighthouse_brand",
-      "source": "website_logo",
-      "target": "concept_lighthouse_brand"
     }
   ],
-  "hyperedges": [
-    {
-      "id": "sdk_family_ingest",
-      "label": "SDK family ingests via /v1/ingest",
-      "nodes": [
-        "readme_pkg_sdk_browser",
-        "readme_pkg_sdk_node",
-        "readme_pkg_sdk_edge",
-        "readme_ingest_endpoint"
-      ],
-      "relation": "participate_in",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md"
-    },
-    {
-      "id": "collector_storage_stack",
-      "label": "Collector storage stack",
-      "nodes": [
-        "readme_pkg_collector",
-        "readme_clickhouse",
-        "readme_postgresql"
-      ],
-      "relation": "form",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md"
-    },
-    {
-      "id": "lighthouse_brand_assets",
-      "label": "Lighthouse brand asset family",
-      "nodes": [
-        "icon_vscode_svg",
-        "icon_activity_svg",
-        "website_logo",
-        "website_favicon"
-      ],
-      "relation": "implement",
-      "confidence": "INFERRED",
-      "confidence_score": 0.9,
-      "source_file": "packages/website/public/logo.svg"
-    }
-  ]
+  "hyperedges": []
 }

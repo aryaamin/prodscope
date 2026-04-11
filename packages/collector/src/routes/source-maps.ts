@@ -5,7 +5,7 @@ const router: ReturnType<typeof Router> = Router();
 
 /** Upload a source map for a project. */
 router.post("/v1/source-maps", async (req: Request, res: Response) => {
-  const projectId = (req as any).projectId as string;
+  const projectId = req.projectId!;
   const { fileName, mapData, gitSha } = req.body;
 
   if (!fileName || !mapData) {

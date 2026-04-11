@@ -29,7 +29,7 @@ export async function apiKeyAuth(
     return;
   }
 
-  (req as any).projectId = result.rows[0].id;
-  (req as any).projectName = result.rows[0].name;
+  req.projectId = result.rows[0].id;
+  req.projectName = result.rows[0].name;
   next();
 }

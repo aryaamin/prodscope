@@ -74,7 +74,9 @@ export function setupWebSocket(server: Server): WebSocketServer {
     }
   }, HEARTBEAT_INTERVAL_MS);
 
-  wss.on("close", () => clearInterval(heartbeat));
+  const stopHeartbeat = () => clearInterval(heartbeat);
+  wss.on("close", stopHeartbeat);
+  server.on("close", stopHeartbeat);
 
   return wss;
 }

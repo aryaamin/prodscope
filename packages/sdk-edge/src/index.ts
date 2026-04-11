@@ -71,6 +71,11 @@ function enqueue(batch: IngestBatch): void {
   if (batch.errors) _batch.errors = (_batch.errors ?? []).concat(batch.errors);
 }
 
+function mergeFailedBatchIntoBuffer(batch: IngestBatch): void {
+  if (batch.spans?.length) _batch.spans = batch.spans.concat(_batch.spans ?? []);
+  if (batch.errors?.length) _batch.errors = batch.errors.concat(_batch.errors ?? []);
+}
+
 /** Flush all buffered events to the collector. Call at the end of your edge function. */
 export async function flush(): Promise<void> {
   if (!_config) return;
@@ -95,9 +100,11 @@ export async function flush(): Promise<void> {
     if (!res.ok) {
       const msg = `ProdScope flush failed: ${res.status} ${res.statusText}`;
       (_config.onError ?? console.error)(msg);
+      mergeFailedBatchIntoBuffer(batch);
     }
   } catch (err) {
     (_config.onError ?? console.error)(err);
+    mergeFailedBatchIntoBuffer(batch);
   }
 }
 

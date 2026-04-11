@@ -8,6 +8,13 @@
       name="description"
       content="The first AI-native observability tool. Claude reads your live production telemetry and tells you exactly what's broken, why, and how to fix it — inside VS Code. Free for all developers."
     />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta property="og:title" content="ProdScopeAI — AI-native observability for your code" />
+    <meta
+      property="og:description"
+      content="Production errors, latency, and sessions mapped to file:line in VS Code — plus an MCP server so your agent debugs with real telemetry."
+    />
+    <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,9 +25,10 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="bg-grid"></div>
     <!-- NAV -->
-    <nav>
+    <nav aria-label="Primary">
       <div class="nav-inner">
         <a href="/" class="brand">
           <img
@@ -31,7 +39,21 @@
           <span class="brand-text">prodscope<span class="brand-ai">AI</span></span>
         </a>
 
-        <div class="nav-links">
+        <button
+          type="button"
+          class="nav-menu-btn"
+          id="nav-menu-toggle"
+          aria-expanded="false"
+          aria-controls="site-nav-links"
+          aria-label="Open menu"
+        >
+          <span class="visually-hidden">Open menu</span>
+          <span class="nav-menu-icon" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+        </button>
+
+        <div class="nav-links" id="site-nav-links">
           <a href="#why">Why?</a>
           <a href="#ai">AI</a>
           <!-- <a href="#how">Quick start</a> -->
@@ -44,17 +66,17 @@
       </div>
     </nav>
 
+    <main id="main">
     <!-- HERO -->
     <section class="hero">
       <p class="hero-tag">
-        <span>&gt;</span> the autonomous ai observability platform
+        <span>&gt;</span> the autonomous AI observability platform
       </p>
       <h1>Make your code see how it performs in production.</h1>
       <p class="hero-sub">
-        ProdScopeAI build AI tools which reads your
-        live telemetry and writes the fix. Get instantly actionable code 
-        intelligence tied to the exact line you&rsquo;re editing 
-        &mdash; plus a powerful MCP server so your coding agent 
+        ProdScopeAI builds tools that read your live telemetry and suggest
+        concrete fixes. Get actionable code intelligence on the exact line
+        you&rsquo;re editing &mdash; plus an MCP server so your coding agent
         debugs with real production data, not guesses.
       </p>
       <div class="hero-actions">
@@ -82,7 +104,8 @@
             />
           </filter>
         </defs>
-      </svg>      <!-- HERO PROMPT STRIP — sample questions you ask Claude -->
+      </svg>
+      <!-- HERO PROMPT STRIP — sample questions you ask Claude -->
       <div class="hero-prompts">
         <span class="hero-prompts-label">ask anything &rarr;</span>
         <div class="hero-prompts-list">
@@ -1488,6 +1511,8 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
       </div>
     </section>
 
+    </main>
+
     <!-- FOOTER -->
     <footer>
       <div class="footer-inner">
@@ -1531,6 +1556,43 @@ prisma.<span class="fn">$use</span>(<span class="fn">prismaMiddleware</span>())<
     </footer>
 
     <script>
+      (function () {
+        var nav = document.querySelector("nav[aria-label=\"Primary\"]");
+        var btn = document.getElementById("nav-menu-toggle");
+        var panel = document.getElementById("site-nav-links");
+        if (!nav || !btn || !panel) return;
+
+        function setOpen(open) {
+          nav.classList.toggle("nav--open", open);
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+          btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+          var hidden = btn.querySelector(".visually-hidden");
+          if (hidden) hidden.textContent = open ? "Close menu" : "Open menu";
+        }
+
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          setOpen(!nav.classList.contains("nav--open"));
+        });
+
+        panel.querySelectorAll("a").forEach(function (a) {
+          a.addEventListener("click", function () {
+            setOpen(false);
+          });
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && nav.classList.contains("nav--open")) {
+            setOpen(false);
+            btn.focus();
+          }
+        });
+
+        document.addEventListener("click", function (e) {
+          if (!nav.contains(e.target)) setOpen(false);
+        });
+      })();
+
       const logos = {
         vscode: new Image(),
         claude: new Image(),

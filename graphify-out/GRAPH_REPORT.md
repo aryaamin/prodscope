@@ -1,220 +1,248 @@
-# Graph Report - .  (2026-04-11)
+# Graph Report - .  (2026-04-12)
 
 ## Corpus Check
-- Corpus is ~32,134 words - fits in a single context window. You may not need a graph.
+- 71 files · ~39,051 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 226 nodes · 293 edges · 35 communities detected
-- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 16 edges (avg confidence: 0.87)
+- 248 nodes · 316 edges · 44 communities detected
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## God Nodes (most connected - your core abstractions)
-1. `ApiClient` - 20 edges
+1. `ApiClient` - 21 edges
 2. `InsightPanelProvider` - 14 edges
-3. `ProdScope` - 9 edges
+3. `Transport` - 8 edges
 4. `runAnalysis()` - 8 edges
-5. `Lighthouse Brand Mark` - 7 edges
-6. `Transport` - 6 edges
-7. `WebSocketClient` - 6 edges
-8. `runCodeIntel()` - 6 edges
-9. `refreshEditor()` - 5 edges
-10. `renderIntelMarkdown()` - 5 edges
+5. `WebSocketClient` - 6 edges
+6. `runCodeIntel()` - 6 edges
+7. `refreshEditor()` - 5 edges
+8. `renderIntelMarkdown()` - 5 edges
+9. `escapeHtmlIntel()` - 5 edges
+10. `escapeHtml()` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Claude Color Logo` --conceptually_related_to--> `@prodscope/mcp-server`  [INFERRED]
-  packages/website/public/claude-color.svg → README.md
-- `prodscope-vscode` --references--> `VS Code Extension Icon (SVG) - Lighthouse Mark`  [INFERRED]
-  README.md → packages/vscode-extension/icon.svg
-- `@prodscope/website` --references--> `Website Logo (Color Lighthouse)`  [INFERRED]
-  README.md → packages/website/public/logo.svg
-- `VS Code Extension Icon (SVG) - Lighthouse Mark` --semantically_similar_to--> `VS Code Extension Icon (PNG)`  [INFERRED] [semantically similar]
-  packages/vscode-extension/icon.svg → packages/vscode-extension/icon.png
-- `VS Code Activity Bar Icon - Lighthouse Outline` --implements--> `Lighthouse Brand Mark`  [INFERRED]
-  packages/vscode-extension/resources/activity-icon.svg → packages/website/public/logo.svg
-
-## Hyperedges (group relationships)
-- **SDK family ingests via /v1/ingest** — readme_pkg_sdk_browser, readme_pkg_sdk_node, readme_pkg_sdk_edge, readme_ingest_endpoint [EXTRACTED 1.00]
-- **Collector storage stack** — readme_pkg_collector, readme_clickhouse, readme_postgresql [EXTRACTED 1.00]
-- **Lighthouse brand asset family** — icon_vscode_svg, icon_activity_svg, website_logo, website_favicon [INFERRED 0.90]
+- `getSessionId()` --calls--> `generateId()`  [EXTRACTED]
+  packages/sdk-browser/src/utils.ts → packages/sdk-node/src/utils.ts
+- `parseFrame()` --calls--> `cleanBrowserPath()`  [EXTRACTED]
+  packages/sdk-node/src/callsite.ts → packages/sdk-browser/src/callsite.ts
+- `bootstrapRemedySchema()` --calls--> `getPostgres()`  [EXTRACTED]
+  packages/remedy/src/db/postgres.ts → packages/collector/src/db/postgres.ts
+- `loadConfig()` --calls--> `deriveWsUrl()`  [EXTRACTED]
+  packages/mcp-server/src/config.ts → packages/vscode-extension/src/config.ts
 
 ## Communities
 
-### Community 0 - "Branding & Product Concept"
-Cohesion: 0.1
-Nodes (26): Lighthouse Brand Mark, VS Code Activity Bar Icon - Lighthouse Outline, VS Code Extension Icon (PNG), VS Code Extension Icon (SVG) - Lighthouse Mark, Claude AI Tools (MCP), ClickHouse, CodeLens & Inline Decorations, Developer Observability Platform (+18 more)
-
-### Community 1 - "VSCode Insight Panel"
+### Community 0 - "Community 0"
 Cohesion: 0.19
 Nodes (7): applyInline(), escapeHtml(), fmtNum(), InsightPanelProvider, renderBodyContent(), renderInsightSections(), renderMarkdownPlain()
 
-### Community 2 - "VSCode API Client"
-Cohesion: 0.17
+### Community 1 - "Community 1"
+Cohesion: 0.16
 Nodes (1): ApiClient
 
-### Community 3 - "VSCode Extension Entry & Decorations"
+### Community 2 - "Community 2"
+Cohesion: 0.15
+Nodes (9): defaultMinLevel(), enqueue(), event(), flush(), generateId(), generateSpanId(), log(), mergeFailedBatchIntoBuffer() (+1 more)
+
+### Community 3 - "Community 3"
 Cohesion: 0.21
 Nodes (12): activate(), applyInlineIntel(), codeIntelShell(), escapeHtmlIntel(), refreshEditor(), renderIntelBody(), renderIntelMarkdown(), resolveIntelTag() (+4 more)
 
-### Community 4 - "Backend API & Auth"
+### Community 4 - "Community 4"
 Cohesion: 0.12
 Nodes (0): 
 
-### Community 5 - "SDK Core Tracking"
-Cohesion: 0.21
-Nodes (5): enqueue(), event(), generateId(), generateSpanId(), track()
-
-### Community 6 - "Config & WebSocket Client"
+### Community 5 - "Community 5"
 Cohesion: 0.22
-Nodes (3): extractValue(), loadConfig(), WebSocketClient
+Nodes (4): deriveWsUrl(), extractValue(), loadConfig(), WebSocketClient
 
-### Community 7 - "AI Analysis (Backend)"
+### Community 6 - "Community 6"
+Cohesion: 0.31
+Nodes (1): Transport
+
+### Community 7 - "Community 7"
 Cohesion: 0.42
 Nodes (8): getAnthropic(), getBaselineVsCurrent(), getDeployImpact(), getHourlyPatterns(), getQueryPerformanceTrends(), getRecentErrorSpikes(), getWeekOverWeekTrends(), runAnalysis()
 
-### Community 8 - "SDK Transport Layer"
-Cohesion: 0.29
-Nodes (1): Transport
+### Community 8 - "Community 8"
+Cohesion: 0.39
+Nodes (5): authedUrl(), commitAndPush(), exists(), prepareWorktree(), run()
 
-### Community 9 - "Vite Plugin Auto-Instrumentation"
+### Community 9 - "Community 9"
 Cohesion: 0.43
 Nodes (4): prodscope(), prodscopeAutoTrack(), prodscopeSourceMaps(), prodscopeTransform()
 
-### Community 10 - "AI Code Intelligence"
+### Community 10 - "Community 10"
+Cohesion: 0.43
+Nodes (5): parseSQL(), patchPg(), bootstrapPostgres(), bootstrapRemedySchema(), getPostgres()
+
+### Community 11 - "Community 11"
 Cohesion: 0.52
 Nodes (6): getAnthropic(), getDeployComparison(), getFunctionDetail(), getWorstFunctions(), runCodeIntel(), traceSymptomToCode()
 
-### Community 11 - "Postgres Instrumentation"
+### Community 12 - "Community 12"
 Cohesion: 0.47
-Nodes (4): parseSQL(), patchPg(), bootstrapPostgres(), getPostgres()
+Nodes (3): getOctokit(), openPullRequest(), prBodyFor()
 
-### Community 12 - "SDK Utilities"
+### Community 13 - "Community 13"
 Cohesion: 0.5
 Nodes (2): generateId(), getSessionId()
 
-### Community 13 - "VSCode CodeLens Provider"
+### Community 14 - "Community 14"
+Cohesion: 0.4
+Nodes (0): 
+
+### Community 15 - "Community 15"
+Cohesion: 0.7
+Nodes (4): getMailer(), notifyFailure(), notifySuccess(), postSlack()
+
+### Community 16 - "Community 16"
 Cohesion: 0.5
 Nodes (2): fmtNum(), ProdScopeCodeLensProvider
 
-### Community 14 - "Dashboard Projects Page"
+### Community 17 - "Community 17"
 Cohesion: 0.5
 Nodes (2): handleCreate(), loadProjects()
 
-### Community 15 - "Data Aggregation Jobs"
+### Community 18 - "Community 18"
 Cohesion: 0.6
 Nodes (3): runAggregation(), runDailySnapshots(), startAggregator()
 
-### Community 16 - "Call Site Capture"
+### Community 19 - "Community 19"
 Cohesion: 0.83
 Nodes (3): captureCallSite(), cleanBrowserPath(), parseFrame()
 
-### Community 17 - "Source Map Resolution"
+### Community 20 - "Community 20"
 Cohesion: 0.83
 Nodes (3): getConsumer(), resolveLocation(), resolveStack()
 
-### Community 18 - "AI Insights Engine"
+### Community 21 - "Community 21"
 Cohesion: 0.83
 Nodes (3): gatherContext(), generateInsight(), getAnthropic()
 
-### Community 19 - "Tracing Decorators"
+### Community 22 - "Community 22"
 Cohesion: 0.67
 Nodes (0): 
 
-### Community 20 - "Error Capture"
+### Community 23 - "Community 23"
 Cohesion: 0.67
 Nodes (0): 
 
-### Community 21 - "ClickHouse Client"
+### Community 24 - "Community 24"
+Cohesion: 0.67
+Nodes (0): 
+
+### Community 25 - "Community 25"
+Cohesion: 1.0
+Nodes (2): buildPrompt(), runAgent()
+
+### Community 26 - "Community 26"
+Cohesion: 1.0
+Nodes (2): processSignature(), runOneCycle()
+
+### Community 27 - "Community 27"
 Cohesion: 1.0
 Nodes (2): getClickHouse(), initClickHouse()
 
-### Community 22 - "WebSocket Broadcast"
+### Community 28 - "Community 28"
 Cohesion: 0.67
 Nodes (0): 
 
-### Community 23 - "Fetch Capture"
+### Community 29 - "Community 29"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 24 - "Click Capture"
+### Community 30 - "Community 30"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 25 - "Function Tracking"
+### Community 31 - "Community 31"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 26 - "Prisma Instrumentation"
+### Community 32 - "Community 32"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 27 - "Dashboard Router"
+### Community 33 - "Community 33"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 28 - "Signup Page"
+### Community 34 - "Community 34"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 29 - "Login Page"
+### Community 35 - "Community 35"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 30 - "SDK Config Example"
+### Community 36 - "Community 36"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 31 - "Shared Types"
+### Community 37 - "Community 37"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 32 - "Vite Config"
+### Community 38 - "Community 38"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 33 - "Vite Env Types"
+### Community 39 - "Community 39"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 34 - "Backend Env Config"
+### Community 40 - "Community 40"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 41 - "Community 41"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 42 - "Community 42"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 43 - "Community 43"
 Cohesion: 1.0
 Nodes (0): 
 
 ## Knowledge Gaps
-- **10 isolated node(s):** `Developer Observability Platform`, `@prodscope/dashboard`, `ClickHouse`, `PostgreSQL`, `Express` (+5 more)
-  These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Fetch Capture`** (2 nodes): `fetches.ts`, `captureFetches()`
+- **Thin community `Community 29`** (2 nodes): `fetches.ts`, `captureFetches()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Click Capture`** (2 nodes): `clicks.ts`, `captureClicks()`
+- **Thin community `Community 30`** (2 nodes): `clicks.ts`, `captureClicks()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Function Tracking`** (2 nodes): `functions.ts`, `trackFunction()`
+- **Thin community `Community 31`** (2 nodes): `functions.ts`, `trackFunction()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Prisma Instrumentation`** (2 nodes): `prisma.ts`, `prodscopePrisma()`
+- **Thin community `Community 32`** (2 nodes): `watcher.ts`, `findCandidateSignatures()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Dashboard Router`** (2 nodes): `main.tsx`, `ProtectedRoute()`
+- **Thin community `Community 33`** (2 nodes): `env.ts`, `int()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Signup Page`** (2 nodes): `Signup.tsx`, `Signup()`
+- **Thin community `Community 34`** (2 nodes): `prisma.ts`, `prodscopePrisma()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Login Page`** (2 nodes): `Login.tsx`, `Login()`
+- **Thin community `Community 35`** (2 nodes): `main.tsx`, `ProtectedRoute()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `SDK Config Example`** (1 nodes): `prodscope.config.example.ts`
+- **Thin community `Community 36`** (2 nodes): `Signup.tsx`, `Signup()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Shared Types`** (1 nodes): `types.ts`
+- **Thin community `Community 37`** (2 nodes): `Login.tsx`, `Login()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Vite Config`** (1 nodes): `vite.config.ts`
+- **Thin community `Community 38`** (1 nodes): `prodscope.config.example.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Vite Env Types`** (1 nodes): `vite-env.d.ts`
+- **Thin community `Community 39`** (1 nodes): `types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Backend Env Config`** (1 nodes): `env.ts`
+- **Thin community `Community 40`** (1 nodes): `express-augment.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 41`** (1 nodes): `vite.config.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 42`** (1 nodes): `vite-env.d.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 43`** (1 nodes): `express-augment.d.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Are the 7 inferred relationships involving `Lighthouse Brand Mark` (e.g. with `VS Code Extension Icon (SVG) - Lighthouse Mark` and `VS Code Activity Bar Icon - Lighthouse Outline`) actually correct?**
-  _`Lighthouse Brand Mark` has 7 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Developer Observability Platform`, `@prodscope/dashboard`, `ClickHouse` to the rest of the system?**
-  _10 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Branding & Product Concept` be split into smaller, more focused modules?**
-  _Cohesion score 0.1 - nodes in this community are weakly interconnected._
-- **Should `Backend API & Auth` be split into smaller, more focused modules?**
+- **Should `Community 4` be split into smaller, more focused modules?**
   _Cohesion score 0.12 - nodes in this community are weakly interconnected._
